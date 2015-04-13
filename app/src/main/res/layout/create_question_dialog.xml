@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".QuestionActivity"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/scrollView" >
+
+<LinearLayout
+
+android:orientation="vertical"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:padding="10dp"
+android:id="@+id/questionField"
+android:layout_weight="5"
+    android:background="#1C1C1C"
+    android:minWidth="500dp"
+    android:nestedScrollingEnabled="true">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Question"
+        android:id="@+id/textView3"
+        android:layout_gravity="center"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialog_description"
+        android:layout_gravity="center|right"
+        android:background="@drawable/item_background"
+        android:hint="enter short description here"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
+
+    <FrameLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:layout_weight="3"
+    android:id="@+id/question"
+        android:background="@drawable/item_background">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/questionmark_circle"
+            android:text="\?"
+            android:layout_gravity="center"
+            android:background="@drawable/circle_question_green"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:textColor="#FFFFFFFF" />
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                    android:id="@+id/dialog_question"
+                android:layout_gravity="center"
+                android:textSize="20dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:background="#00000000"
+                    android:hint="please enter your question" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_background"
+        android:layout_weight="1"
+        android:layout_margin="5dp"
+        android:id="@+id/answer1">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:text="A"
+                android:background="@drawable/circle_answer_a"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:textColor="#FFFFFFFF"
+                android:autoText="false"
+                android:id="@+id/a_circle"
+                android:layout_gravity="center_vertical|left" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/dialog_correct_answer"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="16dp"
+                    android:background="#00000000"
+                    android:hint="correct answer" />
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/img_cross1"
+                    android:layout_gravity="center"
+                    android:visibility="invisible"
+                    android:background="@drawable/cross" />
+
+            </FrameLayout>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/imageView12"
+                android:src="@drawable/correct_normal"
+                android:layout_gravity="center" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <FrameLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_background"
+    android:layout_weight="1"
+    android:layout_margin="5dp"
+    android:id="@+id/answer2">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:text="B"
+            android:layout_gravity="left|top"
+            android:background="@drawable/circle_answer_b"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:textColor="#FFFFFFFF"
+            android:id="@+id/b_circle" />
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                    android:id="@+id/dialog_wrong_answer1"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:background="#00000000"
+                    android:hint="wrong answer #1" />
+
+                <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/img_cross2"
+                android:layout_gravity="center"
+                android:visibility="invisible"
+                android:background="@drawable/cross" />
+            </FrameLayout>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/imageView13"
+                android:src="@drawable/cross"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_background"
+        android:layout_weight="1"
+        android:layout_margin="5dp"
+        android:id="@+id/answer3">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:text="C"
+                android:layout_gravity="center"
+                android:background="@drawable/circle_answer_c"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:textColor="#FFFFFFFF"
+                android:id="@+id/c_circle" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/fl">
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/dialog_wrong_answer2"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="16dp"
+                    android:background="#00000000"
+                    android:hint="wrong answer #2" />
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/img_cross3"
+                    android:layout_gravity="center"
+                    android:visibility="invisible"
+                    android:background="@drawable/cross" />
+            </FrameLayout>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/imageView14"
+                android:src="@drawable/cross"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <FrameLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_background"
+    android:layout_weight="1"
+    android:layout_margin="5dp"
+    android:id="@+id/answer4">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:text="D"
+                android:background="@drawable/circle_answer_d"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:textColor="#FFFFFFFF"
+            android:id="@+id/d_circle"
+                android:layout_gravity="center" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                    android:id="@+id/dialog_wrong_answer3"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:background="#00000000"
+                    android:hint="wrong answer #3" />
+
+                <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/img_cross4"
+                android:layout_gravity="center"
+                android:visibility="invisible"
+                android:background="@drawable/cross" />
+            </FrameLayout>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/imageView15"
+                android:layout_gravity="center"
+                android:src="@drawable/cross" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="save"
+            android:id="@+id/button_save_question"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="cancel"
+            android:id="@+id/button_dismiss_question"
+            android:layout_gravity="center_horizontal"
+            android:onClick="cancelWaypointCreation" />
+    </LinearLayout>
+
+</LinearLayout>
+    </ScrollView>

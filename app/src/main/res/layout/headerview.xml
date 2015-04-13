@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+    android:paddingTop="10dp">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton"
+            android:src="@drawable/arrow_new"
+            android:background="#00000000"
+            android:adjustViewBounds="true"
+            android:onClick="onClickStartButton"
+            android:nestedScrollingEnabled="true"
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/green_arrow_next_start_screen" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView9"
+        android:src="@drawable/start"
+        android:adjustViewBounds="true"
+        android:layout_gravity="center"
+        android:scaleType="fitCenter"
+        android:contentDescription="@string/start_text_in_green_arrow" />
+
+</FrameLayout>

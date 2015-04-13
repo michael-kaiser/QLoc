@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#131313">
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/head_section">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/head_background"
+            android:adjustViewBounds="true"
+            android:src="@drawable/q_act_bg_top" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:divider="@drawable/separator_vertical_white"
+            android:showDividers="middle">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="100p"
+                android:id="@+id/points"
+                android:textColor="#FFFFFF"
+                android:layout_weight="1"
+                android:textAlignment="gravity"
+                android:gravity="center_horizontal" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/q_logo"
+                android:adjustViewBounds="true"
+                android:src="@drawable/q_act_logo"
+                android:maxHeight="50dp"
+                android:layout_weight="5" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="1/4"
+                android:id="@+id/questionCounter"
+                android:textColor="#FFFFFF"
+                android:layout_weight="1"
+                android:gravity="center_horizontal" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:id="@+id/imageView8"
+            android:layout_gravity="bottom"
+            android:src="#80FFFFFF" />
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/question_fragment"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"></FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/footer"
+        android:background="#111111"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dumma (c)"
+            android:id="@+id/textView2"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="#FFFFFF"
+            android:textSize="8dp" />
+    </RelativeLayout>
+
+</LinearLayout>

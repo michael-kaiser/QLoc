@@ -1,0 +1,64 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+
+
+    <Button
+        android:id="@+id/chooseRadio"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remember"
+        android:onClick="remember"/>
+
+    <TextView
+        android:id="@+id/prov"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="No provider selected yet"
+        android:layout_marginTop="10dp"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/lat"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Latitude: -"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/lon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Longitude: -"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/bea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Longitude: -"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/goldach"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Direction to Golden Roof: -"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/golddist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Distance to Golden Roof: -"
+        android:textSize="20dp" />
+</LinearLayout>
+

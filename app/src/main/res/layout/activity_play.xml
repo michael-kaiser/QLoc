@@ -1,0 +1,65 @@
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ActivityStartScreen"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:src="@drawable/bg_header"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView2"
+            android:src="@drawable/logo"
+            android:adjustViewBounds="true"
+            android:maxHeight="100dp"
+            android:layout_gravity="center" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:id="@+id/imageView5"
+            android:layout_gravity="bottom"
+            android:background="#80FFFFFF"
+            android:adjustViewBounds="false" />
+
+    </FrameLayout>
+
+
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <ListView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/list"
+            android:divider="@null"
+            android:dividerHeight="10dp"
+            android:background="#1C1C1C"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:id="@+id/imageView6"
+            android:background="#80FFFFFF" />
+    </FrameLayout>
+
+</LinearLayout>
