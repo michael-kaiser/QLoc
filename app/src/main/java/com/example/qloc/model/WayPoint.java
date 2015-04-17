@@ -4,13 +4,16 @@ import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.nio.DoubleBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.json.Json;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+/*import javax.json.Json;
 import javax.json.JsonBuilderFactory;
-import javax.json.JsonObject;
+import javax.json.JsonObject;*/
 
 /**
  * Created by uli on 06.04.15.
@@ -23,7 +26,7 @@ public class WayPoint extends Location implements Parcelable{
     private String name;
     private String desc;
     private String question;
-    private String trueAnswer; //TODO mock
+    private String answer01; //TODO mock
     private String answer2;
     private String answer3;
     private String answer4;
@@ -31,6 +34,8 @@ public class WayPoint extends Location implements Parcelable{
     public String getQuestion() {
         return question;
     }
+
+
 
     public WayPoint(Location l) {
         super(l);
@@ -40,7 +45,7 @@ public class WayPoint extends Location implements Parcelable{
         super(l);
         this.name= "Einziger";
         this.question = q;
-        this.trueAnswer = a1;
+        this.answer01 = a1;
         this.answer2 = a2;
         this.answer3 = a3;
         this.answer4 = a4;
@@ -54,30 +59,47 @@ public class WayPoint extends Location implements Parcelable{
         this.name= wp.getName();
         this.desc = wp.getDesc();
         this.question = wp.getQuestion();
-        this.trueAnswer = wp.getTrueAnswer();
+        this.answer01 = wp.getAnswer01();
         this.answer2 = wp.getAnswer2();
         this.answer3 = wp.getAnswer3();
         this.answer4 = wp.getAnswer4();
         this.id = wp.getId();
-        this.nextId = wp.nextId;
+        this.nextId = wp.getNextId();
     }
 
-    public WayPoint(Location l, String id, String n, String desc,  String q, String a1, String a2, String a3, String a4){
+    public WayPoint(Location l, String id, String n, String desc,  String q, String a1, String a2, String a3, String a4, String nextId){
         super(l);
         this.name= n;
         this.question = q;
-        this.trueAnswer = a1;
+        this.answer01 = a1;
         this.answer2 = a2;
         this.answer3 = a3;
         this.answer4 = a4;
         this.desc = desc;
         this.id = id;
+        this.nextId = nextId;
+
+    }
+    public WayPoint(Double latitude, Double longitude, String id, String n, String desc,  String q, String a1, String a2, String a3, String a4, String nextId){
+        super("");
+        this.setLongitude(longitude);
+        this.setLatitude(latitude);
+        this.name= n;
+        this.question = q;
+        this.answer01 = a1;
+        this.answer2 = a2;
+        this.answer3 = a3;
+        this.answer4 = a4;
+        this.desc = desc;
+        this.id = id;
+        this.nextId = nextId;
 
     }
 
+
     public List<String> getAnswerList(){
         ArrayList<String> answers = new ArrayList<>();
-        answers.add(trueAnswer);
+        answers.add(answer01);
         answers.add(answer2);
         answers.add(answer3);
         answers.add(answer4);
@@ -102,11 +124,11 @@ public class WayPoint extends Location implements Parcelable{
     }
 
     public String getAnswer1() {
-        return trueAnswer;
+        return answer01;
     }
 
     public void setAnswer1(String answer1) {
-        this.trueAnswer = answer1;
+        this.answer01 = answer1;
     }
 
     public String getAnswer2() {
@@ -136,7 +158,7 @@ public class WayPoint extends Location implements Parcelable{
 
     //TODO send answer request
     public boolean checkAnswer(String givenAnswer){
-        return (givenAnswer.equals(trueAnswer));
+        return (givenAnswer.equals(answer01));
     }
 
     public String getDesc() {
@@ -147,12 +169,12 @@ public class WayPoint extends Location implements Parcelable{
         this.desc = desc;
     }
 
-    public String getTrueAnswer() {
-        return trueAnswer;
+    public String getAnswer01() {
+        return answer01;
     }
 
-    public void setTrueAnswer(String trueAnswer) {
-        this.trueAnswer = trueAnswer;
+    public void setAnswer01(String answer01) {
+        this.answer01 = answer01;
     }
 
 
@@ -176,7 +198,7 @@ public class WayPoint extends Location implements Parcelable{
         parcel.writeString(name);
         parcel.writeString(desc);
         parcel.writeString(question);
-        parcel.writeString(trueAnswer);
+        parcel.writeString(answer01);
         parcel.writeString(answer2);
         parcel.writeString(answer3);
         parcel.writeString(answer4);
@@ -190,7 +212,7 @@ public class WayPoint extends Location implements Parcelable{
        this.name = in.readString();
        this.desc = in.readString();
        this.question = in.readString();
-       this.trueAnswer = in.readString();
+       this.answer01 = in.readString();
        this.answer2 = in.readString();
        this.answer3 = in.readString();
        this.answer4 = in.readString();
@@ -217,7 +239,7 @@ public class WayPoint extends Location implements Parcelable{
                 "name='" + name + '\'' +
                 ", desc='" + desc + '\'' +
                 ", question='" + question + '\'' +
-                ", trueAnswer='" + trueAnswer + '\'' +
+                ", answer01='" + answer01 + '\'' +
                 ", answer2='" + answer2 + '\'' +
                 ", answer3='" + answer3 + '\'' +
                 ", answer4='" + answer4 + '\'' +
@@ -227,12 +249,21 @@ public class WayPoint extends Location implements Parcelable{
                 '}';
     }
 
-    public String toJSON(){
+
+/*    public String toJSON(){
         JsonBuilderFactory factory = Json.createBuilderFactory(null);
         JsonObject value = factory.createObjectBuilder()
                 .add("id", this.id)
-                .add("desc", this.desc).build();
-                
-         return value.toString();
-    }
+                .add("name", this.name)
+                .add("desc", this.desc)
+                .add("answer01", this.answer01)
+                .add("answer2", this.answer2)
+                .add("answer3", this.answer3)
+                .add("answer4", this.answer4)
+                .add("nextID", this. nextId)
+                .add("latitude", this.getLatitude())
+                .add("longitude", this.getLongitude())
+                .build();
+        return value.toString();
+    }*/
 }

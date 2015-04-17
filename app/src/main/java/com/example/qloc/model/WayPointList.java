@@ -105,7 +105,7 @@ public class WayPointList {
         String [] locs = context.getResources().getStringArray(R.array.location);
 
         for(int i = 0; i < descs.length; i++) {
-            WayPoint start = new WayPoint(new Location(""), i + "", locs[i], descs[i], "Was ist die Hauptstadt von Österreich?", "Wien", "Belgien", "Innsbruck", "der Weihnachtsmann");
+            WayPoint start = new WayPoint(new Location(""), i + "", locs[i], descs[i], "Was ist die Hauptstadt von Österreich?", "Wien", "Belgien", "Innsbruck", "der Weihnachtsmann", "nexte");
             start.setLatitude(lats[i]);
             start.setLongitude(longs[i]);
             addToList(start);
