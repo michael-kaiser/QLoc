@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +35,54 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
     public static final String KEY = "Waypoint";
     private List<RowItem> rowItems;
     private ListView myListview;
+    private GPSTracker tracker;
+    private Location currentLocation;
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        updateList();
+    }
+
+
+    private void updateList(){
+        Log.d(TAG,"update list");
+        tracker = GPSTracker.getInstance(this);
+        tracker.setListener(tracker);
+        tracker.init();
+        tracker.startTracking();
+        currentLocation = tracker.getLocation();
+
+        // if no location is available go to the GPS menu
+        if(currentLocation == null){
+            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(intent);
+        }else {
+
+            //feeding list with data
+            rowItems = new ArrayList<>();
+
+            WayPointList.setContext(this);
+            for (WayPoint wp : WayPointList.getIterable()) {
+                Log.d(TAG, wp.toString());
+                RowItem item = new RowItem(wp, currentLocation);
+                rowItems.add(item);
+            }
+
+            //sort the list according to the distance
+            Collections.sort(rowItems, new Comparator<RowItem>() {
+                public int compare(RowItem o1, RowItem o2) {
+                    if (o1.getDistance() == null || o2.getDistance() == null)
+                        return 0;
+                    return (int) (Double.parseDouble(o1.getDistance()) - Double.parseDouble(o2.getDistance()));
+                }
+            });
+
+            CustomAdapter adapter = new CustomAdapter(this, rowItems);
+            myListview.setAdapter(adapter);
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,40 +91,11 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
         //override animation when changing to this activity
         overridePendingTransition(R.anim.pull_in_from_right,R.anim.pull_out_to_left);
         setContentView(R.layout.activity_play);
-
-        GPSTracker tracker = new GPSTracker(this);
-        Location currentLocation = tracker.getLocation();
-
-        //feeding list with data
-        rowItems = new ArrayList<>();
-
-        WayPointList.setContext(this);
-        for(WayPoint wp : WayPointList.getIterable()){
-            Log.d(TAG,wp.toString());
-            RowItem item = new RowItem(wp,currentLocation);
-            rowItems.add(item);
-        }
-
-        //sort the list according to the distance
-        Collections.sort(rowItems, new Comparator<RowItem>() {
-            public int compare(RowItem o1, RowItem o2) {
-                if (o1.getDistance() == null || o2.getDistance() == null)
-                    return 0;
-                return (int) (Double.parseDouble(o1.getDistance()) - Double.parseDouble(o2.getDistance()));
-            }
-        });
-
         myListview = (ListView) findViewById(R.id.list);
-        CustomAdapter adapter = new CustomAdapter(this, rowItems);
         View view = View.inflate(this, R.layout.headerview, null);
-
         myListview.addHeaderView(view);
-        myListview.setAdapter(adapter);
         myListview.setOnItemClickListener(this);
-
-
-
-        //myListview.setOnItemClickListener(this);
+        updateList();
     }
 
 
@@ -114,11 +134,10 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
      * starts the activity when you click on the green arrow
      */
     public void onClickStartButton(View v){
-        /*Intent i = new Intent(this,QuestionActivity.class);
-        startActivity(i);*/
-
         Intent i = new Intent(this,NavigationActivity.class);
-
+        WayPoint wp = new WayPoint(rowItems.get(0).getWaypoint());
+        Log.d(TAG+"test",wp.getName() + wp.getDesc() + wp.getAnswer4());
+        i.putExtra(KEY, wp); //give the waypoint to the next Activity
         startActivity(i);
 
     }

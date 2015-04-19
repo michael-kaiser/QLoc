@@ -1,16 +1,12 @@
 package com.example.qloc.controller;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -19,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qloc.R;
+import com.example.qloc.model.DisableEnableGPSListener;
+import com.example.qloc.model.GPSTracker;
 import com.example.qloc.model.WayPoint;
 import com.example.qloc.model.WayPointList;
 
@@ -36,8 +34,6 @@ public class NavigationActivity extends Activity {
     private TextView distance;
     private float degree;
     private TextView provText;
-    private LocationManager locationManager;
-    private String provider;
     private WayPoint start;
     private Sensor accelerometer;
     private Sensor magnetometer;
@@ -48,6 +44,7 @@ public class NavigationActivity extends Activity {
     public static final String KEY = "Waypoint2";
     public static final int REQUEST_ID_NEXT = 1;
     private String nextWaypointId = "unset";
+    private GPSTracker tracker = GPSTracker.getInstance(this);
 
 
     @Override
@@ -69,19 +66,15 @@ public class NavigationActivity extends Activity {
         start = getWayPoint();
         Log.d(TAG,start.getName());
         mylistener = new MyLocationListener();
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-        criteria.setAccuracy(Criteria.ACCURACY_FINE);
-        criteria.setCostAllowed(false);
-        provider = locationManager.getBestProvider(criteria,false);
-        Location location = locationManager.getLastKnownLocation(provider);
+        tracker.setListener(mylistener);
+        tracker.init();
+        Location location = tracker.getLocation();
 
 
         mysensor = new MySensorEventListener();
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-        locationManager.requestLocationUpdates(provider, 400, 1, mylistener);
 
         /*Checks, if GPS is enabled*/
         if (location != null) {
@@ -133,16 +126,11 @@ public class NavigationActivity extends Activity {
 
         }
     }
-    private class MyLocationListener implements LocationListener {
+    private class MyLocationListener extends DisableEnableGPSListener {
         /*variable to check i the user is in a QuestionActivity then he shouldn't get the question again
            the variable is controlled by the onStop() and onRestart() of the Activity
          */
         private boolean inQuestion = false;
-
-
-        public boolean isInQuestion() {
-            return inQuestion;
-        }
 
         public void setInQuestion(boolean inQuestion) {
             this.inQuestion = inQuestion;
@@ -153,7 +141,7 @@ public class NavigationActivity extends Activity {
             // Initialize the location fields
 
             //Das ist natürlich Unsinn, aber es dient nur Testzwecken
-            float near;
+            //float near;
             if(location.distanceTo(start)>0 && location.distanceTo(start)<120 && !inQuestion) {
                 inQuestion = true;
                 Intent intent = new Intent(getApplicationContext(), QuestionActivity.class);
@@ -163,8 +151,8 @@ public class NavigationActivity extends Activity {
             }
             latitude.setText("Latitude: "+String.valueOf(location.getLatitude()));
             longitude.setText("Longitude: "+String.valueOf(location.getLongitude()));
-            distance.setText("Distance to Start: "+Float.toString(location.distanceTo(start)));;
-            provText.setText(provider + " provider has been selected.");
+            distance.setText("Distance to Start: "+Float.toString(location.distanceTo(start)));
+            provText.setText(tracker.getProvider() + " provider has been selected.");
             calculateHeading();
 
 
@@ -175,25 +163,15 @@ public class NavigationActivity extends Activity {
 
         }
 
-        @Override
-        public void onProviderEnabled(String provider) {
-
-
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-
-        }
     }
 
     public void calculateHeading(){
         float helpDegree;
         direction = (TextView) findViewById(R.id.goldach);
-        while(locationManager.getLastKnownLocation(provider)==null){
+        while(tracker.getLocation()==null){
             direction.setText("Richtung: ??");
         }
-        float bea = locationManager.getLastKnownLocation(provider).bearingTo(start);
+        float bea = tracker.getLocation().bearingTo(start);
         float dir =bea;
         if (degree <0){
             helpDegree=360+degree;
@@ -212,7 +190,7 @@ public class NavigationActivity extends Activity {
     }
 
     public void remember(View v){
-        Location s = locationManager.getLastKnownLocation(provider);
+        Location s = tracker.getLocation();
 
         start.setLongitude(s.getLongitude());
         start.setLatitude(s.getLatitude());
@@ -227,6 +205,9 @@ public class NavigationActivity extends Activity {
     protected void onStop() {
         super.onStop();
         mylistener.setInQuestion(true);
+        tracker.stopTracking();
+        mSensorManager.unregisterListener(mysensor,accelerometer);
+        mSensorManager.unregisterListener(mysensor,magnetometer);
 
     }
 
@@ -235,18 +216,21 @@ public class NavigationActivity extends Activity {
         super.onRestart();
         start = getWayPoint();
         mylistener.setInQuestion(false);
+        mSensorManager.registerListener(mysensor,accelerometer,1000);
+        mSensorManager.registerListener(mysensor,magnetometer,1000);
+        tracker.startTracking();
     }
 
     private WayPoint getWayPoint(){
         WayPoint nextWaypoint = null;
         if(nextWaypointId.equals("unset")){
-            nextWaypoint = (WayPoint) getIntent().getParcelableExtra(PlayGameActivity.KEY);
+            nextWaypoint = getIntent().getParcelableExtra(PlayGameActivity.KEY);
         }else if(nextWaypointId.equals("finish")){
             /*
             TODO make usefull stuff when over
              */
             Log.d(TAG,"finishing");
-            locationManager.removeUpdates(mylistener);
+            tracker.stopTracking();
             mSensorManager.unregisterListener(mysensor,accelerometer);
             mSensorManager.unregisterListener(mysensor,magnetometer);
             this.finish();
