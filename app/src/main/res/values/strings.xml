@@ -9,6 +9,9 @@
     <string name="bad">Bad</string>
     <string name="earned_points">You earned </string>
     <string name="back_anim_arrow">back</string>
+    <string name="no_location_service_available">no location service available</string>
+    <string name="gps_enabled">gps enabled</string>
+    <string name="network_enabled">network enabled</string>
 
     <!-- TODO delete | just for testing needed -->
     <!-- location names -->
