@@ -47,4 +47,15 @@ public class MyLittleSerializer {
         }
         return rl;
     }
+
+    public static String RoutesListToJsonString(RoutesList rl){
+
+        String ret = null;
+        try {
+            ret = OBJECT_MAPPER.writeValueAsString(rl);
+        } catch (JsonProcessingException e) {
+            ret = null;
+        }
+        return ret;
+    }
 }

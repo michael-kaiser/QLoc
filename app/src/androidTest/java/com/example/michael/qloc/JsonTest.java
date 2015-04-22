@@ -21,7 +21,10 @@ public class JsonTest extends TestCase {
         wp. setNextId("next");
     }
     public void testAdd() throws JsonProcessingException {
-        assertEquals(MyLittleSerializer.toJSON(wp),"Somethubg");
+        //assertEquals(MyLittleSerializer.toJSON(wp),"Somethubg");
+        String s = MyLittleSerializer.toJSON(wp);
+        WayPoint p =MyLittleSerializer.toWayPoint(s);
+        assertEquals(p.getId(), "GoldenRoof");
     }
 
     public static void main(String ... args) {

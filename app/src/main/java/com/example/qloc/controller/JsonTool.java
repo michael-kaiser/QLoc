@@ -1,5 +1,7 @@
 package com.example.qloc.controller;
 
+import com.example.qloc.model.Route;
+import com.example.qloc.model.RoutesList;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -11,7 +13,7 @@ import java.io.StringWriter;
 /**
  * Created by uli on 18.04.15.
  */
-public class ServerCom {
+public class JsonTool {
 
     public static String rangeQuery(double lon, double lat) throws IOException {
 
@@ -61,6 +63,7 @@ public class ServerCom {
         return "true".equals(aField.toString());
 
     }
+
 
 
 }
