@@ -18,7 +18,7 @@ public class MyLittleSerializer {
         OBJECT_MAPPER = new ObjectMapper();
     }
 
-    public static String toJSON(WayPoint wp){
+    public static String WayPointToJSON(WayPoint wp){
         WayPointDataCont cont = new WayPointDataCont(wp);
         String ret = null;
         try {
@@ -28,7 +28,7 @@ public class MyLittleSerializer {
         }
         return ret;
     }
-    public static WayPoint toWayPoint(String jsonString){
+    public static WayPoint JSONStringToWayPoint(String jsonString){
         WayPointDataCont wpdc;
         try {
             wpdc = OBJECT_MAPPER.readValue(jsonString, WayPointDataCont.class);
@@ -38,7 +38,7 @@ public class MyLittleSerializer {
         return wpdc.toWayPoint();
     }
 
-    public static RoutesList toRoutesList(String jsonString){
+    public static RoutesList JSONStringToRoutesList(String jsonString){
         RoutesList rl;
         try {
             rl = OBJECT_MAPPER.readValue(jsonString, RoutesList.class);
@@ -48,7 +48,7 @@ public class MyLittleSerializer {
         return rl;
     }
 
-    public static String RoutesListToJsonString(RoutesList rl){
+    public static String RoutesListToJSONString(RoutesList rl){
 
         String ret = null;
         try {

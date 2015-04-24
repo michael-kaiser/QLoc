@@ -49,6 +49,22 @@ public class JsonTool {
         return writer.toString();
     }
 
+    public static String requestNext(String next) throws IOException {
+        JsonFactory jFactory = new JsonFactory();
+        StringWriter writer = new StringWriter();
+        JsonGenerator jsonGenerator = null;
+        try {
+            jsonGenerator = jFactory.createGenerator(writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        jsonGenerator.writeStartObject();
+        jsonGenerator.writeStringField("nextID", next);
+        jsonGenerator.writeEndObject();
+        jsonGenerator.close();
+        return writer.toString();
+    }
+
     public static boolean evaluatedAnswer(String st) {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode actualObj = null;

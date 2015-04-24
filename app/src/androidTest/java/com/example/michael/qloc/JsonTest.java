@@ -22,8 +22,8 @@ public class JsonTest extends TestCase {
     }
     public void testAdd() throws JsonProcessingException {
         //assertEquals(MyLittleSerializer.toJSON(wp),"Somethubg");
-        String s = MyLittleSerializer.toJSON(wp);
-        WayPoint p =MyLittleSerializer.toWayPoint(s);
+        String s = MyLittleSerializer.WayPointToJSON(wp);
+        WayPoint p =MyLittleSerializer.JSONStringToWayPoint(s);
         assertEquals(p.getId(), "GoldenRoof");
     }
 
