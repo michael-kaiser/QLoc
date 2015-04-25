@@ -1,5 +1,7 @@
 package com.example.qloc.controller;
 
+import android.location.Location;
+
 import com.example.qloc.model.Route;
 import com.example.qloc.model.RoutesList;
 import com.fasterxml.jackson.core.JsonFactory;
@@ -32,6 +34,25 @@ public class JsonTool {
         jsonGenerator.close();
         return writer.toString();
     }
+
+    public static String rangeQuery(Location l) throws IOException {
+
+        JsonFactory jFactory = new JsonFactory();
+        StringWriter writer = new StringWriter();
+        JsonGenerator jsonGenerator = null;
+        try {
+            jsonGenerator = jFactory.createGenerator(writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        jsonGenerator.writeStartObject();
+        jsonGenerator.writeNumberField("longitude", l.getLongitude());
+        jsonGenerator.writeNumberField("latitude", l.getLatitude());
+        jsonGenerator.writeEndObject();
+        jsonGenerator.close();
+        return writer.toString();
+    }
+
 
     public static String sendAnswer(String ans) throws IOException {
         JsonFactory jFactory = new JsonFactory();

@@ -3,6 +3,7 @@ package com.example.qloc.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by uli on 17.04.15.
@@ -15,9 +16,9 @@ public class WayPointDataCont {
     private String question;
     private String nextId;
     @JsonProperty("answers")
-    private ArrayList<String> answers = new ArrayList(4);
+    private String[] answers = new String[4];
     @JsonProperty("locations")
-    private ArrayList<Double> locations = new ArrayList(2);
+    private Double[] locations = new Double[2];
 
 
     public WayPointDataCont() {
@@ -28,17 +29,23 @@ public class WayPointDataCont {
         this.name = name;
         this.desc = desc;
         this.question = question;
-
+        this.answers[0]=answer01;
+        this.answers[1]=answer2;
+        this.answers[2]=answer3;
+        this.answers[3]=answer4;
+        /*
         this.answers.add(answer01);
         this.answers.add(answer2);
         this.answers.add(answer3);
         this.answers.add(answer4);
 
-
+*/
         this.nextId = nextId;
-        this.locations.add( latitude);
-        this.locations.add(longitude);
 
+  /*      this.locations.add( latitude);
+        this.locations.add(longitude);*/
+        this.locations[0]=latitude;
+        this.locations[1] =longitude;
     }
 
     public WayPointDataCont(WayPoint wp){
@@ -46,18 +53,25 @@ public class WayPointDataCont {
         this.desc = wp.getDesc();
         this.question = wp.getQuestion();
 
-        this.answers.add(wp.getAnswer01());
+        this.answers[0]=wp.getAnswer01();
+        this.answers[1]=wp.getAnswer1();
+        this.answers[2]=wp.getAnswer3();
+        this.answers[3]=wp.getAnswer4();
+
+/*        this.answers.add(wp.getAnswer01());
         this.answers.add(wp.getAnswer2());
         this.answers.add(wp.getAnswer3());
-        this.answers.add(wp.getAnswer4());
+        this.answers.add(wp.getAnswer4());*/
         this.id = wp.getId();
         this.nextId = wp.getNextId();
-        this.locations.add(wp.getLatitude());
-        this.locations.add(wp.getLongitude());
+        this.locations[0] =wp.getLatitude();
+        this.locations[1] =wp.getLongitude();
+        /*this.locations.add(wp.getLatitude());
+        this.locations.add(wp.getLongitude());*/
 
     }
     public WayPoint toWayPoint(){
-        return new WayPoint(locations.get(0),  locations.get(1), id,  name, desc,  question, answers.get(0), answers.get(1), answers.get(2), answers.get(3), nextId);
+        return new WayPoint(locations[0],  locations[1], id,  name, desc,  question, answers[0], answers[1], answers[2], answers[3], nextId);
     }
 
     public String getId() {
@@ -100,52 +114,19 @@ public class WayPointDataCont {
         this.nextId = nextId;
     }
 
-    public String getAnswer01() {
-        return answers.get(0);
+    public String[] getAnswers() {
+        return answers;
     }
 
-    public void setAnswer01(String answer01) {
-        this.answers.add(answer01);
+    public void setAnswers(String[] answers) {
+        this.answers = answers;
     }
 
-    public String getAnswer2() {
-        return answers.get(1);
+    public Double[] getLocations() {
+        return locations;
     }
 
-    public void setAnswer2(String answer2) {
-        this.answers.add(answer2);
+    public void setLocations(Double[] locations) {
+        this.locations = locations;
     }
-
-    public String getAnswer3() {
-        return answers.get(2);
-    }
-
-    public void setAnswer3(String answer3) {
-        this.answers.add(answer3);
-    }
-
-    public String getAnswer4() {
-        return answers.get(3);
-    }
-
-    public void setAnswer4(String answer4) {
-        this.answers.add(answer4);
-    }
-
-    public double getLatitude() {
-        return locations.get(0);
-    }
-
-    public void setLatitude(double latitude) {
-        this.locations.add(latitude);
-    }
-
-    public double getLongitude() {
-        return locations.get(1);
-    }
-
-    public void setLongitude(double longitude) {
-        this.locations.add(longitude);
-    }
-
 }

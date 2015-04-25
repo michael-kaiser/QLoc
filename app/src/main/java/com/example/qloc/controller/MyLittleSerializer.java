@@ -3,6 +3,7 @@ package com.example.qloc.controller;
 import com.example.qloc.model.RoutesList;
 import com.example.qloc.model.WayPoint;
 import com.example.qloc.model.WayPointDataCont;
+//import com.example.qloc.model.WayPointList2;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -58,4 +59,5 @@ public class MyLittleSerializer {
         }
         return ret;
     }
+
 }

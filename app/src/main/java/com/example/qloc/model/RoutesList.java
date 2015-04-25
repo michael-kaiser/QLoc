@@ -10,7 +10,12 @@ import java.util.ArrayList;
  */
 public class RoutesList {
     @JsonProperty("routes")
-    private static ArrayList<Route> routes = new ArrayList<>();
+    private ArrayList<Route> routes;
+
+    public RoutesList() {
+        this.routes =  new ArrayList<Route>();
+
+    }
 
     public ArrayList<Route> getRoutes() {
         return routes;
@@ -21,4 +26,5 @@ public class RoutesList {
     public void setRoutes(ArrayList<Route> routes) {
         this.routes = routes;
     }
+
 }
