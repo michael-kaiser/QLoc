@@ -23,27 +23,32 @@ public class HttpConnection {
     }
 
     public String sendAndRecive(String request) {
+        String response = null;
         try {
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setChunkedStreamingMode(0);
+            //deactivate that servers use gzip compression
+            connection.setRequestProperty("Accept-Encoding", "identity");
 
             OutputStream out = new BufferedOutputStream(connection.getOutputStream());
             writeStream(out, request);
 
             InputStream in = new BufferedInputStream(connection.getInputStream());
-            readStream(in);
+            response = readStream(in);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             connection.disconnect();
         }
+        return response;
     }
 
 
     private void writeStream(OutputStream out, String request)throws IOException{
         out.write(request.getBytes());
     }
+
     private String readStream(InputStream is) throws IOException {
         StringBuilder sb = new StringBuilder();
         //check character size of longest response
