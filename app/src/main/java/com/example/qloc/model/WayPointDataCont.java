@@ -17,7 +17,7 @@ public class WayPointDataCont {
     private String nextId;
     @JsonProperty("answers")
     private String[] answers = new String[4];
-    @JsonProperty("locations")
+    @JsonProperty("location")
     private Double[] locations = new Double[2];
 
 

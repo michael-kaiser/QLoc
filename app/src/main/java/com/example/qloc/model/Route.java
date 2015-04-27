@@ -11,7 +11,7 @@ public class Route {
     private String name;
     private String id;
     private String description;
-    @JsonProperty("location")
+    @JsonProperty("start_loc")
     private ArrayList<Double> location;
     private double distance;
 

@@ -1,6 +1,7 @@
 package com.example.qloc.controller;
 
 import com.example.qloc.model.RoutesList;
+import com.example.qloc.model.RoutesNext;
 import com.example.qloc.model.WayPoint;
 import com.example.qloc.model.WayPointDataCont;
 //import com.example.qloc.model.WayPointList2;
@@ -20,7 +21,7 @@ public class MyLittleSerializer {
     }
 
     public static String WayPointToJSON(WayPoint wp){
-        WayPointDataCont cont = new WayPointDataCont(wp);
+        RoutesNext cont = new RoutesNext(new WayPointDataCont(wp));
         String ret = null;
         try {
             ret = OBJECT_MAPPER.writeValueAsString(cont);
@@ -30,9 +31,9 @@ public class MyLittleSerializer {
         return ret;
     }
     public static WayPoint JSONStringToWayPoint(String jsonString){
-        WayPointDataCont wpdc;
+        RoutesNext wpdc;
         try {
-            wpdc = OBJECT_MAPPER.readValue(jsonString, WayPointDataCont.class);
+            wpdc = OBJECT_MAPPER.readValue(jsonString, RoutesNext.class);
         } catch (IOException e) {
             return null;
         }

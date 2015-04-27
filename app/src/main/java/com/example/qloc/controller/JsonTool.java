@@ -17,7 +17,7 @@ import java.io.StringWriter;
  */
 public class JsonTool {
 
-    public static String rangeQuery(double lon, double lat) throws IOException {
+    /*public static String rangeQuery(double lon, double lat) throws IOException {
 
         JsonFactory jFactory = new JsonFactory();
         StringWriter writer = new StringWriter();
@@ -33,9 +33,9 @@ public class JsonTool {
         jsonGenerator.writeEndObject();
         jsonGenerator.close();
         return writer.toString();
-    }
+    }*/
 
-    public static String rangeQuery(Location l) throws IOException {
+    /*public static String rangeQuery(Location l) throws IOException {
 
         JsonFactory jFactory = new JsonFactory();
         StringWriter writer = new StringWriter();
@@ -49,6 +49,34 @@ public class JsonTool {
         jsonGenerator.writeNumberField("longitude", l.getLongitude());
         jsonGenerator.writeNumberField("latitude", l.getLatitude());
         jsonGenerator.writeEndObject();
+        jsonGenerator.close();
+        return writer.toString();
+    }*/
+    public static String rangeQuery(Location l) throws IOException {
+        return rangeQuery(l.getLatitude(), l.getLongitude());
+
+    }
+
+    public static String rangeQuery(double lon, double lat) throws IOException {
+        JsonFactory jFactory = new JsonFactory();
+        StringWriter writer = new StringWriter();
+        JsonGenerator jsonGenerator = null;
+        try {
+            jsonGenerator = jFactory.createGenerator(writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        jsonGenerator.writeStartObject(); // {
+        jsonGenerator.writeFieldName("range_query"); // {"myData":
+        jsonGenerator.writeStartObject();
+        jsonGenerator.writeFieldName("location");
+        jsonGenerator.writeStartArray(); // [
+        jsonGenerator.writeNumber(lat); // "someString" (preceded by comma if not 1st)
+        jsonGenerator.writeNumber(lon);
+        jsonGenerator.writeNumber(0.0);
+        jsonGenerator.writeEndArray(); // ]
+        jsonGenerator.writeEndObject();
+        jsonGenerator.writeEndObject(); // }}
         jsonGenerator.close();
         return writer.toString();
     }
@@ -80,7 +108,10 @@ public class JsonTool {
             e.printStackTrace();
         }
         jsonGenerator.writeStartObject();
-        jsonGenerator.writeStringField("nextID", next);
+        jsonGenerator.writeFieldName("route_next");
+        jsonGenerator.writeStartObject();
+        jsonGenerator.writeStringField("id", next);
+        jsonGenerator.writeEndObject();
         jsonGenerator.writeEndObject();
         jsonGenerator.close();
         return writer.toString();
