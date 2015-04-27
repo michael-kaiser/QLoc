@@ -1,6 +1,7 @@
 package com.example.qloc.controller;
 
 import android.location.Location;
+import android.util.Log;
 
 import com.example.qloc.model.Route;
 import com.example.qloc.model.RoutesList;
@@ -57,15 +58,11 @@ public class JsonTool {
 
     }
 
-    public static String rangeQuery(double lon, double lat) throws IOException {
+    public static String rangeQuery(double lat, double lon) throws IOException {
         JsonFactory jFactory = new JsonFactory();
         StringWriter writer = new StringWriter();
         JsonGenerator jsonGenerator = null;
-        try {
-            jsonGenerator = jFactory.createGenerator(writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        jsonGenerator = jFactory.createGenerator(writer);
         jsonGenerator.writeStartObject(); // {
         jsonGenerator.writeFieldName("range_query"); // {"myData":
         jsonGenerator.writeStartObject();
@@ -86,11 +83,7 @@ public class JsonTool {
         JsonFactory jFactory = new JsonFactory();
         StringWriter writer = new StringWriter();
         JsonGenerator jsonGenerator = null;
-        try {
-            jsonGenerator = jFactory.createGenerator(writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        jsonGenerator = jFactory.createGenerator(writer);
         jsonGenerator.writeStartObject();
         jsonGenerator.writeStringField("answer", ans);
         jsonGenerator.writeEndObject();
@@ -102,11 +95,7 @@ public class JsonTool {
         JsonFactory jFactory = new JsonFactory();
         StringWriter writer = new StringWriter();
         JsonGenerator jsonGenerator = null;
-        try {
-            jsonGenerator = jFactory.createGenerator(writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        jsonGenerator = jFactory.createGenerator(writer);
         jsonGenerator.writeStartObject();
         jsonGenerator.writeFieldName("route_next");
         jsonGenerator.writeStartObject();
@@ -117,7 +106,7 @@ public class JsonTool {
         return writer.toString();
     }
 
-    public static boolean evaluatedAnswer(String st) {
+    /*public static boolean evaluatedAnswer(String st) {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode actualObj = null;
         try {
@@ -128,10 +117,7 @@ public class JsonTool {
         JsonNode aField = actualObj.get("evaluation");
 
 
-        return "true".equals(aField.toString());
-
-    }
-
+        return (aField.booleanValue());*/
 
 
 }

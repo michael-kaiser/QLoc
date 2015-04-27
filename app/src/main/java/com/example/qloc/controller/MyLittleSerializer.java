@@ -1,10 +1,12 @@
 package com.example.qloc.controller;
 
+import com.example.qloc.model.Answer;
 import com.example.qloc.model.RoutesList;
 import com.example.qloc.model.RoutesNext;
 import com.example.qloc.model.WayPoint;
 import com.example.qloc.model.WayPointDataCont;
 //import com.example.qloc.model.WayPointList2;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -20,45 +22,44 @@ public class MyLittleSerializer {
         OBJECT_MAPPER = new ObjectMapper();
     }
 
-    public static String WayPointToJSON(WayPoint wp){
+    public static String WayPointToJSON(WayPoint wp) throws JsonProcessingException {
         RoutesNext cont = new RoutesNext(new WayPointDataCont(wp));
         String ret = null;
-        try {
-            ret = OBJECT_MAPPER.writeValueAsString(cont);
-        } catch (JsonProcessingException e) {
-            ret = null;
-        }
+        ret = OBJECT_MAPPER.writeValueAsString(cont);
         return ret;
     }
-    public static WayPoint JSONStringToWayPoint(String jsonString){
+    public static WayPoint JSONStringToWayPoint(String jsonString) throws IOException {
         RoutesNext wpdc;
-        try {
+
             wpdc = OBJECT_MAPPER.readValue(jsonString, RoutesNext.class);
-        } catch (IOException e) {
-            return null;
-        }
+
         return wpdc.toWayPoint();
     }
 
-    public static RoutesList JSONStringToRoutesList(String jsonString){
+    public static RoutesList JSONStringToRoutesList(String jsonString) throws IOException {
         RoutesList rl;
-        try {
+
             rl = OBJECT_MAPPER.readValue(jsonString, RoutesList.class);
-        } catch (IOException e) {
-            return null;
-        }
+
         return rl;
     }
 
-    public static String RoutesListToJSONString(RoutesList rl){
+    public static String RoutesListToJSONString(RoutesList rl) throws JsonProcessingException {
 
         String ret = null;
-        try {
+
             ret = OBJECT_MAPPER.writeValueAsString(rl);
-        } catch (JsonProcessingException e) {
-            ret = null;
-        }
+
         return ret;
+    }
+
+    public static boolean EvaluateAnswer(String s) throws IOException {
+        boolean b;
+        Answer a = null;
+
+            a = OBJECT_MAPPER.readValue(s, Answer.class);
+
+        return a.isEvaluation();
     }
 
 }
