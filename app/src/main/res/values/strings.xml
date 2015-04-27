@@ -41,5 +41,6 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_main_screen">QLoc</string>
     <string name="title_activity_navigation">NavigationActivity</string>
+    <string name="title_activity_navigation_neu">NavigationActivityNeu</string>
 
 </resources>

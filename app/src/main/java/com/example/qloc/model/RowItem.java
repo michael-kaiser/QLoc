@@ -14,6 +14,10 @@ public class RowItem {
         this.waypoint = wp;
         this.distance = String.valueOf(currentLocation.distanceTo(wp));
     }
+
+    public RowItem(Route route, Location currentLocation){
+
+    }
     public String getDesc() {
         return waypoint.getDesc();
     }

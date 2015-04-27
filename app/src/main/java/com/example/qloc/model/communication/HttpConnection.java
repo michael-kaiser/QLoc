@@ -16,10 +16,23 @@ import java.net.URL;
  */
 public class HttpConnection {
     private URL url;
+    private final String URL_NAME = "http://1.2.3.4:3000/";
     private HttpURLConnection connection;
+    private static HttpConnection instance;
 
-    public  HttpConnection(String url) throws MalformedURLException {
-        this.url = new URL(url);
+    public static HttpConnection getInstance(){
+        if(instance == null){
+            try {
+                return new HttpConnection();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+        return instance;
+    }
+
+    private  HttpConnection() throws MalformedURLException {
+        this.url = new URL(URL_NAME);
     }
 
     public String sendAndRecive(String request) {
@@ -46,7 +59,7 @@ public class HttpConnection {
 
 
     private void writeStream(OutputStream out, String request)throws IOException{
-        out.write(request.getBytes());
+        out.write(request.getBytes("UTF-8"));
     }
 
     private String readStream(InputStream is) throws IOException {

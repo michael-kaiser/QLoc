@@ -18,7 +18,9 @@ import com.example.qloc.model.GPSTracker;
 import com.example.qloc.model.RowItem;
 import com.example.qloc.model.WayPoint;
 import com.example.qloc.model.WayPointList;
+import com.example.qloc.model.communication.HttpConnection;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -37,6 +39,7 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
     private ListView myListview;
     private GPSTracker tracker;
     private Location currentLocation;
+    private  HttpConnection conn = null;
 
     @Override
     protected void onRestart() {
@@ -52,7 +55,19 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
         tracker.init();
         tracker.startTracking();
         currentLocation = tracker.getLocation();
+        String answer = null;
+        try {
+            answer = conn.sendAndRecive(JsonTool.rangeQuery(currentLocation));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        ArrayList<WayPoint> wpList = null;
+        try {
+            wpList = (MyLittleSerializer.JSONStringToRoutesList(answer)).toWayPointList();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // if no location is available go to the GPS menu
         if(currentLocation == null){
             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
@@ -63,7 +78,7 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
             rowItems = new ArrayList<>();
 
             WayPointList.setContext(this);
-            for (WayPoint wp : WayPointList.getIterable()) {
+            for (WayPoint wp : wpList) {
                 Log.d(TAG, wp.toString());
                 RowItem item = new RowItem(wp, currentLocation);
                 rowItems.add(item);
@@ -91,6 +106,7 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
         //override animation when changing to this activity
         overridePendingTransition(R.anim.pull_in_from_right,R.anim.pull_out_to_left);
         setContentView(R.layout.activity_play);
+        conn = HttpConnection.getInstance();
         myListview = (ListView) findViewById(R.id.list);
         View view = View.inflate(this, R.layout.headerview, null);
         myListview.addHeaderView(view);
@@ -123,10 +139,22 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent i = new Intent(this,NavigationActivity.class);
+        Intent i = new Intent(this,Navigation_Activity_neu.class);
         WayPoint wp = new WayPoint(((RowItem) parent.getAdapter().getItem(position)).getWaypoint());
         Log.d(TAG+"test",wp.getName() + wp.getDesc() + wp.getAnswer4());
-        i.putExtra(KEY, wp); //give the waypoint to the next Activity
+        String msg = null;
+        try {
+            msg = JsonTool.requestNext(wp.getId());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        WayPoint new_wp = null;
+        try {
+            new_wp = MyLittleSerializer.JSONStringToWayPoint(conn.sendAndRecive(msg));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        i.putExtra(KEY, new_wp); //give the waypoint to the next Activity
         startActivity(i);
     }
 
@@ -134,7 +162,7 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
      * starts the activity when you click on the green arrow
      */
     public void onClickStartButton(View v){
-        Intent i = new Intent(this,NavigationActivity.class);
+        Intent i = new Intent(this,Navigation_Activity_neu.class);
         WayPoint wp = new WayPoint(rowItems.get(0).getWaypoint());
         Log.d(TAG+"test",wp.getName() + wp.getDesc() + wp.getAnswer4());
         i.putExtra(KEY, wp); //give the waypoint to the next Activity

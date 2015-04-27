@@ -64,6 +64,12 @@
             android:label="@string/title_activity_navigation"
             android:parentActivityName=".controller.PlayGameActivity">
         </activity>
+
+        <activity
+            android:name=".controller.Navigation_Activity_neu"
+            android:label="@string/title_activity_navigation_neu"
+            android:parentActivityName=".controller.PlayGameActivity">
+        </activity>
     </application>
 
 </manifest>

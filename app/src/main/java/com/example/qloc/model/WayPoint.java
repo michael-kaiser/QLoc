@@ -4,13 +4,14 @@ import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.nio.DoubleBuffer;
+import com.example.qloc.controller.JsonTool;
+import com.example.qloc.controller.MyLittleSerializer;
+import com.example.qloc.model.communication.HttpConnection;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 /*import javax.json.Json;
 import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;*/
@@ -80,6 +81,19 @@ public class WayPoint extends Location implements Parcelable{
         this.nextId = nextId;
 
     }
+
+    public WayPoint(Location l, String id, String n, String desc,  String q, String a1, String a2, String a3, String a4){
+        super(l);
+        this.name= n;
+        this.question = q;
+        this.answer01 = a1;
+        this.answer2 = a2;
+        this.answer3 = a3;
+        this.answer4 = a4;
+        this.desc = desc;
+        this.id = id;
+    }
+
     public WayPoint(Double latitude, Double longitude, String id, String n, String desc,  String q, String a1, String a2, String a3, String a4, String nextId){
         super("");
         this.setLongitude(longitude);
@@ -158,7 +172,22 @@ public class WayPoint extends Location implements Parcelable{
 
     //TODO send answer request
     public boolean checkAnswer(String givenAnswer){
-        return (givenAnswer.equals(answer01));
+        HttpConnection conn = HttpConnection.getInstance();
+        String temp = null;
+        boolean response = true;
+
+        try {
+            temp = JsonTool.sendAnswer(givenAnswer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        conn.sendAndRecive(temp);
+        try {
+            response = MyLittleSerializer.EvaluateAnswer(temp);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return response;
     }
 
     public String getDesc() {
