@@ -43,9 +43,10 @@ public class HttpConnection {
             connection.setDoOutput(true);
             connection.setChunkedStreamingMode(0);
 //deactivate that servers use gzip compression
-            connection.setRequestProperty("Accept-Encoding", "identity");
+            //connection.setRequestProperty("Accept-Encoding", "identity");
             OutputStream out = new BufferedOutputStream(connection.getOutputStream());
             writeStream(out, request);
+            out.close();
             InputStream in = new BufferedInputStream(connection.getInputStream());
             response = readStream(in);
         } catch (IOException e) {
@@ -57,6 +58,7 @@ public class HttpConnection {
     }
     private void writeStream(OutputStream out, String request)throws IOException{
         out.write(request.getBytes("UTF-8"));
+        out.flush();
     }
     private String readStream(InputStream is) throws IOException {
         StringBuilder sb = new StringBuilder();
