@@ -1,6 +1,7 @@
 package com.example.qloc.model.communication;
 
 import android.location.Location;
+import android.util.Log;
 
 import com.example.qloc.controller.json_utils.JsonTool;
 import com.example.qloc.controller.json_utils.MyLittleSerializer;
@@ -36,6 +37,7 @@ public class HttpFacade {
             answer = conn.sendAndRecive(JsonTool.rangeQuery(currentLocation));
         } catch (IOException e) {
         }
+        Log.d("Facade", answer);
 
 
         ArrayList<WayPoint> wpList = null;

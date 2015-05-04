@@ -1,4 +1,7 @@
 package com.example.qloc.model.communication;
+
+import android.util.Log;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -14,7 +17,7 @@ import java.net.URL;
  */
 public class HttpConnection {
     private URL url;
-    private final String URL_NAME = "http://172.25.1.119:3000/";
+    private final String URL_NAME = "192.168.1.73";
     private HttpURLConnection connection;
     private static HttpConnection instance;
     public static HttpConnection getInstance(){
@@ -28,12 +31,15 @@ public class HttpConnection {
         return instance;
     }
     private HttpConnection() throws MalformedURLException {
-        this.url = new URL(URL_NAME);
+        this.url = new URL("http", "192.168.1.73", 3000,"");
+        Log.d("Http", url.toString());
     }
     public String sendAndRecive(String request) {
         String response = null;
         try {
             connection = (HttpURLConnection) url.openConnection();
+            Log.d("Http", connection.toString());
+            connection.setRequestMethod("POST");
             connection.setDoOutput(true);
             connection.setChunkedStreamingMode(0);
 //deactivate that servers use gzip compression
