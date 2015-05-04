@@ -31,7 +31,7 @@ public class Navigation2Activity extends Activity {
                                                  LayoutParams.WRAP_CONTENT,
                                                     0.5f));
 
-        listenerManager = new ListenerManager(sensorManager, compass);
+        listenerManager = new ListenerManager(sensorManager, compass, null, null, null);
     }
 
     @Override

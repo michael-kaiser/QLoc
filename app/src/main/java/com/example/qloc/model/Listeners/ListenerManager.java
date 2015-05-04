@@ -5,32 +5,53 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.AsyncTask;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
+import com.example.qloc.model.GPSTracker;
+import com.example.qloc.model.WayPoint;
 
 
 /**
  * Created by Alex on 01.04.2015.
  */
-public class ListenerManager implements SensorEventListener {
+public class ListenerManager implements SensorEventListener{
     private SensorManager sensorManager;
     private updateSensorListener updateSensorMagnetic;
     private updateSensorListener updateSensorAccelerator;
 
-    float[] R = new float[9];
-    float[] I = null;
-    float[] newRadians = new float[3];
+    public ImageView getCompass() {
+        return compass;
+    }
+
     float currentDegree = 0f;
+
+    public float getCurrentDegree() {
+        return currentDegree;
+    }
+
+    public synchronized void setCurrentDegree(float currentDegree) {
+        this.currentDegree = currentDegree;
+    }
+
     private ImageView compass;
 
 
-    public ListenerManager(SensorManager manager, ImageView compass) {
+    private GPSTracker tracker;
+    private WayPoint start;
+    private ImageView outer;
+
+    public ListenerManager(SensorManager manager, ImageView compass, ImageView pointer, WayPoint p, GPSTracker gps) {
         sensorManager = manager;
         updateSensorMagnetic = new updateSensorListener();
         updateSensorAccelerator = new updateSensorListener();
         this.compass = compass;
+        this.outer = pointer;
+        this.start = p;
+        this.tracker=gps;
+
     }
 
     /**
@@ -77,21 +98,32 @@ public class ListenerManager implements SensorEventListener {
             updateSensorAccelerator.resetUpdate();
             updateSensorMagnetic.resetUpdate();
             //DO do make rotation in a thread
-            boolean success = SensorManager.getRotationMatrix(R, I, updateSensorAccelerator.getValues(), updateSensorMagnetic.getValues());
-            if(success){
-                SensorManager.getOrientation(R, newRadians);
-                float azimuth = (float) Math.toDegrees(newRadians[0]);
-                RotateAnimation rotateAnimation = new RotateAnimation(
-                        currentDegree, -azimuth,
-                        Animation.RELATIVE_TO_SELF, 0.5f,
-                        Animation.RELATIVE_TO_SELF, 0.5f
-                );
-                rotateAnimation.setDuration(250);
-                //rotationAnimation.setFillAfter(true);
-                compass.startAnimation(rotateAnimation);
-                currentDegree = -azimuth;
-            }
+            new AsyncCompasComputation(this).execute(new SensorDataContainer(updateSensorAccelerator.getValues(), updateSensorMagnetic.getValues()));
+
         }
     }
+
+    public float calculateHeading(){
+        float helpDegree;
+        while(tracker.getLocation()==null){
+        }
+        float bea = tracker.getLocation().bearingTo(start);
+        float dir = bea;
+        if (currentDegree <0){
+            helpDegree=360+currentDegree;
+        }else{
+            helpDegree=currentDegree;
+        }
+        if(bea<0){
+            dir=360+bea;
+        }
+        dir = (helpDegree-dir);
+
+        return dir;
+
+
+
+    }
+
 
 }
