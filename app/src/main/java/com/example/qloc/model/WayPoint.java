@@ -4,8 +4,8 @@ import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.qloc.controller.JsonTool;
-import com.example.qloc.controller.MyLittleSerializer;
+import com.example.qloc.controller.json_utils.JsonTool;
+import com.example.qloc.controller.json_utils.MyLittleSerializer;
 import com.example.qloc.model.communication.HttpConnection;
 
 import java.io.IOException;

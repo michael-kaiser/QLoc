@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.qloc" >
-
+    <uses-permission android:name="android.permission.SET_DEBUG_APP"></uses-permission>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -26,15 +26,15 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".controller.PlayGameActivity"
+            android:name=".controller.activities.PlayGameActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".controller.MainScreen">
+            android:parentActivityName=".controller.activities.MainScreen">
         </activity>
         <activity
-            android:name=".controller.QuestionActivity"
+            android:name=".controller.activities.QuestionActivity"
             android:label="@string/title_activity_question"
             android:noHistory="true"
-            android:parentActivityName=".controller.NavigationActivity">
+            android:parentActivityName=".controller.activities.NavigationActivity">
         </activity>
 
         <meta-data
@@ -45,13 +45,13 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".controller.MapsActivity"
+            android:name=".controller.activities.MapsActivity"
             android:label="@string/title_activity_maps"
-            android:parentActivityName=".controller.MainScreen"
+            android:parentActivityName=".controller.activities.MainScreen"
             android:noHistory="true">
         </activity>
         <activity
-            android:name=".controller.MainScreen"
+            android:name=".controller.activities.MainScreen"
             android:label="@string/title_activity_main_screen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,15 +60,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".controller.NavigationActivity"
+            android:name=".controller.activities.NavigationActivity"
             android:label="@string/title_activity_navigation"
-            android:parentActivityName=".controller.PlayGameActivity">
+            android:parentActivityName=".controller.activities.PlayGameActivity">
         </activity>
 
         <activity
-            android:name=".controller.Navigation_Activity_neu"
+            android:name=".controller.activities.Navigation_Activity_neu"
             android:label="@string/title_activity_navigation_neu"
-            android:parentActivityName=".controller.PlayGameActivity">
+            android:parentActivityName=".controller.activities.PlayGameActivity">
         </activity>
     </application>
 

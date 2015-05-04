@@ -1,4 +1,4 @@
-package com.example.qloc.controller;
+package com.example.qloc.controller.fragments;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.qloc.R;
+import com.example.qloc.controller.activities.QuestionActivity;
 
 /**
  * Created by michael on 31.03.15.

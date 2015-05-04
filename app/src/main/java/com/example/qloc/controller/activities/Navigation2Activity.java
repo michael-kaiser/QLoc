@@ -1,4 +1,4 @@
-package com.example.qloc.controller;
+package com.example.qloc.controller.activities;
 
 
 import android.app.Activity;

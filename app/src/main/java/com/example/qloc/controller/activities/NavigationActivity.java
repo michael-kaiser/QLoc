@@ -1,4 +1,4 @@
-package com.example.qloc.controller;
+package com.example.qloc.controller.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qloc.R;
+import com.example.qloc.controller.fragments.StatusFragment;
 import com.example.qloc.model.DisableEnableGPSListener;
 import com.example.qloc.model.GPSTracker;
 import com.example.qloc.model.WayPoint;
@@ -126,6 +127,7 @@ public class NavigationActivity extends Activity {
 
         }
     }
+
     private class MyLocationListener extends DisableEnableGPSListener {
         /*variable to check i the user is in a QuestionActivity then he shouldn't get the question again
            the variable is controlled by the onStop() and onRestart() of the Activity

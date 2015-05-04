@@ -4,6 +4,7 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.qloc.R;
@@ -21,6 +22,7 @@ public final class GPSTracker extends DisableEnableGPSListener{
     private boolean isNetworkEnabled;
     private static GPSTracker instance = null;
     private Location currentLocation;
+    private boolean canGetLocation;
 
     private GPSTracker(Context context) {
         this.context = context;
@@ -45,34 +47,47 @@ public final class GPSTracker extends DisableEnableGPSListener{
         if(!isGPSEnabled && !isNetworkEnabled){
             Toast.makeText(this.context, R.string.no_location_service_available, Toast.LENGTH_LONG).show();
             currentProvider = NO_PROVIDER;
+            this.canGetLocation = false;
         }
-        else
-        {
-            if(isGPSEnabled){
-                if(!enableGPS()){
-                    if(isNetworkEnabled){
-                        if(enableNetwork()){
-                            currentProvider = LocationManager.NETWORK_PROVIDER;
-                        }else{
-                            currentProvider = NO_PROVIDER;
-                        }
-                    }else{
-                        currentProvider = NO_PROVIDER;
+        else {
+
+            this.canGetLocation = true;
+            if (isNetworkEnabled) {
+                currentLocation = null;
+                locationManager.requestLocationUpdates(
+                        LocationManager.NETWORK_PROVIDER,
+                        MIN_TIME_BW_UPDATES,
+                        MIN_DIST_CHANGE_FOR_UPDATES, this);
+                Log.d(TAG, "Network");
+                if (locationManager != null) {
+                    currentLocation = locationManager
+                            .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    if (currentLocation != null) {
+                        currentLocation.setLatitude(currentLocation.getLatitude());
+                        currentLocation.setLongitude(currentLocation.getLongitude());
                     }
-                }else{
-                    currentProvider = LocationManager.GPS_PROVIDER;
                 }
-            }else{
-                if(isNetworkEnabled){
-                    if(enableNetwork()){
-                        currentProvider = LocationManager.NETWORK_PROVIDER;
-                    }else{
-                        currentProvider = NO_PROVIDER;
+            }
+            // if GPS Enabled get lat/long using GPS Services
+            if (isGPSEnabled) {
+                currentLocation = null;
+                if (currentLocation == null) {
+                    locationManager.requestLocationUpdates(
+                            LocationManager.GPS_PROVIDER,
+                            MIN_TIME_BW_UPDATES,
+                            MIN_DIST_CHANGE_FOR_UPDATES, this);
+                    Log.d(TAG, "GPS Enabled");
+                    if (locationManager != null) {
+                        currentLocation = locationManager
+                                .getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        if (currentLocation != null) {
+                            currentLocation.setLatitude(currentLocation.getLatitude());
+                            currentLocation.setLongitude(currentLocation.getLongitude());
+                        }
                     }
                 }
             }
         }
-
     }
     public Location getLocation(){
         return currentLocation;

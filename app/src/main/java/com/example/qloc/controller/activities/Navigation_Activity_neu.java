@@ -1,4 +1,4 @@
-package com.example.qloc.controller;
+package com.example.qloc.controller.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,6 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qloc.R;
+import com.example.qloc.controller.json_utils.JsonTool;
+import com.example.qloc.controller.json_utils.MyLittleSerializer;
+import com.example.qloc.controller.fragments.StatusFragment;
 import com.example.qloc.model.BitMapWorkerTask;
 import com.example.qloc.model.DisableEnableGPSListener;
 import com.example.qloc.model.GPSTracker;
@@ -238,8 +241,11 @@ public class Navigation_Activity_neu extends Activity {
 
     private WayPoint getWayPoint(){
         WayPoint nextWaypoint = null;
+        //The first time you get the next waypoint from the PlayGameActivity
         if(nextWaypointId.equals("unset")){
             nextWaypoint = getIntent().getParcelableExtra(PlayGameActivity.KEY);
+
+        //otherwise request next from server
         }else{
             String temp = null;
             try {
@@ -255,6 +261,7 @@ public class Navigation_Activity_neu extends Activity {
                 nextWaypoint = null;
             }
 
+            //there is no next waypoint
             if(nextWaypoint == null){
                            /*
             TODO make usefull stuff when over

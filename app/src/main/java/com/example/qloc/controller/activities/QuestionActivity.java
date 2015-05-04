@@ -1,4 +1,4 @@
-package com.example.qloc.controller;
+package com.example.qloc.controller.activities;
 
 import android.animation.Animator;
 import android.app.Activity;
@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.qloc.R;
+import com.example.qloc.controller.fragments.QuestionFragment;
+import com.example.qloc.controller.fragments.StatusFragment;
 import com.example.qloc.model.WayPoint;
 
 /**
@@ -21,7 +23,7 @@ import com.example.qloc.model.WayPoint;
  *
  * @author michael
  */
-public class QuestionActivity extends Activity implements QuestionFragment.QuestionDeliverer, StatusFragment.StatusDeliverer{
+public class QuestionActivity extends Activity implements QuestionFragment.QuestionDeliverer, StatusFragment.StatusDeliverer {
 
     private final String TAG = "QuestionActicity";
     private FragmentManager fm;
@@ -51,29 +53,6 @@ public class QuestionActivity extends Activity implements QuestionFragment.Quest
         ft = fm.beginTransaction();
         ft.add(R.id.question_fragment, new QuestionFragment());
         ft.commit();
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_question, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public boolean checkAnswer(String answer) {

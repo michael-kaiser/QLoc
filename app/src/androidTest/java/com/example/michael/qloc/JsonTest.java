@@ -2,7 +2,7 @@ package com.example.michael.qloc;
 
 import android.location.Location;
 
-import com.example.qloc.controller.MyLittleSerializer;
+import com.example.qloc.controller.json_utils.MyLittleSerializer;
 import com.example.qloc.model.WayPoint;
 import com.fasterxml.jackson.core.JsonProcessingException;
 

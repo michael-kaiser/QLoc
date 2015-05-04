@@ -1,4 +1,4 @@
-package com.example.qloc.controller;
+package com.example.qloc.controller.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;

@@ -1,4 +1,4 @@
-package com.example.qloc.controller;
+package com.example.qloc.controller.json_utils;
 
 import android.location.Location;
 import android.util.Log;

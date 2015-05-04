@@ -1,16 +1,16 @@
-package com.example.qloc.controller;
+package com.example.qloc.controller.json_utils;
 
 import com.example.qloc.model.Answer;
 import com.example.qloc.model.RoutesList;
 import com.example.qloc.model.RoutesNext;
 import com.example.qloc.model.WayPoint;
 import com.example.qloc.model.WayPointDataCont;
-//import com.example.qloc.model.WayPointList2;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+
+//import com.example.qloc.model.WayPointList2;
 
 /**
  * Created by uli on 17.04.15.
