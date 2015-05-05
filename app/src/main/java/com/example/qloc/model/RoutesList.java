@@ -35,7 +35,7 @@ public class RoutesList {
             Location loc = new Location(" ");
             loc.setLatitude(r.getLocation().get(0));
             loc.setLongitude(r.getLocation().get(1));
-            WayPoint temp = new WayPoint(loc, r.getId(), r.getName(), r.getDescription(), "nix", "ein", "zwei","drei", "vier", "id");
+            WayPoint temp = new WayPoint(loc, r.getId(), r.getName(), r.getDescription(), "dummy", "dummy", "dummy","dummy", "", r.getId());
             wp.add(temp);
         }
         return wp;

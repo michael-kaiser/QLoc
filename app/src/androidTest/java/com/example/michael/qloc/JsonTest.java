@@ -19,6 +19,7 @@ public class JsonTest extends TestCase {
         wp.setLatitude(47.268646d);
         wp.setLongitude(11.393268d);
         wp. setNextId("next");
+
     }
     public void testAdd() throws JsonProcessingException {
         //assertEquals(MyLittleSerializer.toJSON(wp),"Somethubg");
