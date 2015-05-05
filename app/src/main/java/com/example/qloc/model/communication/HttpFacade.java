@@ -49,12 +49,12 @@ public class HttpFacade {
         return wpList;
     }
 
-    public WayPoint getNextWayPoint(WayPoint currentWayPoint){
+    public WayPoint getNextWayPoint(String nextWayPointID){
         String msg = null;
         WayPoint nextWayPoint = null;
 
         try {
-            msg = JsonTool.requestNext(currentWayPoint.getId());
+            msg = JsonTool.requestNext(nextWayPointID);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -62,10 +62,28 @@ public class HttpFacade {
         try {
             nextWayPoint = MyLittleSerializer.JSONStringToWayPoint(conn.sendAndRecive(msg));
         } catch (IOException e) {
-            e.printStackTrace();
+            nextWayPoint = null;
         }
 
         return nextWayPoint;
+    }
+
+    public boolean checkAnswer(String givenAnswer){
+        String temp = null;
+        boolean response = true;
+
+        try {
+            temp = JsonTool.sendAnswer(givenAnswer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        conn.sendAndRecive(temp);
+        try {
+            response = MyLittleSerializer.EvaluateAnswer(temp);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return response;
     }
 
 }

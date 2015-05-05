@@ -16,6 +16,7 @@ import com.example.qloc.model.GPSTracker;
 import com.example.qloc.model.RowItem;
 import com.example.qloc.model.WayPoint;
 import com.example.qloc.model.communication.HttpFacade;
+import com.example.qloc.model.mockup.Mockup;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,7 +68,8 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
         WayPoint wp = new WayPoint(((RowItem) parent.getAdapter().getItem(position)).getWaypoint());
         Log.d(TAG+"test",wp.getName() + wp.getDesc() + wp.getAnswer4());
 
-        WayPoint nextWayPoint = httpFacade.getNextWayPoint(wp);
+        //TODO change to server
+        WayPoint nextWayPoint = Mockup.getNextWayPoint(wp.getId());
         Log.d(TAG+"test",nextWayPoint.getName() + nextWayPoint.getDesc() + nextWayPoint.getAnswer4());
 
         i.putExtra(KEY, nextWayPoint); //give the waypoint to the next Activity
@@ -80,7 +82,8 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
     public void onClickStartButton(View v){
         Intent i = new Intent(this,Navigation_Activity_neu.class);
         WayPoint wp = new WayPoint(rowItems.get(0).getWaypoint());
-        WayPoint nextWayPoint = httpFacade.getNextWayPoint(wp);
+        //TODO change to server
+        WayPoint nextWayPoint = Mockup.getNextWayPoint(wp.getId());
         Log.d(TAG+"test",nextWayPoint.getName() + nextWayPoint.getDesc() + nextWayPoint.getAnswer4());
         i.putExtra(KEY, nextWayPoint); //give the waypoint to the next Activity
         startActivity(i);
@@ -116,7 +119,8 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
         }
         Log.d(TAG, "got location");
 
-        wpList = httpFacade.getWayPointList(currentLocation);
+        //TODO change to server !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        wpList = Mockup.getWayPointList(currentLocation);
         rowItems = new ArrayList<>();
 
         for (WayPoint wp : wpList) {

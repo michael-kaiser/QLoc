@@ -4,11 +4,9 @@ import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.qloc.controller.json_utils.JsonTool;
-import com.example.qloc.controller.json_utils.MyLittleSerializer;
-import com.example.qloc.model.communication.HttpConnection;
+import com.example.qloc.model.communication.HttpFacade;
+import com.example.qloc.model.mockup.Mockup;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -172,22 +170,10 @@ public class WayPoint extends Location implements Parcelable{
 
     //TODO send answer request
     public boolean checkAnswer(String givenAnswer){
-        HttpConnection conn = HttpConnection.getInstance();
-        String temp = null;
-        boolean response = true;
+        HttpFacade facade = HttpFacade.getInstance();
 
-        try {
-            temp = JsonTool.sendAnswer(givenAnswer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        conn.sendAndRecive(temp);
-        try {
-            response = MyLittleSerializer.EvaluateAnswer(temp);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return response;
+        //TODO change to server!!!!!!!!!!!!!!!!!!!!!
+        return Mockup.checkAnswer(givenAnswer);
     }
 
     public String getDesc() {
