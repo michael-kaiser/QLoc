@@ -19,7 +19,7 @@ import com.example.qloc.controller.fragments.StatusFragment;
 import com.example.qloc.model.DisableEnableGPSListener;
 import com.example.qloc.model.GPSTracker;
 import com.example.qloc.model.WayPoint;
-import com.example.qloc.model.WayPointList;
+
 
 /**
  * This activity shows the compass and starts QuestionActivities when waypoints are reached
@@ -64,7 +64,7 @@ public class NavigationActivity extends Activity {
         degree =0;
 
 
-        start = getWayPoint();
+        start = new WayPoint(new Location(""));
         Log.d(TAG,start.getName());
         mylistener = new MyLocationListener();
         tracker.setListener(mylistener);
@@ -216,34 +216,14 @@ public class NavigationActivity extends Activity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        start = getWayPoint();
+        start = new WayPoint(new Location(""));
         mylistener.setInQuestion(false);
         mSensorManager.registerListener(mysensor,accelerometer,1000);
         mSensorManager.registerListener(mysensor,magnetometer,1000);
         tracker.startTracking();
     }
 
-    private WayPoint getWayPoint(){
-        WayPoint nextWaypoint = null;
-        if(nextWaypointId.equals("unset")){
-            nextWaypoint = getIntent().getParcelableExtra(PlayGameActivity.KEY);
-        }else if(nextWaypointId.equals("finish")){
-            /*
-            TODO make usefull stuff when over
-             */
-            Log.d(TAG,"finishing");
-            tracker.stopTracking();
-            mSensorManager.unregisterListener(mysensor,accelerometer);
-            mSensorManager.unregisterListener(mysensor,magnetometer);
-            this.finish();
-        }else{
-            nextWaypoint = WayPointList.getWaypointById(nextWaypointId);
-        }
-        if (nextWaypoint != null) {
-            Log.d(TAG, "got waypoint: " + nextWaypoint.toString());
-        }
-        return nextWaypoint;
-    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
