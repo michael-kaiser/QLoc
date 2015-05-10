@@ -54,7 +54,7 @@ public class WayPointDataCont {
         this.question = wp.getQuestion();
 
         this.answers[0]=wp.getAnswer01();
-        this.answers[1]=wp.getAnswer1();
+        this.answers[1]=wp.getAnswer2();
         this.answers[2]=wp.getAnswer3();
         this.answers[3]=wp.getAnswer4();
 
