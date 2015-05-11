@@ -34,7 +34,7 @@
             android:name=".controller.activities.QuestionActivity"
             android:label="@string/title_activity_question"
             android:noHistory="true"
-            android:parentActivityName=".controller.activities.NavigationActivity">
+            android:parentActivityName=".controller.activities.Navigation_Activity_neu">
         </activity>
 
         <meta-data
@@ -58,11 +58,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".controller.activities.NavigationActivity"
-            android:label="@string/title_activity_navigation"
-            android:parentActivityName=".controller.activities.PlayGameActivity">
         </activity>
 
         <activity

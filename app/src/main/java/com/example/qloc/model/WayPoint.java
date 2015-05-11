@@ -5,7 +5,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.example.qloc.model.communication.HttpFacade;
-import com.example.qloc.model.mockup.Mockup;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -173,7 +172,7 @@ public class WayPoint extends Location implements Parcelable{
         HttpFacade facade = HttpFacade.getInstance();
 
         //TODO change to server!!!!!!!!!!!!!!!!!!!!!
-        return Mockup.checkAnswer(givenAnswer);
+        return facade.checkAnswer(givenAnswer);
     }
 
     public String getDesc() {

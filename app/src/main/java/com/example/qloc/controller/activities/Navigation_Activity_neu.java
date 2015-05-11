@@ -24,7 +24,6 @@ import com.example.qloc.model.DisableEnableGPSListener;
 import com.example.qloc.model.GPSTracker;
 import com.example.qloc.model.WayPoint;
 import com.example.qloc.model.communication.HttpFacade;
-import com.example.qloc.model.mockup.Mockup;
 
 /**
  * This activity shows the compass and starts QuestionActivities when waypoints are reached
@@ -73,8 +72,7 @@ public class Navigation_Activity_neu extends Activity {
 
 
         start = getWayPoint();
-        loc_name.setText(start.getName());
-        Log.d(TAG,start.getName());
+        loc_name.setText(start.getDesc());
         mylistener = new MyLocationListener();
         tracker.setListener(mylistener);
         tracker.init();
@@ -230,7 +228,7 @@ public class Navigation_Activity_neu extends Activity {
         //otherwise request next from server
         }else{
             //TODO change to server
-            nextWaypoint = Mockup.getNextWayPoint(nextWaypointId);
+            nextWaypoint = facade.getNextWayPoint(nextWaypointId);
 
 
             //there is no next waypoint

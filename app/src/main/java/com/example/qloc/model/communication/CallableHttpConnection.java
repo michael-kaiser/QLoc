@@ -12,34 +12,28 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.Callable;
+
 /**
  * Created by Alex on 26.04.2015.
  */
-public class HttpConnection{
-    private URL url;
-    private final String URL_NAME = "138.232.236.5/cgi-bin/do.cgi";
-    //private HttpURLConnection connection;
-    private static HttpConnection instance;
-    public static HttpConnection getInstance(){
-        if(instance == null){
-            try {
-                return new HttpConnection();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-        }
-        return instance;
+
+public class CallableHttpConnection implements Callable<String> {
+    private final String URL_NAME = "192.168.1.87";
+
+    private final URL url;
+    private final String request;
+
+    public CallableHttpConnection(String request) throws MalformedURLException {
+        url = new URL("http", URL_NAME, 3000,"");
+        this.request =request;
     }
-    private HttpConnection() throws MalformedURLException {
-        this.url = new URL("http", "192.168.1.73", 3000,"");
-        Log.d("Http", url.toString());
-    }
-    public String sendAndRecive(String request) {
+
+    public String call() {
         String response = null;
         if(request == null) return null;
         HttpURLConnection connection = null;
         try {
-
             connection = (HttpURLConnection) url.openConnection();
             Log.d("Http", connection.toString());
             connection.setRequestMethod("POST");
@@ -61,6 +55,7 @@ public class HttpConnection{
             if(connection != null)
                 connection.disconnect();
         }
+
         return response;
     }
     private void writeStream(OutputStream out, String request)throws IOException{
@@ -77,4 +72,5 @@ public class HttpConnection{
         is.close();
         return sb.toString();
     }
+
 }

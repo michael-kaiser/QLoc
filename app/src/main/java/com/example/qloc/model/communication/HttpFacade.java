@@ -5,17 +5,21 @@ import android.util.Log;
 
 import com.example.qloc.controller.json_utils.JsonTool;
 import com.example.qloc.controller.json_utils.MyLittleSerializer;
+import com.example.qloc.model.SaveRoute;
+import com.example.qloc.model.ThreadControl.NetworkExecuter;
 import com.example.qloc.model.WayPoint;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by michael on 03.05.15.
  */
 public class HttpFacade {
-
+    private NetworkExecuter<String> executer = new NetworkExecuter<String>();
     private HttpConnection conn;
     private static HttpFacade instance = null;
 
@@ -34,8 +38,10 @@ public class HttpFacade {
     public List<WayPoint> getWayPointList(Location currentLocation){
         String answer = null;
         try {
-            answer = conn.sendAndRecive(JsonTool.rangeQuery(currentLocation));
-        } catch (IOException e) {
+            getResponseFromServer("{\"reset\": true}");
+            answer = getResponseFromServer((JsonTool.rangeQuery(currentLocation)));
+        } catch (Exception e) {
+            Log.d("Facade", e.getMessage());
         }
         Log.d("Facade", answer);
 
@@ -60,12 +66,19 @@ public class HttpFacade {
         }
 
         try {
-            nextWayPoint = MyLittleSerializer.JSONStringToWayPoint(conn.sendAndRecive(msg));
+            String response = getResponseFromServer(msg);
+            Log.d("Test", " " + response);
+            nextWayPoint = MyLittleSerializer.JSONStringToWayPoint(response);
         } catch (IOException e) {
             nextWayPoint = null;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
         nextWayPoint.setNextId(nextWayPointID);
         nextWayPoint.setId(nextWayPointID);
+        Log.d("id", nextWayPointID + " ");
         return nextWayPoint;
     }
 
@@ -75,16 +88,29 @@ public class HttpFacade {
 
         try {
             temp = JsonTool.sendAnswer(givenAnswer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        conn.sendAndRecive(temp);
-        try {
+
+            temp = getResponseFromServer(temp);
             response = MyLittleSerializer.EvaluateAnswer(temp);
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
             e.printStackTrace();
         }
         return response;
     }
 
+    private String getResponseFromServer(String request) throws MalformedURLException, ExecutionException, InterruptedException {
+        String response;
+        executer.execute(new CallableHttpConnection(request));
+        response = executer.getResult();
+        return response;
+    }
+
+    public boolean saveRoute(SaveRoute route){
+        //TODO implement
+        Log.d("Http", route.toString() + " " + route.size());
+        return false;
+    }
 }

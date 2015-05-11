@@ -7,8 +7,6 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -68,8 +66,8 @@ public class QuestionActivity extends Activity implements QuestionFragment.Quest
      * gets the question
      */
     public WayPoint getWaypoint() {
-        Log.d(TAG, "got waypoint: " + (getIntent().getParcelableExtra(NavigationActivity.KEY)).toString());
-        return (WayPoint) getIntent().getParcelableExtra(NavigationActivity.KEY);
+        Log.d(TAG, "got waypoint: " + (getIntent().getParcelableExtra(Navigation_Activity_neu.KEY)).toString());
+        return (WayPoint) getIntent().getParcelableExtra(Navigation_Activity_neu.KEY);
     }
 
 
