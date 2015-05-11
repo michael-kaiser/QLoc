@@ -1,5 +1,7 @@
 package com.example.qloc.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 
 /**
@@ -7,5 +9,6 @@ import java.util.ArrayList;
  */
 public class CreatedRoute {
 
+    @JsonProperty("waypoints")
     private ArrayList<WayPoint> waypoints;
 }

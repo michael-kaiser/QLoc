@@ -13,19 +13,16 @@ import java.io.IOException;
 
 public class JsonTest5 extends TestCase {
 
-    public void testAdd() throws JsonProcessingException {
-        String s = "{\"waypoint\":{\"answers\":[\"1\",\"2\",\"3\",\"-6\"],\"location\":[0.0,0.0],\"hint\":\"\",\"question\":\"1 + 1?\"}}";
+    public void testAdd() throws IOException {
+        String s ="{\"waypoint\":{\"answers\":[\"A\",\"B\",\"C\",\"D\"],\"location\":[47.264077,11.345851],\"hint\":\"mein Hint\",\"question\":\"Zeichensäle\"}}";
 
-        try {
-            assertEquals(MyLittleSerializer.JSONStringToRoutesList(s).toWayPointList().get(0).toString(), "nix");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+            assertEquals(MyLittleSerializer.JSONStringToWayPoint(s).toString(), "nix");
     }
 
     public static void main(String ... args) {
         TestCase test = new JsonTest5() {
-            public void runTest() {
+            public void runTest() throws IOException {
                 try {
                     testAdd();
                 } catch (JsonProcessingException e) {

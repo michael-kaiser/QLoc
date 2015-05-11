@@ -14,7 +14,7 @@ import java.io.IOException;
 public class JsonTest4 extends TestCase {
 
     public void testAdd() throws JsonProcessingException {
-        String s = "{\"evaluation\":true}";
+        String s = "{\"evaluation\":false}";
 
         try {
             assertTrue(MyLittleSerializer.EvaluateAnswer(s));
