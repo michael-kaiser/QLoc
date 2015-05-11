@@ -71,7 +71,6 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
         //TODO change to server
         WayPoint nextWayPoint = Mockup.getNextWayPoint(wp.getId());
         Log.d(TAG+"test",nextWayPoint.getName() + nextWayPoint.getDesc() + nextWayPoint.getAnswer4());
-
         i.putExtra(KEY, nextWayPoint); //give the waypoint to the next Activity
         startActivity(i);
     }

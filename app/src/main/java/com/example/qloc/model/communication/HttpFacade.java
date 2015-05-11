@@ -64,7 +64,8 @@ public class HttpFacade {
         } catch (IOException e) {
             nextWayPoint = null;
         }
-
+        nextWayPoint.setNextId(nextWayPointID);
+        nextWayPoint.setId(nextWayPointID);
         return nextWayPoint;
     }
 
