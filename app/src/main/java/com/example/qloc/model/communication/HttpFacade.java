@@ -76,6 +76,7 @@ public class HttpFacade {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+        nextWayPoint.setName(nextWayPoint.getDesc());
         nextWayPoint.setNextId(nextWayPointID);
         nextWayPoint.setId(nextWayPointID);
         Log.d("id", nextWayPointID + " ");

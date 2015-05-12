@@ -42,4 +42,16 @@ public class SaveRoute {
     public int size(){
         return wayPointList.size();
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public List<ServerWayPoint> getWayPointList() {
+        return wayPointList;
+    }
 }

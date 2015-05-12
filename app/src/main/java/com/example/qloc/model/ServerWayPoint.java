@@ -24,4 +24,20 @@ public class ServerWayPoint {
     public Location getLocation() {
         return location;
     }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public String getHint() {
+        return hint;
+    }
+
+    public String[] getFalseAnswers() {
+        return falseAnswers;
+    }
+
+    public String getAnswerTrue() {
+        return answerTrue;
+    }
 }
