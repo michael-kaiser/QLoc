@@ -1,6 +1,7 @@
 package com.example.qloc.model.communication;
 
 import android.util.Log;
+import android.webkit.CookieManager;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -12,6 +13,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
@@ -35,6 +37,12 @@ public class CallableHttpConnection implements Callable<String> {
         if(request == null) return null;
         HttpURLConnection connection = null;
         try {
+            // Set cookies in requests
+            CookieManager cookieManager = CookieManager.getInstance();
+            String cookie = cookieManager.getCookie(connection.getURL().toString());
+            if (cookie != null) {
+                connection.setRequestProperty("Cookie", cookie);
+            }
             connection = (HttpURLConnection) url.openConnection();
             Log.d("Http", connection.toString());
             connection.setRequestMethod("POST");
@@ -45,7 +53,13 @@ public class CallableHttpConnection implements Callable<String> {
             OutputStream out = new BufferedOutputStream(connection.getOutputStream());
             writeStream(out, request);
             out.close();
-
+            // Get cookies from responses and save into the cookie manager
+            List<String> cookieList = connection.getHeaderFields().get("Set-Cookie");
+            if (cookieList != null) {
+                for (String cookieTemp : cookieList) {
+                    cookieManager.setCookie(connection.getURL().toString(), cookieTemp);
+                }
+            }
             Log.d("http", request.toString());
             status  = connection.getResponseCode();
             InputStream in;
@@ -71,7 +85,7 @@ public class CallableHttpConnection implements Callable<String> {
     }
     private String readStream(InputStream is) throws IOException {
         StringBuilder sb = new StringBuilder();
-//check character size of longest response
+        //check character size of longest response
         BufferedReader r = new BufferedReader(new InputStreamReader(is),1000);
         for (String line = r.readLine(); line != null; line =r.readLine()){
             sb.append(line);

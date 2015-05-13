@@ -33,6 +33,7 @@ import com.example.qloc.model.communication.HttpFacade;
  * TODO add compass
  */
 public class Navigation_Activity_neu extends Activity {
+    private static int DELAY_SENSOR = 10000;
 
     private ImageView compass;
     private TextView loc_name;
@@ -94,8 +95,8 @@ public class Navigation_Activity_neu extends Activity {
             startActivity(intent);
         }
 
-        mSensorManager.registerListener(mysensor, accelerometer, 10000);
-        mSensorManager.registerListener(mysensor, magnetometer, 10000);
+        mSensorManager.registerListener(mysensor, accelerometer, DELAY_SENSOR);
+        mSensorManager.registerListener(mysensor, magnetometer, DELAY_SENSOR);
 
     }
 
@@ -128,7 +129,7 @@ public class Navigation_Activity_neu extends Activity {
                     );
                     rotateAnimation.reset();
                     rotateAnimation.setInterpolator(new LinearInterpolator());
-                    rotateAnimation.setDuration(200);
+                    rotateAnimation.setDuration(DELAY_SENSOR);
                     rotateAnimation.setFillAfter(true);
                     compass.startAnimation(rotateAnimation);
                     currentDegree = -azimut;
@@ -141,7 +142,7 @@ public class Navigation_Activity_neu extends Activity {
                     );
                     rotateAnimation2.reset();
                     rotateAnimation2.setInterpolator(new LinearInterpolator());
-                    rotateAnimation2.setDuration(200);
+                    rotateAnimation2.setDuration(DELAY_SENSOR);
                     rotateAnimation2.setFillAfter(true);
                     waypoint.startAnimation(rotateAnimation2);
                     currentDegreeWaypoint = goalDegree;
@@ -217,8 +218,8 @@ public class Navigation_Activity_neu extends Activity {
 
         if(start != null) {
             tracker.startTracking();
-            mSensorManager.registerListener(mysensor,accelerometer,10000);
-            mSensorManager.registerListener(mysensor,magnetometer,10000);
+            mSensorManager.registerListener(mysensor,accelerometer,DELAY_SENSOR);
+            mSensorManager.registerListener(mysensor,magnetometer,DELAY_SENSOR);
             loc_name.setText(start.getName());
         }
     }
