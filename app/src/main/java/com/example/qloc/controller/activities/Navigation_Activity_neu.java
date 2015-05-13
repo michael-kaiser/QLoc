@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
@@ -94,8 +95,8 @@ public class Navigation_Activity_neu extends Activity {
             startActivity(intent);
         }
 
-        mSensorManager.registerListener(mysensor, accelerometer, 1000);
-        mSensorManager.registerListener(mysensor, magnetometer, 1000);
+        mSensorManager.registerListener(mysensor, accelerometer, 10000);
+        mSensorManager.registerListener(mysensor, magnetometer, 10000);
 
     }
 
@@ -128,7 +129,7 @@ public class Navigation_Activity_neu extends Activity {
                     );
                     rotateAnimation.reset();
                     rotateAnimation.setInterpolator(new LinearInterpolator());
-                    rotateAnimation.setDuration(400);
+                    rotateAnimation.setDuration(200);
                     rotateAnimation.setFillAfter(true);
                     compass.startAnimation(rotateAnimation);
                     currentDegree = -azimut;
@@ -141,7 +142,7 @@ public class Navigation_Activity_neu extends Activity {
                     );
                     rotateAnimation2.reset();
                     rotateAnimation2.setInterpolator(new LinearInterpolator());
-                    rotateAnimation2.setDuration(400);
+                    rotateAnimation2.setDuration(200);
                     rotateAnimation2.setFillAfter(true);
                     waypoint.startAnimation(rotateAnimation2);
                     currentDegreeWaypoint = goalDegree;
@@ -217,8 +218,8 @@ public class Navigation_Activity_neu extends Activity {
 
         if(start != null) {
             tracker.startTracking();
-            mSensorManager.registerListener(mysensor,accelerometer,1000);
-            mSensorManager.registerListener(mysensor,magnetometer,1000);
+            mSensorManager.registerListener(mysensor,accelerometer,10000);
+            mSensorManager.registerListener(mysensor,magnetometer,10000);
             loc_name.setText(start.getName());
         }
     }

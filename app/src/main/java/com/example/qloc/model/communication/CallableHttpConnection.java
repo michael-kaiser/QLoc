@@ -30,6 +30,7 @@ public class CallableHttpConnection implements Callable<String> {
     }
 
     public String call() {
+        int status;
         String response = null;
         if(request == null) return null;
         HttpURLConnection connection = null;
@@ -46,7 +47,13 @@ public class CallableHttpConnection implements Callable<String> {
             out.close();
 
             Log.d("http", request.toString());
-            InputStream in = new BufferedInputStream(connection.getInputStream());
+            status  = connection.getResponseCode();
+            InputStream in;
+            if(status != 200){
+                in = new BufferedInputStream(connection.getErrorStream());
+            }else {
+                in = new BufferedInputStream(connection.getInputStream());
+            }
             response = readStream(in);
         } catch (IOException e) {
             Log.d("http", e.getMessage());

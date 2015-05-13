@@ -60,6 +60,13 @@
             </intent-filter>
         </activity>
 
+        //TO TEST
+        <activity
+            android:name=".controller.activities.Navigation2Activity"
+            android:label="@string/title_activity_navigation"
+            android:parentActivityName=".controller.activities.PlayGameActivity">
+        </activity>
+        //TILL
         <activity
             android:name=".controller.activities.Navigation_Activity_neu"
             android:label="@string/title_activity_navigation_neu"
