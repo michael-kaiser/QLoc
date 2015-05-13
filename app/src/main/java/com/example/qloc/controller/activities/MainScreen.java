@@ -10,6 +10,8 @@ import android.widget.ImageView;
 
 import com.example.qloc.R;
 import com.example.qloc.controller.json_utils.JsonTool;
+import com.example.qloc.model.BitMapWorkerTask;
+
 
 import java.io.InputStream;
 
@@ -41,7 +43,7 @@ public class MainScreen extends Activity {
     }
 
     public void loadBitmap(int resId, ImageView imageView) {
-        JsonTool.BitMapWorkerTask task = new JsonTool.BitMapWorkerTask(imageView,this);
+        BitMapWorkerTask task = new BitMapWorkerTask(imageView,this);
         task.execute(resId);
     }
 

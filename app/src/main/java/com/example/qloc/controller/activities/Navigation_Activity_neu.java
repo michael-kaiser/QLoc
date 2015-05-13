@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.example.qloc.R;
 import com.example.qloc.controller.fragments.StatusFragment;
-import com.example.qloc.controller.json_utils.JsonTool;
+import com.example.qloc.model.BitMapWorkerTask;
 import com.example.qloc.model.DisableEnableGPSListener;
 import com.example.qloc.model.GPSTracker;
 import com.example.qloc.model.WayPoint;
@@ -262,7 +262,7 @@ public class Navigation_Activity_neu extends Activity {
     }
 
     public void loadBitmap(int resId, ImageView imageView) {
-        JsonTool.BitMapWorkerTask task = new JsonTool.BitMapWorkerTask(imageView,this);
+        BitMapWorkerTask task = new BitMapWorkerTask(imageView,this);
         task.execute(resId);
     }
 
