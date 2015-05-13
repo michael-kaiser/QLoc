@@ -117,8 +117,6 @@ public class Navigation_Activity_neu extends Activity {
                     SensorManager.getOrientation(R, orientation);
                     azimut = (float) Math.toDegrees(orientation[0]);
                     degree = (int) Math.round(azimut);
-
-
                     float dir = calculateHeading();
                     float goalDegree;
                     RotateAnimation rotateAnimation = new RotateAnimation(
@@ -126,7 +124,8 @@ public class Navigation_Activity_neu extends Activity {
                             Animation.RELATIVE_TO_SELF, 0.5f,
                             Animation.RELATIVE_TO_SELF, 0.5f
                     );
-                    rotateAnimation.setDuration(150);
+                    rotateAnimation.reset();
+                    rotateAnimation.setDuration(400);
                     rotateAnimation.setFillAfter(true);
                     compass.startAnimation(rotateAnimation);
                     currentDegree = -azimut;
@@ -137,7 +136,8 @@ public class Navigation_Activity_neu extends Activity {
                             Animation.RELATIVE_TO_SELF, 0.5f,
                             Animation.RELATIVE_TO_SELF, 0.5f
                     );
-                    rotateAnimation2.setDuration(150);
+                    rotateAnimation2.reset();
+                    rotateAnimation2.setDuration(400);
                     rotateAnimation2.setFillAfter(true);
                     waypoint.startAnimation(rotateAnimation2);
                     currentDegreeWaypoint = goalDegree;
