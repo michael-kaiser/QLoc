@@ -18,16 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qloc.R;
-import com.example.qloc.controller.json_utils.JsonTool;
-import com.example.qloc.controller.json_utils.MyLittleSerializer;
 import com.example.qloc.controller.fragments.StatusFragment;
 import com.example.qloc.model.BitMapWorkerTask;
 import com.example.qloc.model.DisableEnableGPSListener;
 import com.example.qloc.model.GPSTracker;
 import com.example.qloc.model.WayPoint;
-import com.example.qloc.model.communication.HttpConnection;
-
-import java.io.IOException;
+import com.example.qloc.model.communication.HttpFacade;
 
 /**
  * This activity shows the compass and starts QuestionActivities when waypoints are reached
@@ -55,7 +51,7 @@ public class Navigation_Activity_neu extends Activity {
     public static final int REQUEST_ID_NEXT = 1;
     private String nextWaypointId = "unset";
     private GPSTracker tracker = GPSTracker.getInstance(this);
-    private HttpConnection conn = HttpConnection.getInstance();
+    private HttpFacade facade = HttpFacade.getInstance();
 
 
     @Override
@@ -65,6 +61,7 @@ public class Navigation_Activity_neu extends Activity {
         //override animation when changing to this activity
         overridePendingTransition(R.anim.pull_in_from_right, R.anim.pull_out_to_left);
         setContentView(R.layout.activity_navigation_new);
+        facade = HttpFacade.getInstance();
         background = (ImageView)findViewById(R.id.background_compass);
         loadBitmap(R.drawable.back_jpeg,background);
         distance = (TextView) findViewById(R.id.txt_distance);
@@ -75,8 +72,7 @@ public class Navigation_Activity_neu extends Activity {
 
 
         start = getWayPoint();
-        loc_name.setText(start.getName());
-        Log.d(TAG,start.getName());
+        loc_name.setText(start.getDesc());
         mylistener = new MyLocationListener();
         tracker.setListener(mylistener);
         tracker.init();
@@ -121,29 +117,30 @@ public class Navigation_Activity_neu extends Activity {
                     SensorManager.getOrientation(R, orientation);
                     azimut = (float) Math.toDegrees(orientation[0]);
                     degree = (int) Math.round(azimut);
-
-
                     float dir = calculateHeading();
-
+                    float goalDegree;
                     RotateAnimation rotateAnimation = new RotateAnimation(
                             currentDegree, -azimut,
                             Animation.RELATIVE_TO_SELF, 0.5f,
                             Animation.RELATIVE_TO_SELF, 0.5f
                     );
-                    rotateAnimation.setDuration(250);
-                    //rotationAnimation.setFillAfter(true);
+                    rotateAnimation.reset();
+                    rotateAnimation.setDuration(400);
+                    rotateAnimation.setFillAfter(true);
                     compass.startAnimation(rotateAnimation);
                     currentDegree = -azimut;
 
+                    goalDegree = currentDegree + dir;
                     RotateAnimation rotateAnimation2 = new RotateAnimation(
-                            currentDegreeWaypoint, dir,
+                            currentDegreeWaypoint, goalDegree,
                             Animation.RELATIVE_TO_SELF, 0.5f,
                             Animation.RELATIVE_TO_SELF, 0.5f
                     );
-                    rotateAnimation2.setDuration(250);
-                    //rotationAnimation.setFillAfter(true);
+                    rotateAnimation2.reset();
+                    rotateAnimation2.setDuration(400);
+                    rotateAnimation2.setFillAfter(true);
                     waypoint.startAnimation(rotateAnimation2);
-                    currentDegreeWaypoint = dir;
+                    currentDegreeWaypoint = goalDegree;
                 }
 
             }
@@ -193,25 +190,8 @@ public class Navigation_Activity_neu extends Activity {
     }
 
     public float calculateHeading(){
-        float helpDegree;
-        while(tracker.getLocation()==null){
-        }
         float bea = tracker.getLocation().bearingTo(start);
-        float dir = bea;
-        if (degree <0){
-            helpDegree=360+degree;
-        }else{
-            helpDegree=degree;
-        }
-        if(bea<0){
-            dir=360+bea;
-        }
-        dir = (helpDegree-dir);
-
-        return dir;
-
-
-
+        return bea;
     }
 
 
@@ -247,19 +227,9 @@ public class Navigation_Activity_neu extends Activity {
 
         //otherwise request next from server
         }else{
-            String temp = null;
-            try {
-                temp = JsonTool.requestNext(nextWaypointId);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            String temp2 = conn.sendAndRecive(temp);
+            //TODO change to server
+            nextWaypoint = facade.getNextWayPoint(nextWaypointId);
 
-            try {
-                nextWaypoint = MyLittleSerializer.JSONStringToWayPoint(temp2);
-            }catch(Exception e){
-                nextWaypoint = null;
-            }
 
             //there is no next waypoint
             if(nextWaypoint == null){

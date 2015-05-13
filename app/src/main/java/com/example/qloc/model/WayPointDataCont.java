@@ -12,7 +12,7 @@ public class WayPointDataCont {
 
     private String id;
     private String name;
-    private String desc;
+    private String hint;
     private String question;
     private String nextId;
     @JsonProperty("answers")
@@ -27,7 +27,7 @@ public class WayPointDataCont {
     public WayPointDataCont(String id, String name, String desc, String question, String answer01, String answer2, String answer3, String answer4, String nextId, double latitude, double longitude) {
         this.id = id;
         this.name = name;
-        this.desc = desc;
+        this.hint = desc;
         this.question = question;
         this.answers[0]=answer01;
         this.answers[1]=answer2;
@@ -50,11 +50,11 @@ public class WayPointDataCont {
 
     public WayPointDataCont(WayPoint wp){
         this.name= wp.getName();
-        this.desc = wp.getDesc();
+        this.hint = wp.getDesc();
         this.question = wp.getQuestion();
 
         this.answers[0]=wp.getAnswer01();
-        this.answers[1]=wp.getAnswer1();
+        this.answers[1]=wp.getAnswer2();
         this.answers[2]=wp.getAnswer3();
         this.answers[3]=wp.getAnswer4();
 
@@ -71,7 +71,7 @@ public class WayPointDataCont {
 
     }
     public WayPoint toWayPoint(){
-        return new WayPoint(locations[0],  locations[1], id,  name, desc,  question, answers[0], answers[1], answers[2], answers[3], nextId);
+        return new WayPoint(locations[0],  locations[1], id,  name, hint,  question, answers[0], answers[1], answers[2], answers[3], nextId);
     }
 
     public String getId() {
@@ -90,12 +90,12 @@ public class WayPointDataCont {
         this.name = name;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getHint() {
+        return hint;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setHint(String desc) {
+        this.hint = desc;
     }
 
     public String getQuestion() {

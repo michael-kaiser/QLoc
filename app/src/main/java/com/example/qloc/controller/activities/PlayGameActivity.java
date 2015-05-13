@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -46,9 +45,6 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
-        StrictMode.setThreadPolicy(policy);
 
         //override animation when changing to this activity
         overridePendingTransition(R.anim.pull_in_from_right,R.anim.pull_out_to_left);
@@ -66,10 +62,11 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
         Intent i = new Intent(this,Navigation_Activity_neu.class);
         WayPoint wp = new WayPoint(((RowItem) parent.getAdapter().getItem(position)).getWaypoint());
         Log.d(TAG+"test",wp.getName() + wp.getDesc() + wp.getAnswer4());
+        Log.d(TAG,wp.getId() + " ");
+        //TODO change to server !!!!!!!!!!!!!!!!!!!!!
+        WayPoint nextWayPoint = httpFacade.getNextWayPoint(wp.getId());
 
-        WayPoint nextWayPoint = httpFacade.getNextWayPoint(wp);
-        Log.d(TAG+"test",nextWayPoint.getName() + nextWayPoint.getDesc() + nextWayPoint.getAnswer4());
-
+        Log.d(TAG+"test",nextWayPoint.getId() + nextWayPoint.getDesc() + nextWayPoint.getAnswer4());
         i.putExtra(KEY, nextWayPoint); //give the waypoint to the next Activity
         startActivity(i);
     }
@@ -80,7 +77,8 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
     public void onClickStartButton(View v){
         Intent i = new Intent(this,Navigation_Activity_neu.class);
         WayPoint wp = new WayPoint(rowItems.get(0).getWaypoint());
-        WayPoint nextWayPoint = httpFacade.getNextWayPoint(wp);
+        //TODO change to server
+        WayPoint nextWayPoint = httpFacade.getNextWayPoint(wp.getId());
         Log.d(TAG+"test",nextWayPoint.getName() + nextWayPoint.getDesc() + nextWayPoint.getAnswer4());
         i.putExtra(KEY, nextWayPoint); //give the waypoint to the next Activity
         startActivity(i);
@@ -116,6 +114,7 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
         }
         Log.d(TAG, "got location");
 
+        //TODO change to server !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         wpList = httpFacade.getWayPointList(currentLocation);
         rowItems = new ArrayList<>();
 
@@ -134,9 +133,10 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
             }
         });
 
-        CustomAdapter adapter = new CustomAdapter(this, rowItems);
+        final CustomAdapter adapter = new CustomAdapter(this, rowItems);
         myListview.setAdapter(adapter);
 
-
     }
+
+
 }

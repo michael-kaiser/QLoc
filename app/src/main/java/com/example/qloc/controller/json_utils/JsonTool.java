@@ -1,10 +1,13 @@
 package com.example.qloc.controller.json_utils;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
-import android.util.Log;
+import android.os.AsyncTask;
+import android.widget.ImageView;
 
-import com.example.qloc.model.Route;
-import com.example.qloc.model.RoutesList;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -12,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.lang.ref.WeakReference;
 
 /**
  * Created by uli on 18.04.15.
@@ -106,6 +110,21 @@ public class JsonTool {
         return writer.toString();
     }
 
+    public static boolean evaluatedAnswer(String st) {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode actualObj = null;
+        try {
+            actualObj = mapper.readTree(st);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        JsonNode aField = actualObj.get("waypoint");
+        System.out.println(aField.get("question").toString());
+
+        return (aField.booleanValue());
+
+    }
+
     /*public static boolean evaluatedAnswer(String st) {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode actualObj = null;
@@ -118,6 +137,8 @@ public class JsonTool {
 
 
         return (aField.booleanValue());*/
+
+
 
 
 }

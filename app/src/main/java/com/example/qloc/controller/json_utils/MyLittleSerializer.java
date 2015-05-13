@@ -3,12 +3,16 @@ package com.example.qloc.controller.json_utils;
 import com.example.qloc.model.Answer;
 import com.example.qloc.model.RoutesList;
 import com.example.qloc.model.RoutesNext;
+import com.example.qloc.model.SaveRoute;
 import com.example.qloc.model.WayPoint;
 import com.example.qloc.model.WayPointDataCont;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.io.StringWriter;
 
 //import com.example.qloc.model.WayPointList2;
 
@@ -60,6 +64,16 @@ public class MyLittleSerializer {
             a = OBJECT_MAPPER.readValue(s, Answer.class);
 
         return a.isEvaluation();
+    }
+
+    public static String SaveRouteToJson(SaveRoute svr) throws IOException {
+        SaveRouteContainer container = new SaveRouteContainer(svr);
+
+        String ret = null;
+        SaveRouteContainer2 container2 =container.prepareJson();
+        ret = OBJECT_MAPPER.writeValueAsString(container2);
+        return ret;
+
     }
 
 }

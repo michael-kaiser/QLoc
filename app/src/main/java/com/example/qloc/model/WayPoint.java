@@ -4,11 +4,8 @@ import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.qloc.controller.json_utils.JsonTool;
-import com.example.qloc.controller.json_utils.MyLittleSerializer;
-import com.example.qloc.model.communication.HttpConnection;
+import com.example.qloc.model.communication.HttpFacade;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,7 +22,7 @@ public class WayPoint extends Location implements Parcelable{
 
     private String id;
     private String name;
-    private String desc;
+    private String hint;
     private String question;
     private String answer01; //TODO mock
     private String answer2;
@@ -42,7 +39,7 @@ public class WayPoint extends Location implements Parcelable{
         super(l);
     }
 
-    public WayPoint(Location l, String id, String desc, String q, String a1, String a2, String a3, String a4){
+    public WayPoint(Location l, String id, String hint, String q, String a1, String a2, String a3, String a4){
         super(l);
         this.name= "Einziger";
         this.question = q;
@@ -50,7 +47,7 @@ public class WayPoint extends Location implements Parcelable{
         this.answer2 = a2;
         this.answer3 = a3;
         this.answer4 = a4;
-        this.desc = desc;
+        this.hint = hint;
         this.id = id;
 
     }
@@ -58,7 +55,7 @@ public class WayPoint extends Location implements Parcelable{
     public WayPoint(WayPoint wp){
         super(wp);
         this.name= wp.getName();
-        this.desc = wp.getDesc();
+        this.hint = wp.getDesc();
         this.question = wp.getQuestion();
         this.answer01 = wp.getAnswer01();
         this.answer2 = wp.getAnswer2();
@@ -68,7 +65,7 @@ public class WayPoint extends Location implements Parcelable{
         this.nextId = wp.getNextId();
     }
 
-    public WayPoint(Location l, String id, String n, String desc,  String q, String a1, String a2, String a3, String a4, String nextId){
+    public WayPoint(Location l, String id, String n, String hint,  String q, String a1, String a2, String a3, String a4, String nextId){
         super(l);
         this.name= n;
         this.question = q;
@@ -76,13 +73,13 @@ public class WayPoint extends Location implements Parcelable{
         this.answer2 = a2;
         this.answer3 = a3;
         this.answer4 = a4;
-        this.desc = desc;
+        this.hint = hint;
         this.id = id;
         this.nextId = nextId;
 
     }
 
-    public WayPoint(Location l, String id, String n, String desc,  String q, String a1, String a2, String a3, String a4){
+    public WayPoint(Location l, String id, String n, String hint,  String q, String a1, String a2, String a3, String a4){
         super(l);
         this.name= n;
         this.question = q;
@@ -90,11 +87,11 @@ public class WayPoint extends Location implements Parcelable{
         this.answer2 = a2;
         this.answer3 = a3;
         this.answer4 = a4;
-        this.desc = desc;
+        this.hint = hint;
         this.id = id;
     }
 
-    public WayPoint(Double latitude, Double longitude, String id, String n, String desc,  String q, String a1, String a2, String a3, String a4, String nextId){
+    public WayPoint(Double latitude, Double longitude, String id, String n, String hint,  String q, String a1, String a2, String a3, String a4, String nextId){
         super("");
         this.setLongitude(longitude);
         this.setLatitude(latitude);
@@ -104,7 +101,7 @@ public class WayPoint extends Location implements Parcelable{
         this.answer2 = a2;
         this.answer3 = a3;
         this.answer4 = a4;
-        this.desc = desc;
+        this.hint = hint;
         this.id = id;
         this.nextId = nextId;
 
@@ -172,30 +169,18 @@ public class WayPoint extends Location implements Parcelable{
 
     //TODO send answer request
     public boolean checkAnswer(String givenAnswer){
-        HttpConnection conn = HttpConnection.getInstance();
-        String temp = null;
-        boolean response = true;
+        HttpFacade facade = HttpFacade.getInstance();
 
-        try {
-            temp = JsonTool.sendAnswer(givenAnswer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        conn.sendAndRecive(temp);
-        try {
-            response = MyLittleSerializer.EvaluateAnswer(temp);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return response;
+        //TODO change to server!!!!!!!!!!!!!!!!!!!!!
+        return facade.checkAnswer(givenAnswer);
     }
 
     public String getDesc() {
-        return desc;
+        return hint;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDesc(String hint) {
+        this.hint = hint;
     }
 
     public String getAnswer01() {
@@ -225,7 +210,7 @@ public class WayPoint extends Location implements Parcelable{
         super.writeToParcel(parcel, flags);
         parcel.writeString(id);
         parcel.writeString(name);
-        parcel.writeString(desc);
+        parcel.writeString(hint);
         parcel.writeString(question);
         parcel.writeString(answer01);
         parcel.writeString(answer2);
@@ -239,7 +224,7 @@ public class WayPoint extends Location implements Parcelable{
        super(Location.CREATOR.createFromParcel(in));
        this.id = in.readString();
        this.name = in.readString();
-       this.desc = in.readString();
+       this.hint = in.readString();
        this.question = in.readString();
        this.answer01 = in.readString();
        this.answer2 = in.readString();
@@ -266,7 +251,7 @@ public class WayPoint extends Location implements Parcelable{
         return "WayPoint{" +
                 "id='" + id + '\'' +
                 "name='" + name + '\'' +
-                ", desc='" + desc + '\'' +
+                ", hint='" + hint + '\'' +
                 ", question='" + question + '\'' +
                 ", answer01='" + answer01 + '\'' +
                 ", answer2='" + answer2 + '\'' +
@@ -284,7 +269,7 @@ public class WayPoint extends Location implements Parcelable{
         JsonObject value = factory.createObjectBuilder()
                 .add("id", this.id)
                 .add("name", this.name)
-                .add("desc", this.desc)
+                .add("hint", this.hint)
                 .add("answer01", this.answer01)
                 .add("answer2", this.answer2)
                 .add("answer3", this.answer3)

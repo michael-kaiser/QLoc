@@ -18,6 +18,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.qloc.R;
+import com.example.qloc.model.SaveRoute;
+import com.example.qloc.model.ServerWayPoint;
+import com.example.qloc.model.communication.HttpFacade;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -25,6 +28,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Activity for creating new routes
@@ -37,6 +43,8 @@ public class MapsActivity extends FragmentActivity implements LocationListener, 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private Criteria criteria;
     private Location currentLocation;
+    private List<ServerWayPoint> waypointList = new ArrayList<>();
+    private HttpFacade facade = HttpFacade.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,13 +187,69 @@ public class MapsActivity extends FragmentActivity implements LocationListener, 
         dialogButtonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View w) {
-                /* TODO save the waypoint */
+                // save waypoint
+                Location loc = new Location("");
+                loc.setLatitude(currentLocation.getLatitude());
+                loc.setLongitude(currentLocation.getLongitude());
+                ServerWayPoint wp = new ServerWayPoint(correct.getText().toString(), new String[]{wrong1.getText().toString(),wrong2.getText().toString(),wrong3.getText().toString()}, loc,description.getText().toString(), question.getText().toString());
+                saveWaypoint(wp);
+
+
                 setMarker(description.getText().toString());
                 dialog.dismiss();
+                Log.d(TAG,waypointList.size() + " size");
             }
         });
 
         Button dialogButtonCancel = (Button) dialog.findViewById(R.id.button_dismiss_question);
+
+        dialogButtonCancel.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    public void startSaveRouteDialog(final View v){
+        final float alpha = v.getAlpha();
+        v.setAlpha(1.0f);
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.save_route_dialog);
+        final EditText description = (EditText) dialog.findViewById(R.id.dialog_save_desc);
+        final EditText name = (EditText) dialog.findViewById(R.id.dialog_save_name);
+
+        /* set alpha of button to origin again */
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                v.setAlpha(alpha);
+            }
+        });
+
+
+
+        Button dialogButtonSave = (Button) dialog.findViewById(R.id.button_save_route);
+        // if button is clicked, close the custom dialog
+        dialogButtonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View w) {
+                /* TODO save the route */
+                String routeName = name.getText().toString();
+                String routeDesc = name.getText().toString();
+                SaveRoute route = new SaveRoute(routeName,routeDesc);
+                route.setWayPointList(waypointList);
+                facade.saveRoute(route);
+                reset();
+                dialog.dismiss();
+            }
+        });
+
+        Button dialogButtonCancel = (Button) dialog.findViewById(R.id.button_save_cancel);
 
         dialogButtonCancel.setOnClickListener(new View.OnClickListener(){
 
@@ -211,6 +275,17 @@ public class MapsActivity extends FragmentActivity implements LocationListener, 
         //override animation when changing to this activity
         overridePendingTransition(R.anim.pull_in_from_left, R.anim.pull_out_to_right);
     }
+
+    public void saveWaypoint(ServerWayPoint wp){
+        waypointList.add(wp);
+    }
+
+    public void reset(){
+        mMap.clear();
+        waypointList.clear();
+        Log.d(TAG, waypointList.size() + " ");
+    }
+
 
 
 
