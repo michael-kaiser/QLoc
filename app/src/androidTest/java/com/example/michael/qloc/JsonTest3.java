@@ -4,6 +4,7 @@ import android.location.Location;
 
 import com.example.qloc.controller.json_utils.MyLittleSerializer;
 import com.example.qloc.model.WayPoint;
+import com.example.qloc.model.exceptions.ServerCommunicationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import junit.framework.TestCase;
@@ -23,10 +24,13 @@ public class JsonTest3 extends TestCase {
     }
     public void testAdd() throws JsonProcessingException {
         String s = MyLittleSerializer.WayPointToJSON(wp);
+        s = "{\"error\":\"ICh bin ein error\"}";
 
         try {
             p =MyLittleSerializer.JSONStringToWayPoint(s);
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ServerCommunicationException e) {
             e.printStackTrace();
         }
         assertEquals(p.toString(), wp.toString());

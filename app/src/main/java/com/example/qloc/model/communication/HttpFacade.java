@@ -36,7 +36,7 @@ public class HttpFacade {
         conn = HttpConnection.getInstance();
     }
 
-    public List<WayPoint> getWayPointList(Location currentLocation){
+    public List<WayPoint> getWayPointList(Location currentLocation) throws ServerCommunicationException {
         String answer = null;
         try {
             getResponseFromServer("{\"reset\": true}");
@@ -56,7 +56,7 @@ public class HttpFacade {
         return wpList;
     }
 
-    public WayPoint getNextWayPoint(String nextWayPointID){
+    public WayPoint getNextWayPoint(String nextWayPointID) throws ServerCommunicationException {
         String msg = null;
         WayPoint nextWayPoint = null;
 
