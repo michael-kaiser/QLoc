@@ -12,6 +12,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -125,6 +126,7 @@ public class Navigation_Activity_neu extends Activity {
                             Animation.RELATIVE_TO_SELF, 0.5f
                     );
                     rotateAnimation.reset();
+                    rotateAnimation.setInterpolator(new LinearInterpolator());
                     rotateAnimation.setDuration(400);
                     rotateAnimation.setFillAfter(true);
                     compass.startAnimation(rotateAnimation);
@@ -137,6 +139,7 @@ public class Navigation_Activity_neu extends Activity {
                             Animation.RELATIVE_TO_SELF, 0.5f
                     );
                     rotateAnimation2.reset();
+                    rotateAnimation2.setInterpolator(new LinearInterpolator());
                     rotateAnimation2.setDuration(400);
                     rotateAnimation2.setFillAfter(true);
                     waypoint.startAnimation(rotateAnimation2);

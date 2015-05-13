@@ -5,6 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.example.qloc.model.communication.HttpFacade;
+import com.example.qloc.model.exceptions.ServerCommunicationException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -168,7 +169,7 @@ public class WayPoint extends Location implements Parcelable{
 
 
     //TODO send answer request
-    public boolean checkAnswer(String givenAnswer){
+    public boolean checkAnswer(String givenAnswer) throws ServerCommunicationException{
         HttpFacade facade = HttpFacade.getInstance();
 
         //TODO change to server!!!!!!!!!!!!!!!!!!!!!

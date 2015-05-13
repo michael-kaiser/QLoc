@@ -15,6 +15,7 @@ import com.example.qloc.R;
 import com.example.qloc.controller.fragments.QuestionFragment;
 import com.example.qloc.controller.fragments.StatusFragment;
 import com.example.qloc.model.WayPoint;
+import com.example.qloc.model.exceptions.ServerCommunicationException;
 
 /**
  * the activity during the question game
@@ -54,7 +55,14 @@ public class QuestionActivity extends Activity implements QuestionFragment.Quest
     }
 
     public boolean checkAnswer(String answer) {
-        return currentQuestion.checkAnswer(answer);
+        boolean check = false;
+        try {
+            check = currentQuestion.checkAnswer(answer);
+        }catch(ServerCommunicationException e){
+
+        }
+
+        return check;
     }
 
     @Override

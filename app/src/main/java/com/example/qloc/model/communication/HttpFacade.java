@@ -8,6 +8,7 @@ import com.example.qloc.controller.json_utils.MyLittleSerializer;
 import com.example.qloc.model.SaveRoute;
 import com.example.qloc.model.ThreadControl.NetworkExecuter;
 import com.example.qloc.model.WayPoint;
+import com.example.qloc.model.exceptions.ServerCommunicationException;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -83,7 +84,7 @@ public class HttpFacade {
         return nextWayPoint;
     }
 
-    public boolean checkAnswer(String givenAnswer){
+    public boolean checkAnswer(String givenAnswer) throws ServerCommunicationException{
         String temp = null;
         boolean response = true;
 
