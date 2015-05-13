@@ -8,6 +8,7 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 
+import com.example.qloc.model.exceptions.ServerCommunicationException;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -110,7 +111,7 @@ public class JsonTool {
         return writer.toString();
     }
 
-    public static boolean evaluatedAnswer(String st) {
+    public static boolean evaluatedAnswer(String st) throws ServerCommunicationException {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode actualObj = null;
         try {
@@ -118,10 +119,33 @@ public class JsonTool {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        JsonNode aField = actualObj.get("waypoint");
+        if((actualObj.get("error"))!= null){
+            String error = actualObj.get("error").toString();
+            throw new ServerCommunicationException();
+        }
+        JsonNode aField = actualObj.get("route");
         System.out.println(aField.get("question").toString());
 
         return (aField.booleanValue());
+
+    }
+
+    public static boolean checkCreatedRoutes(String st) throws ServerCommunicationException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode actualObj = null;
+        try {
+            actualObj = mapper.readTree(st);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if((actualObj.get("error"))!= null){
+            String error = actualObj.get("error").toString();
+            throw new ServerCommunicationException();
+        }
+        JsonNode aField = actualObj.get("route");
+        System.out.println(aField.get("name").toString());
+
+        return true;
 
     }
 

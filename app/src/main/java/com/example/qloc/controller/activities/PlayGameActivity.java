@@ -15,6 +15,7 @@ import com.example.qloc.model.GPSTracker;
 import com.example.qloc.model.RowItem;
 import com.example.qloc.model.WayPoint;
 import com.example.qloc.model.communication.HttpFacade;
+import com.example.qloc.model.exceptions.ServerCommunicationException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -64,7 +65,13 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
         Log.d(TAG+"test",wp.getName() + wp.getDesc() + wp.getAnswer4());
         Log.d(TAG,wp.getId() + " ");
         //TODO change to server !!!!!!!!!!!!!!!!!!!!!
-        WayPoint nextWayPoint = httpFacade.getNextWayPoint(wp.getId());
+        WayPoint nextWayPoint = null;
+        try {
+            nextWayPoint = httpFacade.getNextWayPoint(wp.getId());
+        } catch (ServerCommunicationException e) {
+            e.printStackTrace();
+            ////TODO addDialog
+        }
 
         Log.d(TAG+"test",nextWayPoint.getId() + nextWayPoint.getDesc() + nextWayPoint.getAnswer4());
         i.putExtra(KEY, nextWayPoint); //give the waypoint to the next Activity
@@ -78,7 +85,13 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
         Intent i = new Intent(this,Navigation_Activity_neu.class);
         WayPoint wp = new WayPoint(rowItems.get(0).getWaypoint());
         //TODO change to server
-        WayPoint nextWayPoint = httpFacade.getNextWayPoint(wp.getId());
+        WayPoint nextWayPoint = null;
+        try {
+            nextWayPoint = httpFacade.getNextWayPoint(wp.getId());
+        } catch (ServerCommunicationException e) {
+            e.printStackTrace();
+            //TODO addDialog
+        }
         Log.d(TAG+"test",nextWayPoint.getName() + nextWayPoint.getDesc() + nextWayPoint.getAnswer4());
         i.putExtra(KEY, nextWayPoint); //give the waypoint to the next Activity
         startActivity(i);
@@ -97,7 +110,7 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
      * fill the scrollList with the routes
      */
     private void updateList(){
-        List<WayPoint> wpList;
+        List<WayPoint> wpList = null;
         tracker = GPSTracker.getInstance(this);
         tracker.setListener(tracker);
         tracker.init();
@@ -115,7 +128,12 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
         Log.d(TAG, "got location");
 
         //TODO change to server !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        wpList = httpFacade.getWayPointList(currentLocation);
+        try {
+            wpList = httpFacade.getWayPointList(currentLocation);
+        } catch (ServerCommunicationException e) {
+            e.printStackTrace();
+            //TODO addDialog
+        }
         rowItems = new ArrayList<>();
 
         for (WayPoint wp : wpList) {

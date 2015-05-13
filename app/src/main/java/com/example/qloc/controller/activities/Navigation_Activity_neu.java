@@ -26,6 +26,7 @@ import com.example.qloc.model.DisableEnableGPSListener;
 import com.example.qloc.model.GPSTracker;
 import com.example.qloc.model.WayPoint;
 import com.example.qloc.model.communication.HttpFacade;
+import com.example.qloc.model.exceptions.ServerCommunicationException;
 
 /**
  * This activity shows the compass and starts QuestionActivities when waypoints are reached
@@ -233,7 +234,12 @@ public class Navigation_Activity_neu extends Activity {
         //otherwise request next from server
         }else{
             //TODO change to server
-            nextWaypoint = facade.getNextWayPoint(nextWaypointId);
+            try {
+                nextWaypoint = facade.getNextWayPoint(nextWaypointId);
+            } catch (ServerCommunicationException e) {
+                e.printStackTrace();
+                //TODO addDialog
+            }
 
 
             //there is no next waypoint

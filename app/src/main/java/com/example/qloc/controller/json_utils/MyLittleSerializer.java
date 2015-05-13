@@ -6,9 +6,11 @@ import com.example.qloc.model.RoutesNext;
 import com.example.qloc.model.SaveRoute;
 import com.example.qloc.model.WayPoint;
 import com.example.qloc.model.WayPointDataCont;
+import com.example.qloc.model.exceptions.ServerCommunicationException;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -32,7 +34,19 @@ public class MyLittleSerializer {
         ret = OBJECT_MAPPER.writeValueAsString(cont);
         return ret;
     }
-    public static WayPoint JSONStringToWayPoint(String jsonString) throws IOException {
+
+    public static WayPoint JSONStringToWayPoint(String jsonString) throws IOException, ServerCommunicationException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode actualObj = null;
+        try {
+            actualObj = mapper.readTree(jsonString);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if((actualObj.get("error"))!= null){
+            String error = actualObj.get("error").toString();
+            throw new ServerCommunicationException();
+        }
         RoutesNext wpdc;
 
             wpdc = OBJECT_MAPPER.readValue(jsonString, RoutesNext.class);
@@ -40,7 +54,18 @@ public class MyLittleSerializer {
         return wpdc.toWayPoint();
     }
 
-    public static RoutesList JSONStringToRoutesList(String jsonString) throws IOException {
+    public static RoutesList JSONStringToRoutesList(String jsonString) throws IOException, ServerCommunicationException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode actualObj = null;
+        try {
+            actualObj = mapper.readTree(jsonString);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if((actualObj.get("error"))!= null){
+            String error = actualObj.get("error").toString();
+            throw new ServerCommunicationException();
+        }
         RoutesList rl;
 
             rl = OBJECT_MAPPER.readValue(jsonString, RoutesList.class);
