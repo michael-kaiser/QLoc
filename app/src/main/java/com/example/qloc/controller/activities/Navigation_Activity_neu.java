@@ -94,8 +94,8 @@ public class Navigation_Activity_neu extends Activity {
             startActivity(intent);
         }
 
-        mSensorManager.registerListener(mysensor, accelerometer, 1000);
-        mSensorManager.registerListener(mysensor, magnetometer, 1000);
+        mSensorManager.registerListener(mysensor, accelerometer, 10000);
+        mSensorManager.registerListener(mysensor, magnetometer, 10000);
 
     }
 
@@ -128,9 +128,8 @@ public class Navigation_Activity_neu extends Activity {
                     );
                     rotateAnimation.reset();
                     rotateAnimation.setInterpolator(new LinearInterpolator());
-                    rotateAnimation.setDuration(400);
+                    rotateAnimation.setDuration(200);
                     rotateAnimation.setFillAfter(true);
-                    rotateAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
                     compass.startAnimation(rotateAnimation);
                     currentDegree = -azimut;
 
@@ -142,9 +141,8 @@ public class Navigation_Activity_neu extends Activity {
                     );
                     rotateAnimation2.reset();
                     rotateAnimation2.setInterpolator(new LinearInterpolator());
-                    rotateAnimation2.setDuration(400);
+                    rotateAnimation2.setDuration(200);
                     rotateAnimation2.setFillAfter(true);
-                    rotateAnimation2.setInterpolator(new AccelerateDecelerateInterpolator());
                     waypoint.startAnimation(rotateAnimation2);
                     currentDegreeWaypoint = goalDegree;
                 }
@@ -219,8 +217,8 @@ public class Navigation_Activity_neu extends Activity {
 
         if(start != null) {
             tracker.startTracking();
-            mSensorManager.registerListener(mysensor,accelerometer,1000);
-            mSensorManager.registerListener(mysensor,magnetometer,1000);
+            mSensorManager.registerListener(mysensor,accelerometer,10000);
+            mSensorManager.registerListener(mysensor,magnetometer,10000);
             loc_name.setText(start.getName());
         }
     }
