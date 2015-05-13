@@ -62,6 +62,14 @@
             android:layout_height="1px"
             android:id="@+id/imageView6"
             android:background="#80FFFFFF" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/button"
+            android:onClick="onButtonRemove"
+            android:layout_gravity="center" />
     </FrameLayout>
 
 </LinearLayout>

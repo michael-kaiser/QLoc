@@ -35,6 +35,7 @@ public class HttpConnection{
         Log.d("Http", url.toString());
     }
     public String sendAndRecive(String request) {
+
         String response = null;
         if(request == null) return null;
         HttpURLConnection connection = null;

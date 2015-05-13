@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
@@ -127,6 +128,7 @@ public class Navigation_Activity_neu extends Activity {
                     rotateAnimation.reset();
                     rotateAnimation.setDuration(400);
                     rotateAnimation.setFillAfter(true);
+                    rotateAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
                     compass.startAnimation(rotateAnimation);
                     currentDegree = -azimut;
 
@@ -139,6 +141,7 @@ public class Navigation_Activity_neu extends Activity {
                     rotateAnimation2.reset();
                     rotateAnimation2.setDuration(400);
                     rotateAnimation2.setFillAfter(true);
+                    rotateAnimation2.setInterpolator(new AccelerateDecelerateInterpolator());
                     waypoint.startAnimation(rotateAnimation2);
                     currentDegreeWaypoint = goalDegree;
                 }
