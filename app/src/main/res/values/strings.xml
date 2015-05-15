@@ -42,5 +42,9 @@
     <string name="title_activity_main_screen">QLoc</string>
     <string name="title_activity_navigation">NavigationActivity</string>
     <string name="title_activity_navigation_neu">NavigationActivityNeu</string>
+    <string name="alert_okay">okay</string>
+    <string name="alert_stop">stop</string>
+    <string name="alert_dialog_message">Can\'t check the question due to connection problems. Do you have internet enabled?</string>
+    <string name="alert_dialog_title">Connection failed</string>
 
 </resources>

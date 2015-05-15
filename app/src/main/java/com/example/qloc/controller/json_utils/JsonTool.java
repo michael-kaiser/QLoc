@@ -1,12 +1,6 @@
 package com.example.qloc.controller.json_utils;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Location;
-import android.os.AsyncTask;
-import android.widget.ImageView;
 
 import com.example.qloc.model.exceptions.ServerCommunicationException;
 import com.fasterxml.jackson.core.JsonFactory;
@@ -16,7 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.lang.ref.WeakReference;
 
 /**
  * Created by uli on 18.04.15.

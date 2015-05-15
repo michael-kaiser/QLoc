@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.qloc.controller.json_utils.JsonTool;
 import com.example.qloc.model.WayPoint;
+import com.example.qloc.model.exceptions.ServerCommunicationException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class Mockup {
             wayPointList.add(start);
         }
     }
-    public static List<WayPoint> getWayPointList(Location currentLocation){
+    public static List<WayPoint> getWayPointList(Location currentLocation) throws ServerCommunicationException{
         try {
             Log.d(TAG, JsonTool.rangeQuery(currentLocation).toString());
         } catch (IOException e) {
@@ -40,7 +41,7 @@ public class Mockup {
         return wayPointList;
     }
 
-    public static WayPoint getNextWayPoint(String id){
+    public static WayPoint getNextWayPoint(String id) throws ServerCommunicationException{
         try {
             Log.d(TAG, JsonTool.requestNext(id));
         } catch (IOException e) {

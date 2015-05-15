@@ -17,7 +17,6 @@ import java.net.URL;
  */
 public class HttpConnection{
     private URL url;
-    private final String URL_NAME = "138.232.236.5/cgi-bin/do.cgi";
     //private HttpURLConnection connection;
     private static HttpConnection instance;
     public static HttpConnection getInstance(){
@@ -31,7 +30,7 @@ public class HttpConnection{
         return instance;
     }
     private HttpConnection() throws MalformedURLException {
-        this.url = new URL("http", "192.168.1.73", 3000,"");
+        this.url = new URL("http", "192.168.1.87", 3000,"");
         Log.d("Http", url.toString());
     }
     public String sendAndRecive(String request) {

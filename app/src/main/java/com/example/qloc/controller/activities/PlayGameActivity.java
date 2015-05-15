@@ -16,6 +16,7 @@ import com.example.qloc.model.RowItem;
 import com.example.qloc.model.WayPoint;
 import com.example.qloc.model.communication.HttpFacade;
 import com.example.qloc.model.exceptions.ServerCommunicationException;
+import com.example.qloc.model.mockup.Mockup;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,7 +68,7 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
         //TODO change to server !!!!!!!!!!!!!!!!!!!!!
         WayPoint nextWayPoint = null;
         try {
-            nextWayPoint = httpFacade.getNextWayPoint(wp.getId());
+            nextWayPoint = Mockup.getNextWayPoint(wp.getId());
         } catch (ServerCommunicationException e) {
             e.printStackTrace();
             ////TODO addDialog
@@ -129,7 +130,7 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
 
         //TODO change to server !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         try {
-            wpList = httpFacade.getWayPointList(currentLocation);
+            wpList = Mockup.getWayPointList(currentLocation);
         } catch (ServerCommunicationException e) {
             e.printStackTrace();
             //TODO addDialog

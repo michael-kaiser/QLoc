@@ -4,8 +4,8 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:id="@+id/background_compass"
         android:scaleType="fitXY"
         android:adjustViewBounds="false" />
@@ -51,7 +51,8 @@
                 android:src="@drawable/waypoint_circle"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
-                android:layout_margin="10dp" />
+                android:layout_margin="10dp"
+                android:layout_gravity="center_horizontal" />
 
         </FrameLayout>
 

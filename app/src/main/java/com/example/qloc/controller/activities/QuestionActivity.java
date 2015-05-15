@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.qloc.R;
+import com.example.qloc.controller.dialogs.AlertDialogUtility;
 import com.example.qloc.controller.fragments.QuestionFragment;
 import com.example.qloc.controller.fragments.StatusFragment;
 import com.example.qloc.model.WayPoint;
@@ -54,15 +56,11 @@ public class QuestionActivity extends Activity implements QuestionFragment.Quest
         ft.commit();
     }
 
-    public boolean checkAnswer(String answer) {
+    public boolean checkAnswer(final String answer) throws ServerCommunicationException{
         boolean check = false;
-        try {
-            check = currentQuestion.checkAnswer(answer);
-        }catch(ServerCommunicationException e){
-
-        }
-
-        return check;
+        check = currentQuestion.checkAnswer(answer);
+        throw new ServerCommunicationException();
+        //return check;
     }
 
     @Override
@@ -81,31 +79,43 @@ public class QuestionActivity extends Activity implements QuestionFragment.Quest
 
     /**
      * evaluates the answer
+     * if there are connection problems a dialog is shown
      * if evaluates to true -> change to status fragment
      * else -> decrease points and increment tries counter
      * @param v
      */
     public void evaluateAnswer(View v){
         int caller = v.getId(); //which answer was given? needed to get the answer text
-        TextView txt;
+        final TextView txt;
         boolean eval = false;
-        switch(caller){
-            case R.id.answer1:
-                txt = (TextView) findViewById(R.id.text_answerA);
-                eval = checkAnswer(txt.getText().toString());
-                break;
-            case R.id.answer2:
-                txt = (TextView) findViewById(R.id.text_answerB);
-                eval = checkAnswer(txt.getText().toString());
-                break;
-            case R.id.answer3:
-                txt = (TextView) findViewById(R.id.text_answerC);
-                eval = checkAnswer(txt.getText().toString());
-                break;
-            case R.id.answer4:
-                txt = (TextView) findViewById(R.id.text_answerD);
-                eval = checkAnswer(txt.getText().toString());
-                break;
+        try {
+            switch (caller) {
+                case R.id.answer1:
+                    txt = (TextView) findViewById(R.id.text_answerA);
+                    eval = checkAnswer(txt.getText().toString());
+                    break;
+                case R.id.answer2:
+                    txt = (TextView) findViewById(R.id.text_answerB);
+                    eval = checkAnswer(txt.getText().toString());
+                    break;
+                case R.id.answer3:
+                    txt = (TextView) findViewById(R.id.text_answerC);
+                    eval = checkAnswer(txt.getText().toString());
+                    break;
+                case R.id.answer4:
+                    txt = (TextView) findViewById(R.id.text_answerD);
+                    eval = checkAnswer(txt.getText().toString());
+                    break;
+            }
+        }catch(ServerCommunicationException e) {
+            Log.d(TAG, "ServerCommunicationException");
+            AlertDialogUtility.showAlertDialog(this, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            return;
         }
         if(eval){
             Log.d("Evaluation","True");
