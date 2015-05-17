@@ -1,5 +1,6 @@
 package com.example.qloc.model;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -39,7 +40,7 @@ public class BitMapWorkerTask extends AsyncTask<Integer, Void, Bitmap> {
         }
     }
 
-    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
+    private Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
                                                          int reqWidth, int reqHeight) {
 
         // First decode with inJustDecodeBounds=true to check dimensions
@@ -55,7 +56,7 @@ public class BitMapWorkerTask extends AsyncTask<Integer, Void, Bitmap> {
         return BitmapFactory.decodeResource(res, resId, options);
     }
 
-    public static int calculateInSampleSize(
+    private int calculateInSampleSize(
             BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
         final int height = options.outHeight;
@@ -76,5 +77,10 @@ public class BitMapWorkerTask extends AsyncTask<Integer, Void, Bitmap> {
         }
 
         return inSampleSize;
+    }
+
+    public static void loadBitmap(int resId, ImageView imageView, Activity activity) {
+        BitMapWorkerTask task = new BitMapWorkerTask(imageView, activity);
+        task.execute(resId);
     }
 }

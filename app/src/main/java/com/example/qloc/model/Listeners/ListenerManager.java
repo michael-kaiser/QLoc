@@ -5,12 +5,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.AsyncTask;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
-import com.example.qloc.model.GPSTracker;
+import com.example.qloc.location.GPSTracker;
 import com.example.qloc.model.WayPoint;
 
 

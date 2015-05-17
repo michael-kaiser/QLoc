@@ -59,8 +59,8 @@ public class QuestionActivity extends Activity implements QuestionFragment.Quest
     public boolean checkAnswer(final String answer) throws ServerCommunicationException{
         boolean check = false;
         check = currentQuestion.checkAnswer(answer);
-        throw new ServerCommunicationException();
-        //return check;
+        //throw new ServerCommunicationException();
+        return check;
     }
 
     @Override

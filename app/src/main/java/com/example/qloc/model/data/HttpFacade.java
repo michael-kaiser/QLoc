@@ -1,4 +1,4 @@
-package com.example.qloc.model.communication;
+package com.example.qloc.model.data;
 
 import android.location.Location;
 import android.util.Log;
@@ -8,6 +8,8 @@ import com.example.qloc.controller.json_utils.MyLittleSerializer;
 import com.example.qloc.model.SaveRoute;
 import com.example.qloc.model.ThreadControl.NetworkExecuter;
 import com.example.qloc.model.WayPoint;
+import com.example.qloc.model.communication.CallableHttpConnection;
+import com.example.qloc.model.communication.HttpConnection;
 import com.example.qloc.model.exceptions.ServerCommunicationException;
 
 import java.io.IOException;
@@ -19,7 +21,7 @@ import java.util.concurrent.ExecutionException;
 /**
  * Created by michael on 03.05.15.
  */
-public class HttpFacade {
+public class HttpFacade implements Data {
     private NetworkExecuter<String> executer = new NetworkExecuter<String>();
     private HttpConnection conn;
     private static HttpFacade instance = null;

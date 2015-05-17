@@ -11,12 +11,12 @@ import android.widget.ListView;
 
 import com.example.qloc.R;
 import com.example.qloc.model.CustomAdapter;
-import com.example.qloc.model.GPSTracker;
+import com.example.qloc.location.GPSTracker;
 import com.example.qloc.model.RowItem;
 import com.example.qloc.model.WayPoint;
-import com.example.qloc.model.communication.HttpFacade;
 import com.example.qloc.model.exceptions.ServerCommunicationException;
-import com.example.qloc.model.mockup.Mockup;
+import com.example.qloc.model.data.Data;
+import com.example.qloc.model.data.Mockup;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,7 +36,7 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
     private ListView myListview;
     private GPSTracker tracker;
     private Location currentLocation;
-    private HttpFacade httpFacade;
+    private Data httpFacade;
 
     @Override
     protected void onRestart() {
@@ -51,7 +51,7 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
         //override animation when changing to this activity
         overridePendingTransition(R.anim.pull_in_from_right,R.anim.pull_out_to_left);
         setContentView(R.layout.activity_play);
-        httpFacade = HttpFacade.getInstance();
+        httpFacade = Mockup.getInstance();
         myListview = (ListView) findViewById(R.id.list);
         View view = View.inflate(this, R.layout.headerview, null);
         myListview.addHeaderView(view);
@@ -61,14 +61,14 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent i = new Intent(this,Navigation_Activity_neu.class);
+        Intent i = new Intent(this,Navigation_Activity_neu2.class);
         WayPoint wp = new WayPoint(((RowItem) parent.getAdapter().getItem(position)).getWaypoint());
         Log.d(TAG+"test",wp.getName() + wp.getDesc() + wp.getAnswer4());
         Log.d(TAG,wp.getId() + " ");
         //TODO change to server !!!!!!!!!!!!!!!!!!!!!
         WayPoint nextWayPoint = null;
         try {
-            nextWayPoint = Mockup.getNextWayPoint(wp.getId());
+            nextWayPoint = httpFacade.getNextWayPoint(wp.getId());
         } catch (ServerCommunicationException e) {
             e.printStackTrace();
             ////TODO addDialog
@@ -130,7 +130,7 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
 
         //TODO change to server !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         try {
-            wpList = Mockup.getWayPointList(currentLocation);
+            wpList = httpFacade.getWayPointList(currentLocation);
         } catch (ServerCommunicationException e) {
             e.printStackTrace();
             //TODO addDialog

@@ -1,4 +1,4 @@
-package com.example.qloc.model.mockup;
+package com.example.qloc.model.data;
 
 import android.location.Location;
 import android.util.Log;
@@ -14,11 +14,20 @@ import java.util.List;
 /**
  * Created by michael on 05.05.15.
  */
-public class Mockup {
+public class Mockup implements Data{
     private static final String TAG = "MOCKUP";
-    private static List<WayPoint> wayPointList;
+    private  List<WayPoint> wayPointList;
+    private static Mockup instance;
 
-    static{
+    public static  Mockup getInstance(){
+        if(instance == null){
+            return new Mockup();
+        }else{
+            return instance;
+        }
+    }
+
+    private Mockup(){
         wayPointList = new ArrayList<>();
         double [] lats = {47.268646d, 47.2559848d, 47.2644675d, 47.2588401d, 47.2633235d, 47.2641882d};
         double [] longs = {11.393268d, 11.4113074d, 11.4297771d, 11.3859263d, 11.3838469d, 11.3458574d};
@@ -32,7 +41,7 @@ public class Mockup {
             wayPointList.add(start);
         }
     }
-    public static List<WayPoint> getWayPointList(Location currentLocation) throws ServerCommunicationException{
+    public List<WayPoint> getWayPointList(Location currentLocation) throws ServerCommunicationException{
         try {
             Log.d(TAG, JsonTool.rangeQuery(currentLocation).toString());
         } catch (IOException e) {
@@ -41,7 +50,7 @@ public class Mockup {
         return wayPointList;
     }
 
-    public static WayPoint getNextWayPoint(String id) throws ServerCommunicationException{
+    public WayPoint getNextWayPoint(String id) throws ServerCommunicationException{
         try {
             Log.d(TAG, JsonTool.requestNext(id));
         } catch (IOException e) {
@@ -50,7 +59,7 @@ public class Mockup {
         return wayPointList.get(0);
     }
 
-    public static boolean checkAnswer(String givenAnswer){
+    public boolean checkAnswer(String givenAnswer) throws ServerCommunicationException{
         Log.d(TAG, "answer: " + givenAnswer);
         return true;
     }

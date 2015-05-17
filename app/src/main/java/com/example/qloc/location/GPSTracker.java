@@ -1,7 +1,8 @@
-package com.example.qloc.model;
+package com.example.qloc.location;
 
 import android.content.Context;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +15,7 @@ import com.example.qloc.R;
  * singleton class of a GPS-Tracker
  * tracks the users position and selects the GPS-service
  */
-public final class GPSTracker extends DisableEnableGPSListener{
+public final class GPSTracker extends DisableEnableGPSListener {
 
     private final String TAG = "GPSTracker";
     private Context context;
@@ -110,7 +111,17 @@ public final class GPSTracker extends DisableEnableGPSListener{
     public void startTracking(){
         if(!currentProvider.equals(NO_PROVIDER)) {
             locationManager.requestLocationUpdates(currentProvider, MIN_TIME_BW_UPDATES, MIN_DIST_CHANGE_FOR_UPDATES, listener);
+
         }
+    }
+
+    public void addListener(LocationListener list){
+        locationManager.requestLocationUpdates(currentProvider, MIN_TIME_BW_UPDATES, MIN_DIST_CHANGE_FOR_UPDATES, list);
+
+    }
+
+    public void removeListener(LocationListener list){
+        locationManager.removeUpdates(list);
     }
 
 }

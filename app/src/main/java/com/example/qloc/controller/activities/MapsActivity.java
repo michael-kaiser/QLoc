@@ -20,7 +20,7 @@ import android.widget.EditText;
 import com.example.qloc.R;
 import com.example.qloc.model.SaveRoute;
 import com.example.qloc.model.ServerWayPoint;
-import com.example.qloc.model.communication.HttpFacade;
+import com.example.qloc.model.data.HttpFacade;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;

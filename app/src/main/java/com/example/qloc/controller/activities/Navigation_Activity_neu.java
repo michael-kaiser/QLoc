@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
@@ -22,10 +21,10 @@ import android.widget.Toast;
 import com.example.qloc.R;
 import com.example.qloc.controller.fragments.StatusFragment;
 import com.example.qloc.model.BitMapWorkerTask;
-import com.example.qloc.model.DisableEnableGPSListener;
-import com.example.qloc.model.GPSTracker;
+import com.example.qloc.location.DisableEnableGPSListener;
+import com.example.qloc.location.GPSTracker;
 import com.example.qloc.model.WayPoint;
-import com.example.qloc.model.communication.HttpFacade;
+import com.example.qloc.model.data.HttpFacade;
 import com.example.qloc.model.exceptions.ServerCommunicationException;
 
 /**

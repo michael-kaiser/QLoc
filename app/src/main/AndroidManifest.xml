@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.qloc" >
-    <uses-permission android:name="android.permission.SET_DEBUG_APP"></uses-permission>
+
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+
+
     <!--
  The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but are recommended.
@@ -28,13 +31,13 @@
         <activity
             android:name=".controller.activities.PlayGameActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".controller.activities.MainScreen">
+            android:parentActivityName=".controller.activities.MainScreen" >
         </activity>
         <activity
             android:name=".controller.activities.QuestionActivity"
             android:label="@string/title_activity_question"
             android:noHistory="true"
-            android:parentActivityName=".controller.activities.Navigation_Activity_neu">
+            android:parentActivityName=".controller.activities.Navigation_Activity_neu" >
         </activity>
 
         <meta-data
@@ -47,8 +50,8 @@
         <activity
             android:name=".controller.activities.MapsActivity"
             android:label="@string/title_activity_maps"
-            android:parentActivityName=".controller.activities.MainScreen"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:parentActivityName=".controller.activities.MainScreen" >
         </activity>
         <activity
             android:name=".controller.activities.MainScreen"
@@ -59,18 +62,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         //TO TEST
         <activity
             android:name=".controller.activities.Navigation2Activity"
             android:label="@string/title_activity_navigation"
-            android:parentActivityName=".controller.activities.PlayGameActivity">
+            android:parentActivityName=".controller.activities.PlayGameActivity" >
         </activity>
         //TILL
         <activity
             android:name=".controller.activities.Navigation_Activity_neu"
             android:label="@string/title_activity_navigation_neu"
-            android:parentActivityName=".controller.activities.PlayGameActivity">
+            android:parentActivityName=".controller.activities.PlayGameActivity" >
+        </activity>
+        <activity
+            android:name=".controller.activities.Navigation_Activity_neu2"
+            android:label="@string/title_activity_navigation_neu"
+            android:parentActivityName=".controller.activities.PlayGameActivity" >
+        </activity>
+        <activity
+            android:name=".controller.fragments.MapsModeFragment"
+            android:label="@string/title_activity_maps_mode_fragment" >
         </activity>
     </application>
 
