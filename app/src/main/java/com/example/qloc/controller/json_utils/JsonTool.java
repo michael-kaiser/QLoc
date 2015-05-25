@@ -135,13 +135,44 @@ public class JsonTool {
             String error = actualObj.get("error").toString();
             throw new ServerCommunicationException();
         }
-        JsonNode aField = actualObj.get("route");
-        System.out.println(aField.get("name").toString());
 
         return true;
 
     }
 
+    public static String register(String name, String password1, String password2) throws IOException {
+        JsonFactory jFactory = new JsonFactory();
+        StringWriter writer = new StringWriter();
+        JsonGenerator jsonGenerator = null;
+        jsonGenerator = jFactory.createGenerator(writer);
+        jsonGenerator.writeStartObject();
+        jsonGenerator.writeFieldName("setpwd");
+        jsonGenerator.writeStartObject();
+        jsonGenerator.writeStringField("name", name);
+        jsonGenerator.writeStringField("password1", password1);
+        jsonGenerator.writeStringField("password2", password2);
+        jsonGenerator.writeEndObject();
+        jsonGenerator.writeEndObject();
+        jsonGenerator.close();
+        return writer.toString();
+    }
+
+
+    public static String login(String name, String password) throws IOException {
+        JsonFactory jFactory = new JsonFactory();
+        StringWriter writer = new StringWriter();
+        JsonGenerator jsonGenerator = null;
+        jsonGenerator = jFactory.createGenerator(writer);
+        jsonGenerator.writeStartObject();
+        jsonGenerator.writeFieldName("login");
+        jsonGenerator.writeStartObject();
+        jsonGenerator.writeStringField("name", name);
+        jsonGenerator.writeStringField("password", password);
+        jsonGenerator.writeEndObject();
+        jsonGenerator.writeEndObject();
+        jsonGenerator.close();
+        return writer.toString();
+    }
     /*public static boolean evaluatedAnswer(String st) {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode actualObj = null;

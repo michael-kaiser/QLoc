@@ -112,9 +112,33 @@ public class HttpFacade implements Data {
         return response;
     }
 
-    public boolean saveRoute(SaveRoute route){
+    public boolean saveRoute(SaveRoute route) throws ServerCommunicationException {
         //TODO implement
+        String JsonStringSavedRoute = null;
+        String answer = null;
+        try {
+            JsonStringSavedRoute= MyLittleSerializer.SaveRouteToJson(route);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            executer.execute(new CallableHttpConnection(JsonStringSavedRoute));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        try {
+            answer= executer.getResult();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        JsonTool.checkCreatedRoutes(answer);
+        Log.d("SavedRouteJson", JsonStringSavedRoute);
         Log.d("Http", route.toString() + " " + route.size());
+
+
         return false;
     }
+
 }

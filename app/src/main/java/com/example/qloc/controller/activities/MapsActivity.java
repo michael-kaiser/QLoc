@@ -21,6 +21,7 @@ import com.example.qloc.R;
 import com.example.qloc.model.SaveRoute;
 import com.example.qloc.model.ServerWayPoint;
 import com.example.qloc.model.data.HttpFacade;
+import com.example.qloc.model.exceptions.ServerCommunicationException;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -243,7 +244,12 @@ public class MapsActivity extends FragmentActivity implements LocationListener, 
                 String routeDesc = name.getText().toString();
                 SaveRoute route = new SaveRoute(routeName,routeDesc);
                 route.setWayPointList(waypointList);
-                facade.saveRoute(route);
+                try {
+                    facade.saveRoute(route);
+                } catch (ServerCommunicationException e) {
+                    //TODO make dialog
+                    e.printStackTrace();
+                }
                 reset();
                 dialog.dismiss();
             }
