@@ -149,8 +149,7 @@ public class JsonTool {
         jsonGenerator.writeFieldName("setpwd");
         jsonGenerator.writeStartObject();
         jsonGenerator.writeStringField("name", name);
-        jsonGenerator.writeStringField("password1", password1);
-        jsonGenerator.writeStringField("password2", password2);
+        jsonGenerator.writeStringField("password1", password1);//TODO check if server also wants "password1"...
         jsonGenerator.writeEndObject();
         jsonGenerator.writeEndObject();
         jsonGenerator.close();
