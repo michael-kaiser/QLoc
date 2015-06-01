@@ -31,6 +31,7 @@ public class RequestInputStream {
     }
 
     public String readStream() throws IOException {
+
         StringBuilder sb = new StringBuilder();
         //check character size of longest response
         BufferedReader r = new BufferedReader(new InputStreamReader(httpInputStream),1000);

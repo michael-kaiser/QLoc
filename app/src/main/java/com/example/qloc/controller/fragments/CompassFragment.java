@@ -156,11 +156,11 @@ public class CompassFragment extends Fragment {
                     if(Math.abs((currentDegree + azimut))  < 1)
                         return;
 
-                    compass.startAnimation(createRotationAnimation(-azimut));
+                    compass.startAnimation(createRotationAnimation(currentDegree, -azimut));
                     currentDegree = -azimut;
 
                     goalDegree = currentDegree + dir;
-                    waypoint.startAnimation(createRotationAnimation(goalDegree));
+                    waypoint.startAnimation(createRotationAnimation(currentDegreeWaypoint, goalDegree));
                     currentDegreeWaypoint = goalDegree;
                 }
             }
@@ -174,9 +174,9 @@ public class CompassFragment extends Fragment {
         }
 
 
-        private RotateAnimation createRotationAnimation(float goalDegree){
+        private RotateAnimation createRotationAnimation(float from, float goalDegree){
             RotateAnimation rotateAnimation = new RotateAnimation(
-                    currentDegreeWaypoint, goalDegree,
+                    from, goalDegree,
                     Animation.RELATIVE_TO_SELF, 0.5f,
                     Animation.RELATIVE_TO_SELF, 0.5f
             );
