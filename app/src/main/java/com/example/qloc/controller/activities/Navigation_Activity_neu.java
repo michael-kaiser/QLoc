@@ -128,8 +128,7 @@ public class Navigation_Activity_neu extends Activity {
                             Animation.RELATIVE_TO_SELF, 0.5f
                     );
                     rotateAnimation.reset();
-                    rotateAnimation.setInterpolator(new LinearInterpolator());
-                    rotateAnimation.setDuration(DELAY_SENSOR);
+                    rotateAnimation.setDuration(DELAY_SENSOR/10);
                     rotateAnimation.setFillAfter(true);
                     compass.startAnimation(rotateAnimation);
                     currentDegree = -azimut;
@@ -141,8 +140,7 @@ public class Navigation_Activity_neu extends Activity {
                             Animation.RELATIVE_TO_SELF, 0.5f
                     );
                     rotateAnimation2.reset();
-                    rotateAnimation2.setInterpolator(new LinearInterpolator());
-                    rotateAnimation2.setDuration(DELAY_SENSOR);
+                    rotateAnimation2.setDuration(DELAY_SENSOR/10);
                     rotateAnimation2.setFillAfter(true);
                     waypoint.startAnimation(rotateAnimation2);
                     currentDegreeWaypoint = goalDegree;
