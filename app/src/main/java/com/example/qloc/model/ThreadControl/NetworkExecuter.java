@@ -18,7 +18,7 @@ public class NetworkExecuter<T> {
     public void execute(Callable<T> call){
         result = executer.submit(call);
     }
-    //ToDo check for queue empty
+
     public T getResultWait(long millis) throws InterruptedException, ExecutionException {
         T response;
         try{

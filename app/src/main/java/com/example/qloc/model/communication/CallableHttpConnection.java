@@ -3,15 +3,14 @@ package com.example.qloc.model.communication;
 import android.util.Log;
 import android.webkit.CookieManager;
 
-import java.io.BufferedInputStream;
+import com.example.qloc.model.communication.InputStream.RequestInputStream;
+
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -32,24 +31,22 @@ public class CallableHttpConnection implements Callable<String> {
     }
 
     public String call() {
-        int status;
         String response = null;
         if(request == null) return null;
         HttpURLConnection connection = null;
         try {
+            connection = (HttpURLConnection) url.openConnection();
             // Set cookies in requests
             CookieManager cookieManager = CookieManager.getInstance();
             String cookie = cookieManager.getCookie(connection.getURL().toString());
             if (cookie != null) {
                 connection.setRequestProperty("Cookie", cookie);
             }
-            connection = (HttpURLConnection) url.openConnection();
-            Log.d("Http", connection.toString());
-            connection.setRequestMethod("POST");
-            connection.setDoOutput(true);
-            connection.setChunkedStreamingMode(0);
-            //deactivate that servers use gzip compression
-            //connection.setRequestProperty("Accept-Encoding", "identity");
+
+            setStandardHttpProperty(connection);
+
+            connection.connect();
+
             OutputStream out = new BufferedOutputStream(connection.getOutputStream());
             writeStream(out, request);
             out.close();
@@ -60,15 +57,9 @@ public class CallableHttpConnection implements Callable<String> {
                     cookieManager.setCookie(connection.getURL().toString(), cookieTemp);
                 }
             }
-            Log.d("http", request.toString());
-            status  = connection.getResponseCode();
-            InputStream in;
-            if(status != 200){
-                in = new BufferedInputStream(connection.getErrorStream());
-            }else {
-                in = new BufferedInputStream(connection.getInputStream());
-            }
-            response = readStream(in);
+
+            response = new RequestInputStream(connection).readStream();
+            Log.d("http", response.toString());
         } catch (IOException e) {
             Log.d("http", e.getMessage());
             e.printStackTrace();
@@ -76,22 +67,18 @@ public class CallableHttpConnection implements Callable<String> {
             if(connection != null)
                 connection.disconnect();
         }
-
         return response;
     }
     private void writeStream(OutputStream out, String request)throws IOException{
         out.write(request.getBytes("UTF-8"));
         out.flush();
     }
-    private String readStream(InputStream is) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        //check character size of longest response
-        BufferedReader r = new BufferedReader(new InputStreamReader(is),1000);
-        for (String line = r.readLine(); line != null; line =r.readLine()){
-            sb.append(line);
-        }
-        is.close();
-        return sb.toString();
+    private void setStandardHttpProperty(HttpURLConnection connection) throws ProtocolException {
+        connection.setRequestMethod("POST");
+        connection.setDoOutput(true);
+        connection.setChunkedStreamingMode(0);
+        //deactivate that servers use gzip compression
+        //connection.setRequestProperty("Accept-Encoding", "identity");
     }
 
 }

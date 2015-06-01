@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
@@ -26,7 +25,7 @@ import com.example.qloc.controller.activities.activityUtils.BitMapWorkerTask;
  */
 public class CompassFragment extends Fragment {
 
-    private final static int DELAY_SENSOR = 10000;
+    private final static int DELAY_SENSOR = SensorManager.SENSOR_DELAY_FASTEST;
 
     private ImageView compass;
     private ImageView waypoint;
@@ -40,7 +39,7 @@ public class CompassFragment extends Fragment {
 
     private Sensor accelerometer;
     private Sensor magnetometer;
-    private MySensorEventListener mysensor;
+    private MySensorEventListener mSensorEventListener;
     private SensorManager mSensorManager;
     private LocationListener listener;
 
@@ -60,12 +59,12 @@ public class CompassFragment extends Fragment {
         waypoint = (ImageView) view.findViewById(R.id.waypoint);
 
         degree =0;
-        mysensor = new MySensorEventListener();
+        mSensorEventListener = new MySensorEventListener();
         mSensorManager = (SensorManager) getActivity().getSystemService(getActivity().SENSOR_SERVICE);
         accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-        mSensorManager.registerListener(mysensor, accelerometer, DELAY_SENSOR);
-        mSensorManager.registerListener(mysensor, magnetometer, DELAY_SENSOR);
+        mSensorManager.registerListener(mSensorEventListener, accelerometer, DELAY_SENSOR);
+        mSensorManager.registerListener(mSensorEventListener, magnetometer, DELAY_SENSOR);
         listener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
@@ -94,8 +93,8 @@ public class CompassFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        mSensorManager.unregisterListener(mysensor,accelerometer);
-        mSensorManager.unregisterListener(mysensor, magnetometer);
+        mSensorManager.unregisterListener(mSensorEventListener,accelerometer);
+        mSensorManager.unregisterListener(mSensorEventListener, magnetometer);
         parent.getTracker().removeListener(listener);
     }
 
@@ -114,8 +113,8 @@ public class CompassFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        mSensorManager.registerListener(mysensor,accelerometer,DELAY_SENSOR);
-        mSensorManager.registerListener(mysensor,magnetometer,DELAY_SENSOR);
+        mSensorManager.registerListener(mSensorEventListener,accelerometer,DELAY_SENSOR);
+        mSensorManager.registerListener(mSensorEventListener,magnetometer,DELAY_SENSOR);
     }
 
     @Override
@@ -127,6 +126,7 @@ public class CompassFragment extends Fragment {
             throw new ClassCastException(activity.toString() + "must implement CompassFragment.HeadingUpdater");
         }
     }
+
 
 
 
@@ -152,32 +152,17 @@ public class CompassFragment extends Fragment {
                     degree = (int) Math.round(azimut);
                     float dir = parent.calculateHeading();
                     float goalDegree;
-                    RotateAnimation rotateAnimation = new RotateAnimation(
-                            currentDegree, -azimut,
-                            Animation.RELATIVE_TO_SELF, 0.5f,
-                            Animation.RELATIVE_TO_SELF, 0.5f
-                    );
-                    rotateAnimation.reset();
-                    rotateAnimation.setInterpolator(new LinearInterpolator());
-                    rotateAnimation.setDuration(DELAY_SENSOR);
-                    rotateAnimation.setFillAfter(true);
-                    compass.startAnimation(rotateAnimation);
+
+                    if(Math.abs((currentDegree + azimut))  < 1)
+                        return;
+
+                    compass.startAnimation(createRotationAnimation(-azimut));
                     currentDegree = -azimut;
 
                     goalDegree = currentDegree + dir;
-                    RotateAnimation rotateAnimation2 = new RotateAnimation(
-                            currentDegreeWaypoint, goalDegree,
-                            Animation.RELATIVE_TO_SELF, 0.5f,
-                            Animation.RELATIVE_TO_SELF, 0.5f
-                    );
-                    rotateAnimation2.reset();
-                    rotateAnimation2.setInterpolator(new LinearInterpolator());
-                    rotateAnimation2.setDuration(DELAY_SENSOR);
-                    rotateAnimation2.setFillAfter(true);
-                    waypoint.startAnimation(rotateAnimation2);
+                    waypoint.startAnimation(createRotationAnimation(goalDegree));
                     currentDegreeWaypoint = goalDegree;
                 }
-
             }
 
             parent.calculateHeading();
@@ -186,6 +171,23 @@ public class CompassFragment extends Fragment {
         @Override
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+        }
+
+
+        private RotateAnimation createRotationAnimation(float goalDegree){
+            RotateAnimation rotateAnimation = new RotateAnimation(
+                    currentDegreeWaypoint, goalDegree,
+                    Animation.RELATIVE_TO_SELF, 0.5f,
+                    Animation.RELATIVE_TO_SELF, 0.5f
+            );
+            setStandardAnimationSettings(rotateAnimation);
+            return rotateAnimation;
+        }
+
+        private void setStandardAnimationSettings(RotateAnimation rotateAnimation){
+            rotateAnimation.reset();
+            rotateAnimation.setDuration(DELAY_SENSOR);
+            rotateAnimation.setFillAfter(true);
         }
     }
 
