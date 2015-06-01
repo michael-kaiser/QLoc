@@ -1,20 +1,19 @@
 package com.example.qloc.controller.json_utils;
 
-import com.example.qloc.model.Answer;
-import com.example.qloc.model.RoutesList;
-import com.example.qloc.model.RoutesNext;
-import com.example.qloc.model.SaveRoute;
-import com.example.qloc.model.WayPoint;
-import com.example.qloc.model.WayPointDataCont;
+import com.example.qloc.controller.json_utils.jsonObjects.Answer;
+import com.example.qloc.controller.json_utils.jsonObjects.RoutesList;
+import com.example.qloc.controller.json_utils.jsonObjects.RoutesNext;
+import com.example.qloc.controller.activities.activityUtils.SaveRoute;
+import com.example.qloc.controller.activities.activityUtils.WayPoint;
+import com.example.qloc.controller.json_utils.jsonObjects.SaveRouteContainer;
+import com.example.qloc.controller.json_utils.jsonObjects.SaveRouteContainerContainer;
+import com.example.qloc.controller.json_utils.jsonObjects.WayPointDataCont;
 import com.example.qloc.model.exceptions.ServerCommunicationException;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.io.StringWriter;
 
 //import com.example.qloc.model.WayPointList2;
 
@@ -36,10 +35,10 @@ public class MyLittleSerializer {
     }
 
     public static WayPoint JSONStringToWayPoint(String jsonString) throws IOException, ServerCommunicationException {
-        ObjectMapper mapper = new ObjectMapper();
+
         JsonNode actualObj = null;
         try {
-            actualObj = mapper.readTree(jsonString);
+            actualObj = OBJECT_MAPPER.readTree(jsonString);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,10 +54,9 @@ public class MyLittleSerializer {
     }
 
     public static RoutesList JSONStringToRoutesList(String jsonString) throws IOException, ServerCommunicationException {
-        ObjectMapper mapper = new ObjectMapper();
         JsonNode actualObj = null;
         try {
-            actualObj = mapper.readTree(jsonString);
+            actualObj = OBJECT_MAPPER.readTree(jsonString);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -95,7 +93,7 @@ public class MyLittleSerializer {
         SaveRouteContainer container = new SaveRouteContainer(svr);
 
         String ret = null;
-        SaveRouteContainer2 container2 =container.prepareJson();
+        SaveRouteContainerContainer container2 =container.prepareJson();
         ret = OBJECT_MAPPER.writeValueAsString(container2);
         return ret;
 

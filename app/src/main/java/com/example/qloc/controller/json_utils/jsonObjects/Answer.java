@@ -1,4 +1,4 @@
-package com.example.qloc.model;
+package com.example.qloc.controller.json_utils.jsonObjects;
 
 /**
  * Created by uli on 27.04.15.

@@ -8,7 +8,7 @@ import android.hardware.SensorManager;
 import android.widget.ImageView;
 
 import com.example.qloc.location.GPSTracker;
-import com.example.qloc.model.WayPoint;
+import com.example.qloc.controller.activities.activityUtils.WayPoint;
 
 
 /**

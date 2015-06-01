@@ -24,7 +24,7 @@ import com.example.qloc.controller.fragments.MapsModeFragment;
 import com.example.qloc.controller.fragments.StatusFragment;
 import com.example.qloc.location.DisableEnableGPSListener;
 import com.example.qloc.location.GPSTracker;
-import com.example.qloc.model.WayPoint;
+import com.example.qloc.controller.activities.activityUtils.WayPoint;
 import com.example.qloc.model.exceptions.ServerCommunicationException;
 import com.example.qloc.model.data.Data;
 import com.example.qloc.model.data.Mockup;
@@ -36,7 +36,7 @@ import com.google.android.gms.maps.model.LatLng;
  * There is the possibility to change to the map fragment
  * @author uli,michael,alex
  */
-public class Navigation_Activity_neu2 extends Activity implements CompassMapParent {
+public class NavigationActivity extends Activity implements CompassMapParent {
 
     private final String TAG = "NavigationActivity";
     public static final String KEY = "Waypoint2";
@@ -211,7 +211,7 @@ public class Navigation_Activity_neu2 extends Activity implements CompassMapPare
         start.setLatitude(s.getLatitude());
         mylistener.onLocationChanged(s);
 
-        Toast.makeText(Navigation_Activity_neu2.this, ("Latitude: " + String.valueOf(s.getLatitude()) +
+        Toast.makeText(NavigationActivity.this, ("Latitude: " + String.valueOf(s.getLatitude()) +
                 "\nLongitude: " + String.valueOf(start.getLongitude())), Toast.LENGTH_LONG).show();
 
     }

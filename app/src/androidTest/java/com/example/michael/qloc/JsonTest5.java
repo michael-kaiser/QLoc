@@ -3,9 +3,8 @@ package com.example.michael.qloc;
 import android.location.Location;
 
 import com.example.qloc.controller.json_utils.MyLittleSerializer;
-import com.example.qloc.model.SaveRoute;
-import com.example.qloc.model.ServerWayPoint;
-import com.example.qloc.model.WayPoint;
+import com.example.qloc.controller.activities.activityUtils.SaveRoute;
+import com.example.qloc.controller.activities.activityUtils.ServerWayPoint;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import junit.framework.TestCase;

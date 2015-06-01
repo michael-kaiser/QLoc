@@ -1,4 +1,4 @@
-package com.example.qloc.model;
+package com.example.qloc.controller.activities.activityUtils;
 
 import android.location.Location;
 

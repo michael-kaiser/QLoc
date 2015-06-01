@@ -5,9 +5,9 @@ import android.util.Log;
 
 import com.example.qloc.controller.json_utils.JsonTool;
 import com.example.qloc.controller.json_utils.MyLittleSerializer;
-import com.example.qloc.model.SaveRoute;
+import com.example.qloc.controller.activities.activityUtils.SaveRoute;
 import com.example.qloc.model.ThreadControl.NetworkExecuter;
-import com.example.qloc.model.WayPoint;
+import com.example.qloc.controller.activities.activityUtils.WayPoint;
 import com.example.qloc.model.communication.CallableHttpConnection;
 import com.example.qloc.model.communication.HttpConnection;
 import com.example.qloc.model.exceptions.ServerCommunicationException;

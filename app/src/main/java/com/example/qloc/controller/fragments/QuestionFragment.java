@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.qloc.R;
-import com.example.qloc.model.WayPoint;
+import com.example.qloc.controller.activities.activityUtils.WayPoint;
 
 import java.util.List;
 

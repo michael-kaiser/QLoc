@@ -2,7 +2,7 @@ package com.example.qloc.model.data;
 
 import android.location.Location;
 
-import com.example.qloc.model.WayPoint;
+import com.example.qloc.controller.activities.activityUtils.WayPoint;
 import com.example.qloc.model.exceptions.ServerCommunicationException;
 
 import java.util.List;

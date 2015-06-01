@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.qloc.R;
-import com.example.qloc.model.BitMapWorkerTask;
+import com.example.qloc.controller.activities.activityUtils.BitMapWorkerTask;
 
 public class MainScreen extends Activity {
 

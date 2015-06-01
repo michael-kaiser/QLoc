@@ -18,7 +18,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
 import com.example.qloc.R;
-import com.example.qloc.model.BitMapWorkerTask;
+import com.example.qloc.controller.activities.activityUtils.BitMapWorkerTask;
 
 /**
  * This fragment shows the compass

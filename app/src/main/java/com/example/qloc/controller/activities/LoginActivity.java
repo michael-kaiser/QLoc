@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.qloc.R;
-import com.example.qloc.model.BitMapWorkerTask;
+import com.example.qloc.controller.activities.activityUtils.BitMapWorkerTask;
 import com.example.qloc.model.exceptions.BadLoginException;
 import com.example.qloc.model.exceptions.BadRegistrationException;
 

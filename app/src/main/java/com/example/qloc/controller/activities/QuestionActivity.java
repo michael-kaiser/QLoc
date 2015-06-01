@@ -16,7 +16,7 @@ import com.example.qloc.R;
 import com.example.qloc.controller.dialogs.AlertDialogUtility;
 import com.example.qloc.controller.fragments.QuestionFragment;
 import com.example.qloc.controller.fragments.StatusFragment;
-import com.example.qloc.model.WayPoint;
+import com.example.qloc.controller.activities.activityUtils.WayPoint;
 import com.example.qloc.model.exceptions.ServerCommunicationException;
 
 /**
@@ -72,8 +72,8 @@ public class QuestionActivity extends Activity implements QuestionFragment.Quest
      * gets the question
      */
     public WayPoint getWaypoint() {
-        Log.d(TAG, "got waypoint: " + (getIntent().getParcelableExtra(Navigation_Activity_neu.KEY)).toString());
-        return (WayPoint) getIntent().getParcelableExtra(Navigation_Activity_neu.KEY);
+        Log.d(TAG, "got waypoint: " + (getIntent().getParcelableExtra(NavigationActivity.KEY)).toString());
+        return (WayPoint) getIntent().getParcelableExtra(NavigationActivity.KEY);
     }
 
 

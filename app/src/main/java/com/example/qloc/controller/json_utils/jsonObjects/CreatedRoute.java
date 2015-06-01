@@ -1,6 +1,6 @@
-package com.example.qloc.controller.json_utils;
+package com.example.qloc.controller.json_utils.jsonObjects;
 
-import com.example.qloc.controller.json_utils.WayPoint2;
+import com.example.qloc.controller.json_utils.jsonObjects.WayPointHelper;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class CreatedRoute {
 
     @JsonProperty("waypoints")
 
-    private ArrayList<WayPoint2> waypoints;
+    private ArrayList<WayPointHelper> waypoints;
 
     public String getName() {
         return name;
@@ -32,11 +32,11 @@ public class CreatedRoute {
         this.description = description;
     }
 
-    public ArrayList<WayPoint2> getWaypoints() {
+    public ArrayList<WayPointHelper> getWaypoints() {
         return waypoints;
     }
 
-    public void setWaypoints(ArrayList<WayPoint2> waypoints) {
+    public void setWaypoints(ArrayList<WayPointHelper> waypoints) {
         this.waypoints = waypoints;
     }
 }

@@ -16,47 +16,13 @@ import java.io.StringWriter;
  */
 public class JsonTool {
 
-    /*public static String rangeQuery(double lon, double lat) throws IOException {
 
-        JsonFactory jFactory = new JsonFactory();
-        StringWriter writer = new StringWriter();
-        JsonGenerator jsonGenerator = null;
-        try {
-            jsonGenerator = jFactory.createGenerator(writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        jsonGenerator.writeStartObject();
-        jsonGenerator.writeNumberField("longitude", lon);
-        jsonGenerator.writeNumberField("latitude", lat);
-        jsonGenerator.writeEndObject();
-        jsonGenerator.close();
-        return writer.toString();
-    }*/
-
-    /*public static String rangeQuery(Location l) throws IOException {
-
-        JsonFactory jFactory = new JsonFactory();
-        StringWriter writer = new StringWriter();
-        JsonGenerator jsonGenerator = null;
-        try {
-            jsonGenerator = jFactory.createGenerator(writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        jsonGenerator.writeStartObject();
-        jsonGenerator.writeNumberField("longitude", l.getLongitude());
-        jsonGenerator.writeNumberField("latitude", l.getLatitude());
-        jsonGenerator.writeEndObject();
-        jsonGenerator.close();
-        return writer.toString();
-    }*/
     public static String rangeQuery(Location l) throws IOException {
         return rangeQuery(l.getLatitude(), l.getLongitude());
 
     }
 
-    public static String rangeQuery(double lat, double lon) throws IOException {
+    private static String rangeQuery(double lat, double lon) throws IOException {
         JsonFactory jFactory = new JsonFactory();
         StringWriter writer = new StringWriter();
         JsonGenerator jsonGenerator = null;
@@ -149,7 +115,7 @@ public class JsonTool {
         jsonGenerator.writeFieldName("setpwd");
         jsonGenerator.writeStartObject();
         jsonGenerator.writeStringField("name", name);
-        jsonGenerator.writeStringField("password1", password1);//TODO check if server also wants "password1"...
+        jsonGenerator.writeStringField("password", password1);//TODO assure!
         jsonGenerator.writeEndObject();
         jsonGenerator.writeEndObject();
         jsonGenerator.close();
@@ -172,18 +138,7 @@ public class JsonTool {
         jsonGenerator.close();
         return writer.toString();
     }
-    /*public static boolean evaluatedAnswer(String st) {
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode actualObj = null;
-        try {
-            actualObj = mapper.readTree(st);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        JsonNode aField = actualObj.get("evaluation");
 
-
-        return (aField.booleanValue());*/
 
 
 

@@ -18,8 +18,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.qloc.R;
-import com.example.qloc.model.SaveRoute;
-import com.example.qloc.model.ServerWayPoint;
+import com.example.qloc.controller.activities.activityUtils.SaveRoute;
+import com.example.qloc.controller.activities.activityUtils.ServerWayPoint;
 import com.example.qloc.model.data.HttpFacade;
 import com.example.qloc.model.exceptions.ServerCommunicationException;
 import com.google.android.gms.maps.CameraUpdateFactory;

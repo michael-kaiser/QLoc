@@ -10,10 +10,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.qloc.R;
-import com.example.qloc.model.CustomAdapter;
+import com.example.qloc.controller.activities.activityUtils.CustomAdapter;
 import com.example.qloc.location.GPSTracker;
-import com.example.qloc.model.RowItem;
-import com.example.qloc.model.WayPoint;
+import com.example.qloc.controller.activities.activityUtils.RowItem;
+import com.example.qloc.controller.activities.activityUtils.WayPoint;
 import com.example.qloc.model.exceptions.ServerCommunicationException;
 import com.example.qloc.model.data.Data;
 import com.example.qloc.model.data.Mockup;
@@ -61,7 +61,7 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent i = new Intent(this,Navigation_Activity_neu2.class);
+        Intent i = new Intent(this,NavigationActivity.class);
         WayPoint wp = new WayPoint(((RowItem) parent.getAdapter().getItem(position)).getWaypoint());
         Log.d(TAG+"test",wp.getName() + wp.getDesc() + wp.getAnswer4());
         Log.d(TAG,wp.getId() + " ");
@@ -83,7 +83,7 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
      * starts the activity when you click on the green arrow
      */
     public void onClickStartButton(View v){
-        Intent i = new Intent(this,Navigation_Activity_neu.class);
+        Intent i = new Intent(this,NavigationActivity.class);
         WayPoint wp = new WayPoint(rowItems.get(0).getWaypoint());
         //TODO change to server
         WayPoint nextWayPoint = null;

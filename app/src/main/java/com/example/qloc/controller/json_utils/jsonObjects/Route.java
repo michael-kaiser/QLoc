@@ -1,4 +1,4 @@
-package com.example.qloc.model;
+package com.example.qloc.controller.json_utils.jsonObjects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

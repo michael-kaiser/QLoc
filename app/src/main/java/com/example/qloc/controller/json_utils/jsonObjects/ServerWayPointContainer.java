@@ -1,8 +1,6 @@
-package com.example.qloc.controller.json_utils;
+package com.example.qloc.controller.json_utils.jsonObjects;
 
-import android.location.Location;
-
-import com.example.qloc.model.ServerWayPoint;
+import com.example.qloc.controller.activities.activityUtils.ServerWayPoint;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**

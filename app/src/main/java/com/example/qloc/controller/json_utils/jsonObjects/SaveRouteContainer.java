@@ -1,7 +1,7 @@
-package com.example.qloc.controller.json_utils;
+package com.example.qloc.controller.json_utils.jsonObjects;
 
-import com.example.qloc.model.SaveRoute;
-import com.example.qloc.model.ServerWayPoint;
+import com.example.qloc.controller.activities.activityUtils.SaveRoute;
+import com.example.qloc.controller.activities.activityUtils.ServerWayPoint;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class SaveRouteContainer {
         this.wayPointList = wayPointList;
     }
 
-    public  SaveRouteContainer2  prepareJson(){
-        return new SaveRouteContainer2(this);
+    public SaveRouteContainerContainer prepareJson(){
+        return new SaveRouteContainerContainer(this);
     }
 }
