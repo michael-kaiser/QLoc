@@ -26,7 +26,7 @@ public class CallableHttpConnection implements Callable<String> {
     private final String request;
 
     public CallableHttpConnection(String request) throws MalformedURLException {
-        url = new URL("http", URL_NAME, 3000,"");
+        url = new URL("http", URL_NAME, 3000,"api");
         this.request =request;
     }
 
