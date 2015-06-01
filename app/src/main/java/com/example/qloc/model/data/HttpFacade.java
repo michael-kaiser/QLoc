@@ -58,6 +58,20 @@ public class HttpFacade implements Data {
         return wpList;
     }
 
+    public void login(String name, String password){
+        String answer = null;
+        try {
+            answer = getResponseFromServer(JsonTool.login(name, password));
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.d("Facade", answer);
+    }
+
     public WayPoint getNextWayPoint(String nextWayPointID) throws ServerCommunicationException {
         String msg = null;
         WayPoint nextWayPoint = null;

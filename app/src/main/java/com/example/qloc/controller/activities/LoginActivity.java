@@ -14,8 +14,12 @@ import android.widget.TextView;
 
 import com.example.qloc.R;
 import com.example.qloc.controller.activities.activityUtils.BitMapWorkerTask;
+import com.example.qloc.controller.json_utils.JsonTool;
+import com.example.qloc.model.data.HttpFacade;
 import com.example.qloc.model.exceptions.BadLoginException;
 import com.example.qloc.model.exceptions.BadRegistrationException;
+
+import java.io.IOException;
 
 public class LoginActivity extends Activity{
 
@@ -95,14 +99,7 @@ public class LoginActivity extends Activity{
 
     }
     private void login() throws BadLoginException {
-        if(!pwd.getText().toString().equals("hallo")){
-          throw new BadLoginException();
-        }else{
-            Intent i = new Intent(this, MainScreen.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(i);
-
-        }
+        HttpFacade.getInstance().login(email.getText().toString(), pwd.getText().toString());
 
     }
 
