@@ -17,6 +17,11 @@ import java.io.StringWriter;
 public class JsonTool {
 
 
+    private static final ObjectMapper OBJECT_MAPPER;
+    static {
+        OBJECT_MAPPER = new ObjectMapper();
+    }
+
     public static String rangeQuery(Location l) throws IOException {
         return rangeQuery(l.getLatitude(), l.getLongitude());
 
@@ -71,10 +76,9 @@ public class JsonTool {
     }
 
     public static boolean evaluatedAnswer(String st) throws ServerCommunicationException {
-        ObjectMapper mapper = new ObjectMapper();
         JsonNode actualObj = null;
         try {
-            actualObj = mapper.readTree(st);
+            actualObj = OBJECT_MAPPER.readTree(st);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -90,10 +94,9 @@ public class JsonTool {
     }
 
     public static boolean checkCreatedRoutes(String st) throws ServerCommunicationException {
-        ObjectMapper mapper = new ObjectMapper();
         JsonNode actualObj = null;
         try {
-            actualObj = mapper.readTree(st);
+            actualObj = OBJECT_MAPPER.readTree(st);
         } catch (IOException e) {
             e.printStackTrace();
         }
