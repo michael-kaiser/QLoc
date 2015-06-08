@@ -11,12 +11,12 @@ import android.widget.ListView;
 
 import com.example.qloc.R;
 import com.example.qloc.controller.activities.activityUtils.CustomAdapter;
-import com.example.qloc.location.GPSTracker;
 import com.example.qloc.controller.activities.activityUtils.RowItem;
 import com.example.qloc.controller.activities.activityUtils.WayPoint;
-import com.example.qloc.model.exceptions.ServerCommunicationException;
+import com.example.qloc.location.GPSTracker;
 import com.example.qloc.model.data.Data;
-import com.example.qloc.model.data.Mockup;
+import com.example.qloc.model.data.HttpFacade;
+import com.example.qloc.model.exceptions.ServerCommunicationException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,7 +51,7 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
         //override animation when changing to this activity
         overridePendingTransition(R.anim.pull_in_from_right,R.anim.pull_out_to_left);
         setContentView(R.layout.activity_play);
-        httpFacade = Mockup.getInstance();
+        httpFacade = HttpFacade.getInstance();
         myListview = (ListView) findViewById(R.id.list);
         View view = View.inflate(this, R.layout.headerview, null);
         myListview.addHeaderView(view);

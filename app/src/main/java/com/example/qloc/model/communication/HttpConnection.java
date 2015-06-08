@@ -30,7 +30,7 @@ public class HttpConnection{
         return instance;
     }
     private HttpConnection() throws MalformedURLException {
-        this.url = new URL("http", "192.168.1.87", 3000,"");
+        this.url = new URL("http", "192.168.1.73", 3000,"");
         Log.d("Http", url.toString());
     }
     public String sendAndRecive(String request) {

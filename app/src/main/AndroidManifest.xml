@@ -63,6 +63,12 @@
             android:name=".controller.fragments.MapsModeFragment"
             android:label="@string/title_activity_maps_mode_fragment" >
         </activity>
+
+        <activity
+            android:name=".controller.activities.QuestionActivity"
+            android:label="hallo" >
+        </activity>
+
         <activity
             android:name=".controller.activities.LoginActivity"
             android:label="@string/title_activity_login"

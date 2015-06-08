@@ -36,6 +36,8 @@ public class JsonTool {
         jsonGenerator.writeNumber(lon);
         jsonGenerator.writeNumber(0.0);
         jsonGenerator.writeEndArray(); // ]
+        jsonGenerator.writeFieldName("distance");
+        jsonGenerator.writeNumber(1000000000);
         jsonGenerator.writeEndObject();
         jsonGenerator.writeEndObject(); // }}
         jsonGenerator.close();
@@ -89,12 +91,29 @@ public class JsonTool {
 
     }
 
-    public static boolean checkCreatedRoutes(String st) throws ServerCommunicationException {
+    public static boolean checkError(String st) {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode actualObj = null;
         try {
             actualObj = mapper.readTree(st);
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if((actualObj.get("error"))!= null){
+            String error = actualObj.get("error").toString();
+            return false;
+        }
+
+        return true;
+
+    }
+
+    public static boolean checkCreatedRoutes(String st) throws ServerCommunicationException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode actualObj = null;
+        try {
+            actualObj = mapper.readTree(st);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         if((actualObj.get("error"))!= null){
@@ -106,7 +125,7 @@ public class JsonTool {
 
     }
 
-    public static String register(String name, String password1, String password2) throws IOException {
+    public static String register(String name, String password1) throws IOException {
         JsonFactory jFactory = new JsonFactory();
         StringWriter writer = new StringWriter();
         JsonGenerator jsonGenerator = null;
@@ -115,7 +134,7 @@ public class JsonTool {
         jsonGenerator.writeFieldName("setpwd");
         jsonGenerator.writeStartObject();
         jsonGenerator.writeStringField("name", name);
-        jsonGenerator.writeStringField("password", password1);//TODO assure!
+        jsonGenerator.writeStringField("password", password1);
         jsonGenerator.writeEndObject();
         jsonGenerator.writeEndObject();
         jsonGenerator.close();

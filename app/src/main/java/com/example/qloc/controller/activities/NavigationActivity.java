@@ -18,16 +18,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qloc.R;
+import com.example.qloc.controller.activities.activityUtils.WayPoint;
 import com.example.qloc.controller.fragments.CompassFragment;
 import com.example.qloc.controller.fragments.CompassMapParent;
 import com.example.qloc.controller.fragments.MapsModeFragment;
 import com.example.qloc.controller.fragments.StatusFragment;
 import com.example.qloc.location.DisableEnableGPSListener;
 import com.example.qloc.location.GPSTracker;
-import com.example.qloc.controller.activities.activityUtils.WayPoint;
-import com.example.qloc.model.exceptions.ServerCommunicationException;
 import com.example.qloc.model.data.Data;
-import com.example.qloc.model.data.Mockup;
+import com.example.qloc.model.data.HttpFacade;
+import com.example.qloc.model.exceptions.ServerCommunicationException;
 import com.google.android.gms.maps.model.LatLng;
 
 /**
@@ -55,7 +55,7 @@ public class NavigationActivity extends Activity implements CompassMapParent {
     private MyLocationListener mylistener;
     private String nextWaypointId = "unset";
     private GPSTracker tracker = GPSTracker.getInstance(this);
-    private Data facade = Mockup.getInstance();
+    private Data facade = HttpFacade.getInstance();
     private FragmentManager fm;
     private FragmentTransaction ft;
 
@@ -126,6 +126,11 @@ public class NavigationActivity extends Activity implements CompassMapParent {
             tracker.startTracking();
 
             loc_name.setText(start.getName());
+        }else{
+            fm.beginTransaction().
+            remove(fm.findFragmentById(R.id.compass_fragment_layout)).commit();
+            Intent i = new Intent(this, MainScreen.class);
+            startActivity(i);
         }
     }
 

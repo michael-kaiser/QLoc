@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.webkit.CookieManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -14,12 +15,9 @@ import android.widget.TextView;
 
 import com.example.qloc.R;
 import com.example.qloc.controller.activities.activityUtils.BitMapWorkerTask;
-import com.example.qloc.controller.json_utils.JsonTool;
 import com.example.qloc.model.data.HttpFacade;
 import com.example.qloc.model.exceptions.BadLoginException;
 import com.example.qloc.model.exceptions.BadRegistrationException;
-
-import java.io.IOException;
 
 public class LoginActivity extends Activity{
 
@@ -41,7 +39,7 @@ public class LoginActivity extends Activity{
         email = (EditText) findViewById(R.id.login_email);
         pwd = (EditText) findViewById(R.id.login_pwd1);
         errorMsg = (TextView) findViewById(R.id.error_message);
-
+        CookieManager.getInstance().removeAllCookie();
     }
 
     public void onButtonRegister(View v){
@@ -81,7 +79,7 @@ public class LoginActivity extends Activity{
                 String strPwd2 = pwd2.getText().toString();
                 if(checkPwd(strPwd,strPwd2)){
                     errorPwd.setVisibility(View.INVISIBLE);
-                    regSuccess = registration();
+                    regSuccess = registration(mail, strPwd);
                     dialog.dismiss();
                 }else{
                     errorPwd.setVisibility(View.VISIBLE);
@@ -100,12 +98,13 @@ public class LoginActivity extends Activity{
     }
     private void login() throws BadLoginException {
         HttpFacade.getInstance().login(email.getText().toString(), pwd.getText().toString());
+        Intent i = new Intent(this, MainScreen.class);
+        startActivity(i);
 
     }
 
-    private boolean registration(){
-        //TODO implement
-        return false;
+    private boolean registration(String email, String pwd){
+        return HttpFacade.getInstance().register(email, pwd);
     }
 
     private boolean checkPwd(String pwd1, String pwd2){

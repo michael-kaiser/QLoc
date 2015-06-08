@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import static com.example.qloc.controller.json_utils.JsonTool.checkError;
+
 /**
  * Created by michael on 03.05.15.
  */
@@ -72,6 +74,21 @@ public class HttpFacade implements Data {
         Log.d("Facade", answer);
     }
 
+    public boolean register(String name, String password){
+        String answer = null;
+        try {
+            answer = getResponseFromServer(JsonTool.register(name, password));
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.d("Facade", answer);
+        return checkError(answer);
+    }
+
     public WayPoint getNextWayPoint(String nextWayPointID) throws ServerCommunicationException {
         String msg = null;
         WayPoint nextWayPoint = null;
@@ -92,6 +109,9 @@ public class HttpFacade implements Data {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
+        }
+        if(nextWayPoint==null){
+            return null; //TODO search better solution!
         }
         nextWayPoint.setName(nextWayPoint.getDesc());
         nextWayPoint.setNextId(nextWayPointID);

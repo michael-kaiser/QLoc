@@ -99,6 +99,14 @@ public class CompassFragment extends Fragment {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mSensorManager.unregisterListener(mSensorEventListener,accelerometer);
+        mSensorManager.unregisterListener(mSensorEventListener, magnetometer);
+        parent.getTracker().removeListener(listener);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         parent.getTracker().addListener(listener);

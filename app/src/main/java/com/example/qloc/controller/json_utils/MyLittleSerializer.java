@@ -46,6 +46,9 @@ public class MyLittleSerializer {
             String error = actualObj.get("error").toString();
             throw new ServerCommunicationException();
         }
+        if((actualObj.get("end"))!= null){
+            return null;//TODO no other object null!
+        }
         RoutesNext wpdc;
 
             wpdc = OBJECT_MAPPER.readValue(jsonString, RoutesNext.class);
