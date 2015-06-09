@@ -5,6 +5,8 @@ import android.location.Location;
 import com.example.qloc.model.exceptions.ServerCommunicationException;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -90,14 +92,21 @@ public class JsonTool {
         return (aField.booleanValue());
 
     }
-
+    //TODO Test
     public static boolean checkError(String st) {
+        if(st==null){
+            return false;
+        }
         ObjectMapper mapper = new ObjectMapper();
         JsonNode actualObj = null;
         try {
             actualObj = mapper.readTree(st);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (JsonParseException e) {
+            return false;
+        } catch (JsonProcessingException e) {
+            return false;
+        } catch (IOException e){
+            return false;
         }
         if((actualObj.get("error"))!= null){
             String error = actualObj.get("error").toString();
@@ -109,12 +118,19 @@ public class JsonTool {
     }
 
     public static boolean checkCreatedRoutes(String st) throws ServerCommunicationException {
+        if(st==null){
+            return false;
+        }
         ObjectMapper mapper = new ObjectMapper();
         JsonNode actualObj = null;
         try {
             actualObj = mapper.readTree(st);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (JsonParseException e) {
+            return false;
+        } catch (JsonProcessingException e) {
+            return false;
+        } catch (IOException e){
+            return false;
         }
         if((actualObj.get("error"))!= null){
             String error = actualObj.get("error").toString();
