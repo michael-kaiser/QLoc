@@ -174,8 +174,96 @@ public class JsonTool {
         return writer.toString();
     }
 
+    public static String sendPoints(int points) throws IOException {
+        JsonFactory jFactory = new JsonFactory();
+        StringWriter writer = new StringWriter();
+        JsonGenerator jsonGenerator = null;
+        jsonGenerator = jFactory.createGenerator(writer);
+        jsonGenerator.writeStartObject();
+        jsonGenerator.writeFieldName("savedPoints");
+        jsonGenerator.writeStartObject();
+        jsonGenerator.writeNumberField("points", points);
+        jsonGenerator.writeEndObject();
+        jsonGenerator.writeEndObject();
+        jsonGenerator.close();
+        return writer.toString();
+    }
+
+    public static String routesPerUser() throws IOException {
+        JsonFactory jFactory = new JsonFactory();
+        StringWriter writer = new StringWriter();
+        JsonGenerator jsonGenerator = null;
+        jsonGenerator = jFactory.createGenerator(writer);
+        jsonGenerator.writeStartObject();
+        jsonGenerator.writeFieldName("askForRoutesOfUser");
+        jsonGenerator.writeStartObject();
+        jsonGenerator.writeStringField("user", "user");
+        jsonGenerator.writeEndObject();
+        jsonGenerator.writeEndObject();
+        jsonGenerator.close();
+        return writer.toString();
+    }
+
+    public static String pointsOfUser() throws IOException {
+        JsonFactory jFactory = new JsonFactory();
+        StringWriter writer = new StringWriter();
+        JsonGenerator jsonGenerator = null;
+        jsonGenerator = jFactory.createGenerator(writer);
+        jsonGenerator.writeStartObject();
+        jsonGenerator.writeFieldName("askForPointsOfUser");
+        jsonGenerator.writeStartObject();
+        jsonGenerator.writeStringField("user", "user");
+        jsonGenerator.writeEndObject();
+        jsonGenerator.writeEndObject();
+        jsonGenerator.close();
+        return writer.toString();
+    }
+
+    public static int getPoints(String st) throws ServerCommunicationException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode actualObj = null;
+        try {
+            actualObj = mapper.readTree(st);
+        } catch (JsonParseException e) {
+            return -3;
+        } catch (JsonProcessingException e) {
+            return -2;
+        } catch (IOException e){
+            return -1;
+        }
+
+        if((actualObj.get("error"))!= null){
+            String error = actualObj.get("error").toString();
+            throw new ServerCommunicationException();
+        }
+
+        JsonNode aField = actualObj.get("savedPoints");
+        return aField.get("points").asInt();
 
 
+    }
+
+    public static int routeCount(String st) throws ServerCommunicationException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode actualObj = null;
+        try {
+            actualObj = mapper.readTree(st);
+        } catch (JsonParseException e) {
+            return -3;
+        } catch (JsonProcessingException e) {
+            return -2;
+        } catch (IOException e){
+            return -1;
+        }
+
+        if((actualObj.get("error"))!= null){
+            String error = actualObj.get("error").toString();
+            throw new ServerCommunicationException();
+        }
+
+        JsonNode aField = actualObj.get("userRoutes");
+        return aField.get("routes").asInt();
 
 
+    }
 }
