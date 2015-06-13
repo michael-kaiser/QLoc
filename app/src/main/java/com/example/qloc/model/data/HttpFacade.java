@@ -120,6 +120,74 @@ public class HttpFacade implements Data {
         return nextWayPoint;
     }
 
+    //TODO check
+    public int getNumberOfRoutes() throws ServerCommunicationException {
+        String msg = null;
+
+
+        try {
+            msg = JsonTool.routesPerUser();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String response = null;
+        try {
+            response = getResponseFromServer(msg);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Log.d("Test", " " + response);
+        return JsonTool.routeCount(response);
+    }
+
+
+    //TODO check
+    public int getUserPoints() throws ServerCommunicationException {
+        String msg = null;
+
+
+        try {
+            msg = JsonTool.pointsOfUser();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String response = null;
+        try {
+            response = getResponseFromServer(msg);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Log.d("Test", " " + response);
+        return JsonTool.getPoints(response);
+    }
+
+    //TODO complete!!!!!!!!!!!!!!!!!
+    public boolean setPoints(int points){
+        String answer = null;
+        try {
+            answer = getResponseFromServer(JsonTool.sendPoints(points));
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.d("Facade", answer);
+        return checkError(answer);
+    }
+
+
     public boolean checkAnswer(String givenAnswer) throws ServerCommunicationException{
         String temp = null;
         boolean response = true;
