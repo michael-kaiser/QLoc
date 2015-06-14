@@ -20,7 +20,7 @@ import java.util.concurrent.Callable;
  */
 
 public class CallableHttpConnection implements Callable<String> {
-    private final String URL_NAME = "192.168.1.73";
+    private final String URL_NAME = "192.168.1.87";
 
     private final URL url;
     private final String request;

@@ -23,6 +23,7 @@ import com.example.qloc.controller.activities.QuestionActivity;
 public class StatusFragment extends Fragment {
 
     public static final String RETVAL_KEY = "NEXT_ID";
+    public static final String RETVAL_KEY_POINTS = "NEXT_POINTS";
     private View view;
     private StatusDeliverer deliverer; //activity which manages the status, the QuestionActivity
     private TextView motivation;
@@ -84,6 +85,7 @@ public class StatusFragment extends Fragment {
                         if (delta > MIN_DISTANCE) {
                             Intent i = new Intent();
                             i.putExtra(RETVAL_KEY,deliverer.getStatus().getNext());
+                            i.putExtra(RETVAL_KEY_POINTS,deliverer.getStatus().getPoints());
                             deliverer.quit(i);
                         }
                         break;

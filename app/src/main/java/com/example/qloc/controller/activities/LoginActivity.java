@@ -97,9 +97,13 @@ public class LoginActivity extends Activity{
 
     }
     private void login() throws BadLoginException {
-        HttpFacade.getInstance().login(email.getText().toString(), pwd.getText().toString());
-        Intent i = new Intent(this, MainScreen.class);
-        startActivity(i);
+        boolean check = HttpFacade.getInstance().login(email.getText().toString(), pwd.getText().toString());
+        if(!check){
+            throw new BadLoginException();
+        }else {
+            Intent i = new Intent(this, MainScreen.class);
+            startActivity(i);
+        }
 
     }
 

@@ -50,35 +50,34 @@
             android:name=".controller.activities.MainScreen"
             android:label="@string/title_activity_main_screen"
             android:parentActivityName=".controller.activities.LoginActivity" >
-
         </activity>
         //TO TEST
         //TILL
         <activity
             android:name=".controller.activities.NavigationActivity"
-            android:label="@string/title_activity_navigation_neu">
-
+            android:label="@string/title_activity_navigation_neu" >
         </activity>
         <activity
             android:name=".controller.fragments.MapsModeFragment"
             android:label="@string/title_activity_maps_mode_fragment" >
         </activity>
-
         <activity
             android:name=".controller.activities.QuestionActivity"
             android:label="hallo" >
         </activity>
-
         <activity
             android:name=".controller.activities.LoginActivity"
-            android:label="@string/title_activity_login"
-            android:noHistory="true">
+            android:label="QLoc"
+            android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
+        </activity>
+        <activity
+            android:name=".controller.activities.FinalStatus"
+            android:label="@string/title_activity_final_status" >
         </activity>
     </application>
 

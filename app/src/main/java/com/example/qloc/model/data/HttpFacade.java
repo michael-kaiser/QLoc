@@ -60,7 +60,7 @@ public class HttpFacade implements Data {
         return wpList;
     }
 
-    public void login(String name, String password){
+    public boolean login(String name, String password){
         String answer = null;
         try {
             answer = getResponseFromServer(JsonTool.login(name, password));
@@ -71,7 +71,10 @@ public class HttpFacade implements Data {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         Log.d("Facade", answer);
+        return JsonTool.checkError(answer);
+
     }
 
     public boolean register(String name, String password){

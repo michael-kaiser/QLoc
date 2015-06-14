@@ -11,10 +11,10 @@ import com.example.qloc.R;
  */
 public class AlertDialogUtility {
 
-    public static void showAlertDialog(Activity activity, DialogInterface.OnClickListener positive){
+    public static void showAlertDialog(Activity activity, DialogInterface.OnClickListener positive, String message){
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setPositiveButton(R.string.alert_okay, positive);
-        builder.setMessage(R.string.alert_dialog_message)
+        builder.setMessage(message)
                 .setTitle(R.string.alert_dialog_title);
 
         AlertDialog dialog = builder.create();

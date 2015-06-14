@@ -36,6 +36,7 @@ public class QuestionActivity extends Activity implements QuestionFragment.Quest
     private String noOfQuestions = "/4";
     private TextView text_points;
     private TextView text_noOfQuestions;
+    private boolean evaluated = false; //true when true answer is already given
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +89,12 @@ public class QuestionActivity extends Activity implements QuestionFragment.Quest
         int caller = v.getId(); //which answer was given? needed to get the answer text
         final TextView txt;
         boolean eval = false;
+
+        //do nothing when true answer was already given
+        if(evaluated){
+            return;
+        }
+
         try {
             switch (caller) {
                 case R.id.answer1:
@@ -114,10 +121,11 @@ public class QuestionActivity extends Activity implements QuestionFragment.Quest
                 public void onClick(DialogInterface dialog, int which) {
 
                 }
-            });
+            }, "Can't evaluate answer");
             return;
         }
         if(eval){
+            evaluated = true;
             Log.d("Evaluation","True");
 
             /* the correct answer card-flip animation */

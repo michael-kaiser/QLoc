@@ -40,7 +40,11 @@ public class NavigationActivity extends Activity implements CompassMapParent {
 
     private final String TAG = "NavigationActivity";
     public static final String KEY = "Waypoint2";
+    public static final String KEY_POINTS = "Key_points";
+    public static final String KEY_WPCOUNT = "WpCount";
     public static final int REQUEST_ID_NEXT = 1;
+    private int points = 0;
+    private int waypointCounter = 0;
 
     private enum activeFragments{
         COMPASS, MAPS;
@@ -49,6 +53,7 @@ public class NavigationActivity extends Activity implements CompassMapParent {
     private ImageButton modeButton;
     private TextView loc_name;
     private TextView distance;
+    private TextView pointsTxt;
 
     private activeFragments activeFragment = activeFragments.COMPASS;
     private WayPoint start;
@@ -68,6 +73,9 @@ public class NavigationActivity extends Activity implements CompassMapParent {
 
         modeButton = (ImageButton) findViewById(R.id.modeButton);
         distance = (TextView) findViewById(R.id.txt_distance);
+        pointsTxt = (TextView) findViewById(R.id.txt_points);
+        pointsTxt.setText("points: " + points);
+
         loc_name = (TextView) findViewById(R.id.current_waypoint_name);
 
         start = getWayPoint();
@@ -129,7 +137,9 @@ public class NavigationActivity extends Activity implements CompassMapParent {
         }else{
             fm.beginTransaction().
             remove(fm.findFragmentById(R.id.compass_fragment_layout)).commit();
-            Intent i = new Intent(this, MainScreen.class);
+            Intent i = new Intent(this, FinalStatus.class);
+            i.putExtra(KEY_POINTS, points);
+            i.putExtra(KEY_WPCOUNT, waypointCounter);
             startActivity(i);
         }
     }
@@ -140,6 +150,10 @@ public class NavigationActivity extends Activity implements CompassMapParent {
             if(resultCode == RESULT_OK){
                 nextWaypointId = data.getStringExtra(StatusFragment.RETVAL_KEY);
                 Log.d(TAG,"++++++++++++++++++++++++++++++++++++++nextwaypoint = " + nextWaypointId);
+                points += data.getIntExtra(StatusFragment.RETVAL_KEY_POINTS,0);
+                pointsTxt.setText("points: " + points);
+                Log.d(TAG,"points = " + points);
+                waypointCounter++;
             }
         }
     }
@@ -183,18 +197,6 @@ public class NavigationActivity extends Activity implements CompassMapParent {
             } catch (ServerCommunicationException e) {
                 e.printStackTrace();
                 //TODO addDialog
-            }
-
-
-            //there is no next waypoint
-            if(nextWaypoint == null){
-                           /*
-            TODO make usefull stuff when over
-             */
-                Log.d(TAG,"finishing");
-                tracker.stopTracking();
-                this.finish();
-                return null;
             }
 
         }
