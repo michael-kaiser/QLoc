@@ -293,7 +293,7 @@ import java.util.List;
                 }
 
                 String routeName = name.getText().toString();
-                String routeDesc = name.getText().toString();
+                String routeDesc = description.getText().toString();
                 SaveRoute route = new SaveRoute(routeName,routeDesc);
                 route.setWayPointList(waypointList);
                 try {

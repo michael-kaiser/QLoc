@@ -39,7 +39,7 @@ public class LoginActivity extends Activity{
         email = (EditText) findViewById(R.id.login_email);
         pwd = (EditText) findViewById(R.id.login_pwd1);
         errorMsg = (TextView) findViewById(R.id.error_message);
-        CookieManager.getInstance().removeAllCookie();
+
     }
 
     public void onButtonRegister(View v){
@@ -53,6 +53,7 @@ public class LoginActivity extends Activity{
     }
 
     public void onButtonLogin(View v){
+        CookieManager.getInstance().removeAllCookie();
         v.setAlpha(1.0f);
         try {
             login();
@@ -101,6 +102,7 @@ public class LoginActivity extends Activity{
         if(!check){
             throw new BadLoginException();
         }else {
+            ProfileActivity.setUsername(email.getText().toString());
             Intent i = new Intent(this, MainScreen.class);
             startActivity(i);
         }

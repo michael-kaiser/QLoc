@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.qloc.R;
+import com.example.qloc.model.data.Data;
+import com.example.qloc.model.data.HttpFacade;
 
 public class FinalStatus extends Activity {
 
@@ -30,6 +32,7 @@ public class FinalStatus extends Activity {
     private float x1, x2; //needed for the touch event
     static final int MIN_DISTANCE = 100; //the minimal distance of the swipe event to be recognized
     private int movingStars = 0;
+    private Data facade = HttpFacade.getInstance();
 
 
 
@@ -184,6 +187,6 @@ public class FinalStatus extends Activity {
     }
 
     private void sendPointsToServer(){
-        //TODO implement
+        ///facade.setPoints(points);
     }
 }

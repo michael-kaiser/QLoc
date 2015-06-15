@@ -64,5 +64,10 @@ public class Mockup implements Data{
         return true;
     }
 
+    @Override
+    public boolean setPoints(int points) {
+        return false;
+    }
+
 
 }

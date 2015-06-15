@@ -52,5 +52,6 @@
     <string name="title_activity_maps_mode_fragment">Map</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_final_status">FinalStatus</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 
 </resources>

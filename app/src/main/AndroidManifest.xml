@@ -79,6 +79,10 @@
             android:name=".controller.activities.FinalStatus"
             android:label="@string/title_activity_final_status" >
         </activity>
+        <activity
+            android:name=".controller.activities.ProfileActivity"
+            android:label="@string/title_activity_profile" >
+        </activity>
     </application>
 
 </manifest>

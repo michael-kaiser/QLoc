@@ -20,13 +20,13 @@ import java.util.concurrent.Callable;
  */
 
 public class CallableHttpConnection implements Callable<String> {
-    private final String URL_NAME = "192.168.1.87";
+    private final String URL_NAME = "192.168.1.73";
 
     private final URL url;
     private final String request;
 
     public CallableHttpConnection(String request) throws MalformedURLException {
-        url = new URL("http", URL_NAME, 3000,"api");
+        url = new URL("http", "darkboxed.org", 3000,"api");
         this.request =request;
     }
 
@@ -41,6 +41,7 @@ public class CallableHttpConnection implements Callable<String> {
             String cookie = cookieManager.getCookie(connection.getURL().toString());
             if (cookie != null) {
                 connection.setRequestProperty("Cookie", cookie);
+                Log.d("Cookie", cookie.toString());
             }
 
             setStandardHttpProperty(connection);

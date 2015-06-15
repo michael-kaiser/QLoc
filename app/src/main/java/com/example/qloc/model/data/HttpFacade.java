@@ -43,7 +43,7 @@ public class HttpFacade implements Data {
     public List<WayPoint> getWayPointList(Location currentLocation) throws ServerCommunicationException {
         String answer = null;
         try {
-            getResponseFromServer("{\"reset\": true}");
+            //getResponseFromServer("{\"reset\": true}");
             answer = getResponseFromServer((JsonTool.rangeQuery(currentLocation)));
         } catch (Exception e) {
             Log.d("Facade", e.getMessage());
@@ -124,7 +124,7 @@ public class HttpFacade implements Data {
     }
 
     //TODO check
-    public int getNumberOfRoutes() throws ServerCommunicationException {
+    public ArrayList<WayPoint> getUserRoutes() throws ServerCommunicationException {
         String msg = null;
 
 
@@ -144,8 +144,13 @@ public class HttpFacade implements Data {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Log.d("Test", " " + response);
-        return JsonTool.routeCount(response);
+        ArrayList<WayPoint> wpList = null;
+        try {
+            wpList = (MyLittleSerializer.JSONStringToRoutesList(response)).toWayPointList();
+        } catch (IOException e) {
+        }
+
+        return wpList;
     }
 
 

@@ -195,9 +195,18 @@ public class JsonTool {
         JsonGenerator jsonGenerator = null;
         jsonGenerator = jFactory.createGenerator(writer);
         jsonGenerator.writeStartObject();
-        jsonGenerator.writeFieldName("askForRoutesOfUser");
+        jsonGenerator.writeFieldName("routes_list");
         jsonGenerator.writeStartObject();
-        jsonGenerator.writeStringField("user", "user");
+        jsonGenerator.writeStringField("user", null);
+        jsonGenerator.writeFieldName("location");
+        jsonGenerator.writeStartArray(); // [
+        jsonGenerator.writeNumber(0.0); // "someString" (preceded by comma if not 1st)
+        jsonGenerator.writeNumber(0.0);
+        jsonGenerator.writeNumber(0.0);
+        jsonGenerator.writeEndArray(); // ]
+        jsonGenerator.writeFieldName("distance");
+        jsonGenerator.writeNumber(1000000000);
+        jsonGenerator.writeEndObject();
         jsonGenerator.writeEndObject();
         jsonGenerator.writeEndObject();
         jsonGenerator.close();
@@ -210,9 +219,9 @@ public class JsonTool {
         JsonGenerator jsonGenerator = null;
         jsonGenerator = jFactory.createGenerator(writer);
         jsonGenerator.writeStartObject();
-        jsonGenerator.writeFieldName("askForPointsOfUser");
+        jsonGenerator.writeFieldName("user_points");
         jsonGenerator.writeStartObject();
-        jsonGenerator.writeStringField("user", "user");
+        jsonGenerator.writeStringField("user", null);
         jsonGenerator.writeEndObject();
         jsonGenerator.writeEndObject();
         jsonGenerator.close();
@@ -237,7 +246,7 @@ public class JsonTool {
             throw new ServerCommunicationException();
         }
 
-        JsonNode aField = actualObj.get("savedPoints");
+        JsonNode aField = actualObj.get("user_points");
         return aField.get("points").asInt();
 
 

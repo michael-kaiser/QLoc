@@ -36,4 +36,11 @@ public class MainScreen extends Activity {
         startActivity(i);
     }
 
+    public void onButtonProfileClick(View v){
+        v.setAlpha(1.0f);
+        Intent i = new Intent(this,ProfileActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(i);
+    }
+
 }

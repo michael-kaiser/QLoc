@@ -14,4 +14,5 @@ public interface Data {
     public List<WayPoint> getWayPointList(Location currentLocation) throws ServerCommunicationException;
     public WayPoint getNextWayPoint(String nextWayPointID) throws ServerCommunicationException;
     public boolean checkAnswer(String givenAnswer) throws ServerCommunicationException;
+    public boolean setPoints(int points);
 }
