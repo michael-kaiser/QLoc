@@ -208,7 +208,6 @@ public class JsonTool {
         jsonGenerator.writeNumber(1000000000);
         jsonGenerator.writeEndObject();
         jsonGenerator.writeEndObject();
-        jsonGenerator.writeEndObject();
         jsonGenerator.close();
         return writer.toString();
     }

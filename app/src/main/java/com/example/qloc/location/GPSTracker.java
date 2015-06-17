@@ -40,7 +40,8 @@ public final class GPSTracker extends DisableEnableGPSListener {
     }
     //TODO check if GPS is enabled otherwise use the Network-provider
     public void init(){
-        locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        super.locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        Log.d(TAG, "got location manager");
 
         isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
@@ -122,6 +123,10 @@ public final class GPSTracker extends DisableEnableGPSListener {
 
     public void removeListener(LocationListener list){
         locationManager.removeUpdates(list);
+    }
+
+    public LocationManager getLocationManager(){
+        return locationManager;
     }
 
 }

@@ -7,8 +7,10 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
+import android.location.LocationListener;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -19,11 +21,11 @@ import android.widget.Toast;
 
 import com.example.qloc.R;
 import com.example.qloc.controller.activities.activityUtils.WayPoint;
+import com.example.qloc.controller.dialogs.AlertDialogUtility;
 import com.example.qloc.controller.fragments.CompassFragment;
 import com.example.qloc.controller.fragments.CompassMapParent;
 import com.example.qloc.controller.fragments.MapsModeFragment;
 import com.example.qloc.controller.fragments.StatusFragment;
-import com.example.qloc.location.DisableEnableGPSListener;
 import com.example.qloc.location.GPSTracker;
 import com.example.qloc.model.data.Data;
 import com.example.qloc.model.data.HttpFacade;
@@ -184,6 +186,7 @@ public class NavigationActivity extends Activity implements CompassMapParent {
      * @return the current waypoint
      */
     private WayPoint getWayPoint(){
+        final Activity parent = this;
         WayPoint nextWaypoint = null;
         //The first time you get the next waypoint from the PlayGameActivity
         if(nextWaypointId.equals("unset")){
@@ -191,12 +194,17 @@ public class NavigationActivity extends Activity implements CompassMapParent {
 
         //otherwise request next from server
         }else{
-            //TODO change to server
             try {
                 nextWaypoint = facade.getNextWayPoint(nextWaypointId);
             } catch (ServerCommunicationException e) {
                 e.printStackTrace();
-                //TODO addDialog
+                AlertDialogUtility.showAlertDialog(this, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent i = new Intent(parent, MainScreen.class);
+                        startActivity(i);
+                    }
+                }, "Can't connect to Server!");
             }
 
         }
@@ -299,10 +307,21 @@ public class NavigationActivity extends Activity implements CompassMapParent {
 
 
 
-    private class MyLocationListener extends DisableEnableGPSListener {
+    private class MyLocationListener implements LocationListener{
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+
         /*variable to check i the user is in a QuestionActivity then he shouldn't get the question again
-           the variable is controlled by the onStop() and onRestart() of the Activity
-         */
+                   the variable is controlled by the onStop() and onRestart() of the Activity
+                 */
         private boolean inQuestion = false;
 
         public void setInQuestion(boolean inQuestion) {

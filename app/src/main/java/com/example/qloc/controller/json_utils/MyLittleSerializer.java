@@ -42,8 +42,7 @@ public class MyLittleSerializer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if((actualObj.get("error"))!= null){
-            String error = actualObj.get("error").toString();
+        if(actualObj == null || (actualObj.get("error"))!= null){
             throw new ServerCommunicationException();
         }
         if((actualObj.get("end"))!= null){
@@ -63,8 +62,7 @@ public class MyLittleSerializer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if((actualObj.get("error"))!= null){
-            String error = actualObj.get("error").toString();
+        if(actualObj == null || (actualObj.get("error"))!= null){
             throw new ServerCommunicationException();
         }
         RoutesList rl;

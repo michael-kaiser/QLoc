@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.qloc.R;
-import com.example.qloc.location.DisableEnableGPSListener;
 import com.example.qloc.model.communication.GoogleMapsCommunication;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -119,7 +118,7 @@ public class MapsModeFragment extends Fragment {
 
 
 
-    private class MyLocationListener extends DisableEnableGPSListener {
+    private class MyLocationListener implements LocationListener {
 
 
         @Override
@@ -130,7 +129,7 @@ public class MapsModeFragment extends Fragment {
             LatLng latLng = new LatLng(lat, lon);
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-            Log.d(TAG, "location changed in fragment");
+            Log.d("maps", "location changed in fragment");
             googleMap.clear();
             googleMapsCommunication.drawRoute(getCurrentPositionFromTracker(), provider.getTarget());
             setMarker();
@@ -140,6 +139,16 @@ public class MapsModeFragment extends Fragment {
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
 
         }
 

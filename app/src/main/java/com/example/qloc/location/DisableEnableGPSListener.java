@@ -16,8 +16,8 @@ public abstract class DisableEnableGPSListener implements LocationListener{
     protected String currentProvider = LocationManager.NETWORK_PROVIDER;
     protected final String TAG = "DisEnGPS";
     protected LocationManager locationManager;
-    protected final int MIN_TIME_BW_UPDATES = 10;
-    protected final int MIN_DIST_CHANGE_FOR_UPDATES = 100;
+    protected final int MIN_TIME_BW_UPDATES = 1;
+    protected final int MIN_DIST_CHANGE_FOR_UPDATES = 1;
     protected  LocationListener listener;
 
     @Override

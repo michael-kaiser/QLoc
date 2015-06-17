@@ -1,6 +1,7 @@
 package com.example.qloc.controller.activities;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import com.example.qloc.R;
 import com.example.qloc.controller.activities.activityUtils.CustomAdapter;
 import com.example.qloc.controller.activities.activityUtils.RowItem;
 import com.example.qloc.controller.activities.activityUtils.WayPoint;
+import com.example.qloc.controller.dialogs.AlertDialogUtility;
 import com.example.qloc.location.GPSTracker;
 import com.example.qloc.model.data.Data;
 import com.example.qloc.model.data.HttpFacade;
@@ -61,6 +63,7 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        final Activity thisOne = this;
         Intent i = new Intent(this,NavigationActivity.class);
         WayPoint wp = new WayPoint(((RowItem) parent.getAdapter().getItem(position)).getWaypoint());
         Log.d(TAG+"test",wp.getName() + wp.getDesc() + wp.getAnswer4());
@@ -69,33 +72,56 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
         WayPoint nextWayPoint = null;
         try {
             nextWayPoint = httpFacade.getNextWayPoint(wp.getId());
+            if(nextWayPoint == null){
+                throw new ServerCommunicationException();
+            }
         } catch (ServerCommunicationException e) {
             e.printStackTrace();
-            ////TODO addDialog
+            AlertDialogUtility.showAlertDialog(this, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent i = new Intent(thisOne, MainScreen.class);
+                    startActivity(i);
+                }
+            }, "Can't connect to Server!");
         }
 
-        Log.d(TAG+"test",nextWayPoint.getId() + nextWayPoint.getDesc() + nextWayPoint.getAnswer4());
-        i.putExtra(KEY, nextWayPoint); //give the waypoint to the next Activity
-        startActivity(i);
+        if(nextWayPoint != null) {
+            Log.d(TAG + "test", nextWayPoint.getId() + nextWayPoint.getDesc() + nextWayPoint.getAnswer4());
+            i.putExtra(KEY, nextWayPoint); //give the waypoint to the next Activity
+            startActivity(i);
+        }
     }
 
     /**
      * starts the activity when you click on the green arrow
      */
     public void onClickStartButton(View v){
+        final Activity parent = this;
         Intent i = new Intent(this,NavigationActivity.class);
         WayPoint wp = new WayPoint(rowItems.get(0).getWaypoint());
         //TODO change to server
         WayPoint nextWayPoint = null;
         try {
             nextWayPoint = httpFacade.getNextWayPoint(wp.getId());
+            if(nextWayPoint == null){
+                throw new ServerCommunicationException();
+            }
         } catch (ServerCommunicationException e) {
             e.printStackTrace();
-            //TODO addDialog
+            AlertDialogUtility.showAlertDialog(this, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent i = new Intent(parent, MainScreen.class);
+                    startActivity(i);
+                }
+            }, "Can't connect to Server!");
         }
-        Log.d(TAG+"test",nextWayPoint.getName() + nextWayPoint.getDesc() + nextWayPoint.getAnswer4());
-        i.putExtra(KEY, nextWayPoint); //give the waypoint to the next Activity
-        startActivity(i);
+        if(nextWayPoint != null) {
+            Log.d(TAG + "test", nextWayPoint.getName() + nextWayPoint.getDesc() + nextWayPoint.getAnswer4());
+            i.putExtra(KEY, nextWayPoint); //give the waypoint to the next Activity
+            startActivity(i);
+        }
 
     }
 
@@ -111,6 +137,7 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
      * fill the scrollList with the routes
      */
     private void updateList(){
+        final Activity parent = this;
         List<WayPoint> wpList = null;
         tracker = GPSTracker.getInstance(this);
         tracker.setListener(tracker);
@@ -133,7 +160,13 @@ public class PlayGameActivity extends Activity implements AdapterView.OnItemClic
             wpList = httpFacade.getWayPointList(currentLocation);
         } catch (ServerCommunicationException e) {
             e.printStackTrace();
-            //TODO addDialog
+            AlertDialogUtility.showAlertDialog(this, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent i = new Intent(parent, MainScreen.class);
+                    startActivity(i);
+                }
+            }, "Can't connect to Server!");
         }
         rowItems = new ArrayList<>();
 
