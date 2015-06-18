@@ -85,6 +85,7 @@ public final class GPSTracker extends DisableEnableGPSListener {
                         if (currentLocation != null) {
                             currentLocation.setLatitude(currentLocation.getLatitude());
                             currentLocation.setLongitude(currentLocation.getLongitude());
+                            currentProvider = LocationManager.GPS_PROVIDER;
                         }
                     }
                 }

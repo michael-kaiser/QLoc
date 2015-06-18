@@ -27,6 +27,8 @@ public class CallableHttpConnection implements Callable<String> {
 
     public CallableHttpConnection(String request) throws MalformedURLException {
         url = new URL("http", "darkboxed.org", 3000,"api");
+        //url = new URL("http", "192.168.1.87", 3000,"");
+
         this.request =request;
     }
 
@@ -62,7 +64,7 @@ public class CallableHttpConnection implements Callable<String> {
             response = new RequestInputStream(connection).readStream();
             Log.d("http", response.toString());
         } catch (IOException e) {
-            Log.d("http", e.getMessage());
+            Log.d("httpExc", e.getMessage());
             e.printStackTrace();
         } finally {
             if(connection != null)
@@ -78,6 +80,8 @@ public class CallableHttpConnection implements Callable<String> {
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);
         connection.setChunkedStreamingMode(0);
+        System.setProperty("http.keepAlive", "false");
+        connection.setRequestProperty("Connection", "close");
         //deactivate that servers use gzip compression
         //connection.setRequestProperty("Accept-Encoding", "identity");
     }

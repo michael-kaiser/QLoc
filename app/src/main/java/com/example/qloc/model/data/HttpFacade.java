@@ -102,11 +102,13 @@ public class HttpFacade implements Data {
             e.printStackTrace();
         }
 
+        String response = null;
         try {
-            String response = getResponseFromServer(msg);
+            response = getResponseFromServer(msg);
             Log.d("Test", " " + response);
             nextWayPoint = MyLittleSerializer.JSONStringToWayPoint(response);
         } catch (IOException e) {
+            Log.d("shit", response);
             nextWayPoint = null;
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -217,6 +219,7 @@ public class HttpFacade implements Data {
 
     private String getResponseFromServer(String request) throws MalformedURLException, ExecutionException, InterruptedException {
         String response;
+        Log.d("Req", request);
         executer.execute(new CallableHttpConnection(request));
         response = executer.getResult();
         return response;

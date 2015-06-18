@@ -13,14 +13,6 @@
     </FrameLayout>
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="I&apos;m here"
-        android:id="@+id/button"
-        android:layout_gravity="right|bottom"
-        android:onClick="remember" />
-
     <ImageButton
         android:layout_width="50dp"
         android:layout_height="50dp"

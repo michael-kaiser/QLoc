@@ -1,9 +1,7 @@
 package com.example.qloc.location;
 
-import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.util.Log;
 
 /**
  * Created by michael on 18.04.15.
@@ -22,7 +20,7 @@ public abstract class DisableEnableGPSListener implements LocationListener{
 
     @Override
     public void onProviderEnabled(String provider) {
-        Log.d(TAG, "enabled: " + provider);
+        /*Log.d(TAG, "enabled: " + provider);
         if(provider.equals(LocationManager.GPS_PROVIDER)){
             if(!enableGPS()){
                 if(enableNetwork()){
@@ -41,12 +39,12 @@ public abstract class DisableEnableGPSListener implements LocationListener{
             }else{
                 currentProvider = NO_PROVIDER;
             }
-        }
+        }*/
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-        Log.d(TAG,"disabled: " + provider);
+       /* Log.d(TAG,"disabled: " + provider);
         if(provider.equals(LocationManager.GPS_PROVIDER) &&  locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
             if(enableNetwork()){
                 currentProvider = LocationManager.NETWORK_PROVIDER;
@@ -83,6 +81,7 @@ public abstract class DisableEnableGPSListener implements LocationListener{
 
         }
         return false;
+        */
     }
 
     public void setListener(LocationListener listener){

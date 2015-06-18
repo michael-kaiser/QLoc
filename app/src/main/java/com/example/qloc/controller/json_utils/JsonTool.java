@@ -245,8 +245,7 @@ public class JsonTool {
             throw new ServerCommunicationException();
         }
 
-        JsonNode aField = actualObj.get("user_points");
-        return aField.get("points").asInt();
+        return actualObj.get("points").asInt();
 
 
     }

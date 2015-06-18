@@ -41,7 +41,7 @@ public class ProfileActivity extends Activity {
         int userPoints = 0;
         try {
             list = facade.getUserRoutes();
-           // userPoints = facade.getUserPoints();
+            userPoints = facade.getUserPoints();
         } catch (ServerCommunicationException e) {
             e.printStackTrace();
         }
